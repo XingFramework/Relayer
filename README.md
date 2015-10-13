@@ -1,8 +1,10 @@
-[![Code Climate](https://codeclimate.com/github/LRDesign/relayer/badges/gpa.svg)](https://codeclimate.com/github/hannahhoward/a1atscript) [![Build Status](https://travis-ci.org/LRDesign/relayer.svg?branch=master)](https://travis-ci.org/hannahhoward/a1atscript)
+![Code Climate](https://codeclimate.com/github/XingFramework/relayer/badges/gpa.svg)](https://codeclimate.com/github/XingFramework/relayer)
+![Dependency Status](https://gemnasium.com/XingFramework/Relayer.svg)](https://gemnasium.com/XingFramework/Relayer) 
+![Build Status](https://travis-ci.org/XingFramework/relayer.svg?branch=master)](https://travis-ci.org/XingFramework/relayer)
 
 # Relayer
 
-[![Join the chat at https://gitter.im/LRDesign/relayer](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/LRDesign/relayer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/XingFramework/relayer](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/XingFramework/relayer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Relayer is a simple to use client side interface for talking to hypermedia API's. It's analogous to JS Data or Ember Data, but significantly more powerful in some respects because it assumes a backend that produces a hypermedia conformant API-- namely, your API embeds links in each JSON response to get to other resources. In that respect, where most client side libraries consume an API by making calls to specific endpoints known ahead of time, Relayer instead consumes an API much like a user interacts with a web browser -- it starts at a single URL it knows ahead of time, then follows links to get to other resources. This means that in a best case scenario, you can actually change all your API's endpoints without breaking your client.
 
