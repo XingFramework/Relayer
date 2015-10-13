@@ -1,6 +1,6 @@
-[![Code Climate](https://codeclimate.com/github/XingFramework/relayer/badges/gpa.svg)](https://codeclimate.com/github/XingFramework/relayer)
-[![Dependency Status](https://gemnasium.com/XingFramework/relayer.svg)](https://gemnasium.com/XingFramework/relayer) 
-[![Build Status](https://travis-ci.org/XingFramework/relayer.svg?branch=master)](https://travis-ci.org/XingFramework/relayer)
+[![Code Climate](https://codeclimate.com/github/XingFramework/Relayer/badges/gpa.svg)](https://codeclimate.com/github/XingFramework/Relayer)
+[![Dependency Status](https://gemnasium.com/XingFramework/Relayer.svg)](https://gemnasium.com/XingFramework/Relayer) 
+[![Build Status](https://travis-ci.org/XingFramework/Relayer.svg?branch=master)](https://travis-ci.org/XingFramework/Relayer)
 
 # Relayer
 
