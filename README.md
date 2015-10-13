@@ -212,3 +212,9 @@ b. Title your commits with "[Fix]" or "[Feature]" to help clarify what they are 
 c. Feel free to reach out on Gitter if you are considering a major feature before you implement.
 
 # That's it. Enjoy!
+
+Authors
+-------
+
+* Hannah Howard
+* Judson Lester
