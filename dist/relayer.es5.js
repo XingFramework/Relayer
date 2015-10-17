@@ -2541,7 +2541,7 @@ define('relayer/endpoints/ResolvedEndpoint',["./Endpoint", "../SimpleFactoryInje
   }, {}, Endpoint);
   var $__default = ResolvedEndpoint;
   Object.defineProperty(ResolvedEndpoint, "annotations", {get: function() {
-      return [new SimpleFactory('ResolvedEndpointFactory', ["RelayerPromise"])];
+      return [new SimpleFactory('ResolvedEndpointFactory', ["XingPromise"])];
     }});
   return {
     get default() {
@@ -2588,7 +2588,7 @@ define('relayer/endpoints/LoadedDataEndpoint',["./ResolvedEndpoint", "../SimpleF
   }, {}, ResolvedEndpoint);
   var $__default = LoadedDataEndpoint;
   Object.defineProperty(LoadedDataEndpoint, "annotations", {get: function() {
-      return [new SimpleFactory('LoadedDataEndpointFactory', ['RelayerPromise'])];
+      return [new SimpleFactory('LoadedDataEndpointFactory', ['XingPromise'])];
     }});
   return {
     get default() {
@@ -2939,7 +2939,7 @@ define('relayer/mappers/ResourceMapper',["./Mapper", "../SimpleFactoryInjector"]
       if (this.endpoint) {
         this.mapped = this.primaryResourceBuilderFactory(this.response, this.ResourceClass).build(this.endpoint);
       } else {
-        this.mapped = this.resourceBuilderFactory(this.transport, this.response, this.primaryResourceTransformer, this.ResourceClass).build(this.uriTemplate);
+        this.mapped = this.resourceBuilderFactory(this.transport, this.response, this.primaryResourceTransformer, this.ResourceClass, this.relationshipDescription).build(this.uriTemplate);
       }
     },
     get primaryResourceTransformer() {
@@ -4058,17 +4058,27 @@ define('relayer/relationshipDescriptions/SingleRelationshipDescription',["./Rela
     $__2 = {default: $__2};
   var RelationshipDescription = $__0.default;
   var SimpleFactory = $__2.SimpleFactory;
-  var SingleRelationshipDescription = function SingleRelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, primaryResourceTransformerFactory, embeddedRelationshipTransformerFactory, resolvedEndpointFactory, loadedDataEndpointFactory, templatedUrlFromUrlFactory, name, ResourceClass, initialValues) {
+  var SingleRelationshipDescription = function SingleRelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, primaryResourceTransformerFactory, embeddedRelationshipTransformerFactory, resolvedEndpointFactory, loadedDataEndpointFactory, templatedUrlFactory, name, ResourceClass, initialValues) {
     $traceurRuntime.superConstructor($SingleRelationshipDescription).call(this, relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues);
     this.primaryResourceTransformerFactory = primaryResourceTransformerFactory;
     this.embeddedRelationshipTransformerFactory = embeddedRelationshipTransformerFactory;
     this.resolvedEndpointFactory = resolvedEndpointFactory;
     this.loadedDataEndpointFactory = loadedDataEndpointFactory;
-    this.templatedUrlFromUrlFactory = templatedUrlFromUrlFactory;
+    this.templatedUrlFactory = templatedUrlFactory;
+    this._templated = false;
   };
   var $SingleRelationshipDescription = SingleRelationshipDescription;
   ($traceurRuntime.createClass)(SingleRelationshipDescription, {
+    set templated(templated) {
+      this._templated = templated;
+    },
+    get templated() {
+      return this._templated;
+    },
     embeddedEndpoint: function(parent, uriParams) {
+      if (this._templated) {
+        throw "A templated hasOne relationship cannot be embedded";
+      }
       var parentEndpoint = parent.self();
       var embeddedRelationshipTransformer = this.embeddedRelationshipTransformerFactory(this.name);
       return this.loadedDataEndpointFactory(parentEndpoint, parent, embeddedRelationshipTransformer);
@@ -4076,15 +4086,18 @@ define('relayer/relationshipDescriptions/SingleRelationshipDescription',["./Rela
     linkedEndpoint: function(parent, uriParams) {
       var transport = parent.self().transport;
       var url = parent.pathGet(this.linksPath);
-      var templatedUrl = this.templatedUrlFromUrlFactory(url, url);
-      templatedUrl.addDataPathLink(parent, this.linksPath);
+      var params = this._templated ? uriParams : {};
+      var templatedUrl = this.templatedUrlFactory(url, params);
+      if (!this._templated) {
+        templatedUrl.addDataPathLink(parent, this.linksPath);
+      }
       var primaryResourceTransformer = this.primaryResourceTransformerFactory(this);
       return this.resolvedEndpointFactory(transport, templatedUrl, primaryResourceTransformer);
     }
   }, {}, RelationshipDescription);
   var $__default = SingleRelationshipDescription;
   Object.defineProperty(SingleRelationshipDescription, "annotations", {get: function() {
-      return [new SimpleFactory('SingleRelationshipDescriptionFactory', ['SingleRelationshipInitializerFactory', 'ResourceMapperFactory', 'ResourceSerializerFactory', 'Inflector', 'PrimaryResourceTransformerFactory', 'EmbeddedRelationshipTransformerFactory', 'ResolvedEndpointFactory', 'LoadedDataEndpointFactory', 'TemplatedUrlFromUrlFactory'])];
+      return [new SimpleFactory('SingleRelationshipDescriptionFactory', ['SingleRelationshipInitializerFactory', 'ResourceMapperFactory', 'ResourceSerializerFactory', 'Inflector', 'PrimaryResourceTransformerFactory', 'EmbeddedRelationshipTransformerFactory', 'ResolvedEndpointFactory', 'LoadedDataEndpointFactory', 'TemplatedUrlFactory'])];
     }});
   return {
     get default() {
@@ -4164,8 +4177,8 @@ define('relayer/relationshipDescriptions/ListRelationshipDescription',["./Relati
     $__2 = {default: $__2};
   var RelationshipDescription = $__0.default;
   var SimpleFactory = $__2.SimpleFactory;
-  var SingleRelationshipDescription = function SingleRelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, singleRelationshipDescriptionFactory, ListResource, primaryResourceTransformerFactory, embeddedRelationshipTransformerFactory, individualFromListTransformerFactory, createResourceTransformerFactory, resolvedEndpointFactory, loadedDataEndpointFactory, templatedUrlFromUrlFactory, templatedUrlFactory, name, ResourceClass, initialValues) {
-    $traceurRuntime.superConstructor($SingleRelationshipDescription).call(this, relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues);
+  var ListRelationshipDescription = function ListRelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, singleRelationshipDescriptionFactory, ListResource, primaryResourceTransformerFactory, embeddedRelationshipTransformerFactory, individualFromListTransformerFactory, createResourceTransformerFactory, resolvedEndpointFactory, loadedDataEndpointFactory, templatedUrlFromUrlFactory, templatedUrlFactory, name, ResourceClass, initialValues) {
+    $traceurRuntime.superConstructor($ListRelationshipDescription).call(this, relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues);
     this.singleRelationshipDescriptionFactory = singleRelationshipDescriptionFactory;
     this.ListResource = ListResource;
     this.primaryResourceTransformerFactory = primaryResourceTransformerFactory;
@@ -4179,8 +4192,8 @@ define('relayer/relationshipDescriptions/ListRelationshipDescription',["./Relati
     this.canCreate = false;
     this._linkTemplatePath = null;
   };
-  var $SingleRelationshipDescription = SingleRelationshipDescription;
-  ($traceurRuntime.createClass)(SingleRelationshipDescription, {
+  var $ListRelationshipDescription = ListRelationshipDescription;
+  ($traceurRuntime.createClass)(ListRelationshipDescription, {
     get ListResourceClass() {
       return this._ListResourceClass || this.ListResource;
     },
@@ -4191,7 +4204,10 @@ define('relayer/relationshipDescriptions/ListRelationshipDescription',["./Relati
       return this._linkTemplatePath;
     },
     set linkTemplate(linkTemplate) {
-      this._linkTemplatePath = ("$.links." + linkTemplate);
+      this._linkTemplatePath = ("$.links." + this.inflector.underscore(linkTemplate));
+    },
+    set linkTemplatePath(linkTemplatePath) {
+      this._linkTemplatePath = linkTemplatePath;
     },
     hasParams: function(uriParams) {
       if (typeof uriParams == 'string') {
@@ -4220,6 +4236,9 @@ define('relayer/relationshipDescriptions/ListRelationshipDescription',["./Relati
     singleResourceTransformer: function() {
       return this.primaryResourceTransformerFactory(this.singleRelationshipDescriptionFactory("", this.ResourceClass));
     },
+    get createRelationshipDescription() {
+      return this.singleRelationshipDescriptionFactory("", this.ResourceClass);
+    },
     linkedEndpoint: function(parent, uriParams) {
       var transport = parent.self().transport;
       var url,
@@ -4239,7 +4258,7 @@ define('relayer/relationshipDescriptions/ListRelationshipDescription',["./Relati
         templatedUrl.addDataPathLink(parent, this.linksPath);
         primaryResourceTransformer = this.listResourceTransformer();
         if (this.canCreate) {
-          createTransformer = this.createResourceTransformerFactory(this.singleRelationshipDescriptionFactory("", this.ResourceClass));
+          createTransformer = this.createResourceTransformerFactory(this.createRelationshipDescription);
         }
       }
       var endpoint = this.resolvedEndpointFactory(transport, templatedUrl, primaryResourceTransformer, createTransformer);
@@ -4260,8 +4279,8 @@ define('relayer/relationshipDescriptions/ListRelationshipDescription',["./Relati
       }
     }
   }, {}, RelationshipDescription);
-  var $__default = SingleRelationshipDescription;
-  Object.defineProperty(SingleRelationshipDescription, "annotations", {get: function() {
+  var $__default = ListRelationshipDescription;
+  Object.defineProperty(ListRelationshipDescription, "annotations", {get: function() {
       return [new SimpleFactory('ListRelationshipDescriptionFactory', ['ListRelationshipInitializerFactory', 'ListResourceMapperFactory', 'ListResourceSerializerFactory', 'Inflector', "SingleRelationshipDescriptionFactory", "ListResource", 'PrimaryResourceTransformerFactory', 'EmbeddedRelationshipTransformerFactory', 'IndividualFromListTransformerFactory', 'CreateResourceTransformerFactory', 'ResolvedEndpointFactory', 'LoadedDataEndpointFactory', 'TemplatedUrlFromUrlFactory', 'TemplatedUrlFactory'])];
     }});
   return {
@@ -4390,12 +4409,14 @@ define('relayer/ResourceBuilder',["./SimpleFactoryInjector"], function($__0) {
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var SimpleFactory = $__0.SimpleFactory;
-  var ResourceBuilder = function ResourceBuilder(templatedUrlFromUrlFactory, resolvedEndpointFactory, throwErrorTransformerFactory, transport, response, primaryResourceTransformer, ResourceClass) {
+  var ResourceBuilder = function ResourceBuilder(templatedUrlFromUrlFactory, resolvedEndpointFactory, throwErrorTransformerFactory, createResourceTransformerFactory, transport, response, primaryResourceTransformer, ResourceClass, relationshipDescription) {
     this.transport = transport;
     this.ResourceClass = ResourceClass;
+    this.relationshipDescription = relationshipDescription;
     this.templatedUrlFromUrlFactory = templatedUrlFromUrlFactory;
     this.resolvedEndpointFactory = resolvedEndpointFactory;
     this.throwErrorTransformerFactory = throwErrorTransformerFactory;
+    this.createResourceTransformerFactory = createResourceTransformerFactory;
     this.response = response;
     this.primaryResourceTransformer = primaryResourceTransformer;
   };
@@ -4409,7 +4430,11 @@ define('relayer/ResourceBuilder',["./SimpleFactoryInjector"], function($__0) {
           resource.templatedUrl = this.templatedUrlFromUrlFactory(resource.pathGet("$.links.self"), resource.pathGet("$.links.self"));
         }
         resource.templatedUrl.addDataPathLink(resource, "$.links.self");
-        var createResourceTransformer = this.throwErrorTransformerFactory();
+        if (this.relationshipDescription.canCreate) {
+          var createResourceTransformer = this.createResourceTransformerFactory(this.relationshipDescription.createRelationshipDescription);
+        } else {
+          var createResourceTransformer = this.throwErrorTransformerFactory();
+        }
         var endpoint = this.resolvedEndpointFactory(this.transport, resource.templatedUrl, this.primaryResourceTransformer, createResourceTransformer);
         resource.self = function() {
           return endpoint;
@@ -4419,7 +4444,7 @@ define('relayer/ResourceBuilder',["./SimpleFactoryInjector"], function($__0) {
     }}, {});
   var $__default = ResourceBuilder;
   Object.defineProperty(ResourceBuilder, "annotations", {get: function() {
-      return [new SimpleFactory("ResourceBuilderFactory", ["TemplatedUrlFromUrlFactory", "ResolvedEndpointFactory", "ThrowErrorTransformerFactory"])];
+      return [new SimpleFactory("ResourceBuilderFactory", ["TemplatedUrlFromUrlFactory", "ResolvedEndpointFactory", "ThrowErrorTransformerFactory", "CreateResourceTransformerFactory"])];
     }});
   return {
     get default() {
@@ -4564,16 +4589,18 @@ define('relayer/UrlHelper',["./SimpleFactoryInjector"], function($__0) {
   };
 });
 
-define('relayer/Promise',["a1atscript"], function($__0) {
+define('xing-promise',["a1atscript"], function($__0) {
   
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
-  var Factory = $__0.Factory;
-  var RelayerPromise = function RelayerPromise(resolver) {
-    this.internalPromise = RelayerPromiseFactory.$q(resolver);
+  var $__1 = $__0,
+      AsModule = $__1.AsModule,
+      Factory = $__1.Factory;
+  var XingPromise = function XingPromise(resolver) {
+    this.internalPromise = XingPromiseFactory.$q(resolver);
   };
-  var $RelayerPromise = RelayerPromise;
-  ($traceurRuntime.createClass)(RelayerPromise, {
+  var $XingPromise = XingPromise;
+  ($traceurRuntime.createClass)(XingPromise, {
     then: function(onFulfilled, onRejected, progressBack) {
       return this.internalPromise.then(onFulfilled, onRejected, progressBack);
     },
@@ -4585,27 +4612,27 @@ define('relayer/Promise',["a1atscript"], function($__0) {
     }
   }, {
     resolve: function(value) {
-      return new $RelayerPromise((function(res, rej) {
+      return new $XingPromise((function(res, rej) {
         return res(value);
       }));
     },
     reject: function(value) {
-      return new $RelayerPromise((function(res, rej) {
+      return new $XingPromise((function(res, rej) {
         return rej(value);
       }));
     }
   });
-  var RelayerPromiseFactory = function RelayerPromiseFactory() {
+  var XingPromiseFactory = function XingPromiseFactory() {
     ;
   };
-  var $RelayerPromiseFactory = RelayerPromiseFactory;
-  ($traceurRuntime.createClass)(RelayerPromiseFactory, {}, {factory: function($q) {
-      $RelayerPromiseFactory.$q = $q;
-      return RelayerPromise;
+  var $XingPromiseFactory = XingPromiseFactory;
+  ($traceurRuntime.createClass)(XingPromiseFactory, {}, {factory: function($q) {
+      $XingPromiseFactory.$q = $q;
+      return XingPromise;
     }});
-  var $__default = RelayerPromiseFactory;
-  Object.defineProperty(RelayerPromiseFactory.factory, "annotations", {get: function() {
-      return [new Factory('RelayerPromise', ['$q'])];
+  var $__default = XingPromiseFactory;
+  Object.defineProperty(XingPromiseFactory.factory, "annotations", {get: function() {
+      return [new AsModule('XingPromise'), new Factory('XingPromise', ['$q'])];
     }});
   return {
     get default() {
@@ -4721,7 +4748,7 @@ define('xing-inflector',["a1atscript"], function($__0) {
   };
 });
 
-define('relayer',["./relayer/ResourceDescription", "./relayer/Resource", "./relayer/endpoints", "./relayer/serializers", "./relayer/mappers", "./relayer/transformers", "./relayer/initializers", "./relayer/decorators", "./relayer/relationshipDescriptions", "./relayer/ListResource", "./relayer/PrimaryResourceBuilder", "./relayer/ResourceBuilder", "./relayer/Transport", "./relayer/UrlHelper", "./relayer/TemplatedUrl", "./relayer/Promise", "./relayer/RelationshipUtilities", "a1atscript", "xing-inflector"], function($__0,$__2,$__4,$__5,$__6,$__7,$__8,$__9,$__10,$__11,$__13,$__15,$__17,$__19,$__21,$__22,$__24,$__26,$__28) {
+define('relayer',["./relayer/ResourceDescription", "./relayer/Resource", "./relayer/endpoints", "./relayer/serializers", "./relayer/mappers", "./relayer/transformers", "./relayer/initializers", "./relayer/decorators", "./relayer/relationshipDescriptions", "./relayer/ListResource", "./relayer/PrimaryResourceBuilder", "./relayer/ResourceBuilder", "./relayer/Transport", "./relayer/UrlHelper", "./relayer/TemplatedUrl", "xing-promise", "./relayer/RelationshipUtilities", "a1atscript", "xing-inflector"], function($__0,$__2,$__4,$__5,$__6,$__7,$__8,$__9,$__10,$__11,$__13,$__15,$__17,$__19,$__21,$__22,$__24,$__26,$__28) {
   
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
@@ -4779,7 +4806,7 @@ define('relayer',["./relayer/ResourceDescription", "./relayer/Resource", "./rela
   var Transport = $__17.default;
   var UrlHelper = $__19.default;
   var TemplatedUrls = $__21;
-  var RelayerPromiseFactory = $__22.default;
+  var XingPromise = $__22.default;
   var RelationshipUtilities = $__24.default;
   var $__27 = $__26,
       AsModule = $__27.AsModule,
@@ -4825,7 +4852,7 @@ define('relayer',["./relayer/ResourceDescription", "./relayer/Resource", "./rela
   });
   var $__default = ResourceLayer;
   Object.defineProperty(ResourceLayer, "annotations", {get: function() {
-      return [new AsModule('relayer', [Endpoints, Serializers, Mappers, Transformers, Initializers, Decorators, RelationshipDescriptions, ListResource, PrimaryResourceBuilder, ResourceBuilder, Transport, UrlHelper, TemplatedUrls, ResourceDescription, InitializedResourceClasses, ResourceBuilder, PrimaryResourceBuilder, Inflector, RelayerPromiseFactory, RelationshipUtilities]), new Provider('relayer', ['$provide'])];
+      return [new AsModule('relayer', [Endpoints, Serializers, Mappers, Transformers, Initializers, Decorators, RelationshipDescriptions, ListResource, PrimaryResourceBuilder, ResourceBuilder, Transport, UrlHelper, TemplatedUrls, ResourceDescription, InitializedResourceClasses, ResourceBuilder, PrimaryResourceBuilder, Inflector, XingPromise, RelationshipUtilities]), new Provider('relayer', ['$provide'])];
     }});
   return {
     get default() {

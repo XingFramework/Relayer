@@ -1,3 +1,9 @@
+0.1.2 10-17-2015
+================
+* Fixed tests
+* Fixed build
+* Forgot to make distribution
+
 0.1.1 10-17-2015
 ================
 * Allow templated singular resources

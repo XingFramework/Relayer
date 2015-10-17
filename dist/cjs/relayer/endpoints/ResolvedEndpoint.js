@@ -97,7 +97,7 @@ var ResolvedEndpoint = (function (_Endpoint) {
     }
   }]);
 
-  ResolvedEndpoint = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ResolvedEndpointFactory", ["RelayerPromise"])(ResolvedEndpoint) || ResolvedEndpoint;
+  ResolvedEndpoint = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ResolvedEndpointFactory", ["XingPromise"])(ResolvedEndpoint) || ResolvedEndpoint;
   return ResolvedEndpoint;
 })(_EndpointJs2["default"]);
 
