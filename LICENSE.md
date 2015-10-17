@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2015 Hannah Howard, Judson Lester, Evan Dorn
+Copyright (c) 2015 Hannah Howard, Judson Lester, Logical Reality Design, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
