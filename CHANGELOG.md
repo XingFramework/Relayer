@@ -1,3 +1,11 @@
+0.1.1 10-17-2015
+================
+* Allow templated singular resources
+* Refactory Promise To Seperate Repo
+* Inflect Link Template Names
+* Fix create on embedded list resources
+* Move repo to XingFramework organization
+
 0.1.0 09-28-2015
 ================
 * Fix error responses

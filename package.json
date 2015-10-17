@@ -1,15 +1,15 @@
 {
   "name": "relayer",
   "private": false,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Smart client library for talking to hypermedia APIs",
-  "homepage": "https://github.com/LRDesign/relayer",
+  "homepage": "https://github.com/XingFramework/Relayer",
   "repository": {
     "type": "git",
-    "url": "git://github.com/LRDesign/relayer.git"
+    "url": "git://github.com/XingFramework/Relayer.git"
   },
   "bugs": {
-    "url": "https://github.com/LRDesign/relayer/issues"
+    "url": "https://github.com/XingFramework/Relayer/issues"
   },
   "main": "dist/relayer.js",
   "dependencies": {
