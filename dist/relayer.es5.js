@@ -2339,6 +2339,7 @@ define('relayer/Resource',["./DataWrapper"], function($__0) {
         if (relationshipDescription.initializeOnCreate) {
           var relationship = relationshipDescription.initializer.initialize();
           $__2.relationships[relationshipName] = relationship;
+          $__2.pathBuild(relationshipDescription.dataPath, relationship.response);
         }
       }));
     },
