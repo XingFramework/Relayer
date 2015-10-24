@@ -70,9 +70,12 @@ describe("relationships initialization", function() {
     relationshipDescription = {
       initializer: {
         initialize() {
-          return "awesome"
+          return {
+            response: "awesome"
+          }
         }
-      }
+      },
+      dataPath: "$.data.cool_relationship"
     }
 
     ResourceClass.relationships["coolRelationship"] = relationshipDescription;
@@ -87,7 +90,14 @@ describe("relationships initialization", function() {
 
     it("should call the initializer and save the relationship", function() {
       expect(initializationSpy).toHaveBeenCalled();
-      expect(resource.relationships).toEqual({coolRelationship: "awesome"});
+      expect(resource.relationships).toEqual({coolRelationship: {
+        response: "awesome"
+        }
+      });
+    });
+
+    it("should build the key in the root resource", function() {
+      expect(resource.response["data"]["cool_relationship"]).toEqual("awesome");
     });
   });
 
