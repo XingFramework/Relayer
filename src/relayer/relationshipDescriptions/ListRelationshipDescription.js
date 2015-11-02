@@ -1,22 +1,27 @@
 import RelationshipDescription from "./RelationshipDescription.js";
-import {SimpleFactory} from "../SimpleFactoryInjector.js";
 
-@SimpleFactory('ListRelationshipDescriptionFactory',
-  ['ListRelationshipInitializerFactory',
-  'ListResourceMapperFactory',
-  'ListResourceSerializerFactory',
-  'Inflector',
-  "SingleRelationshipDescriptionFactory",
-  "ListResource",
-  'PrimaryResourceTransformerFactory',
-  'EmbeddedRelationshipTransformerFactory',
-  'IndividualFromListTransformerFactory',
-  'CreateResourceTransformerFactory',
-  'ResolvedEndpointFactory',
-  'LoadedDataEndpointFactory',
-  'TemplatedUrlFromUrlFactory',
-  'TemplatedUrlFactory'])
 export default class ListRelationshipDescription extends RelationshipDescription {
+  static new(classMap, ...args) {
+    var instance = new this(
+      this.buildFactory(classMap, 'ListRelationshipInitializer'),
+      this.buildFactory(classMap, 'ListResourceMapper'),
+      this.buildFactory(classMap, 'ListResourceSerializer'),
+      this.buildSingleton(classMap, 'Inflector'),
+      this.buildFactory(classMap, "SingleRelationshipDescription"),
+      classMap.ListResource,
+      this.buildFactory(classMap, 'PrimaryResourceTransformer'),
+      this.buildFactory(classMap, 'EmbeddedRelationshipTransformer'),
+      this.buildFactory(classMap, 'IndividualFromListTransformer'),
+      this.buildFactory(classMap, 'CreateResourceTransformer'),
+      this.buildFactory(classMap, 'ResolvedEndpoint'),
+      this.buildFactory(classMap, 'LoadedDataEndpoint'),
+      this.buildFactory(classMap, 'TemplatedUrlFromUrl'),
+      this.buildFactory(classMap, 'TemplatedUrl'),
+      ...args);
+    instance.classMap = classMap;
+    return instance;
+  }
+
   constructor(relationshipInitializerFactory,
     resourceMapperFactory,
     resourceSerializerFactory,

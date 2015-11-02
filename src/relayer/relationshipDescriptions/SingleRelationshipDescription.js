@@ -1,17 +1,18 @@
 import RelationshipDescription from "./RelationshipDescription.js";
-import {SimpleFactory} from "../SimpleFactoryInjector.js";
 
-@SimpleFactory('SingleRelationshipDescriptionFactory',
-  ['SingleRelationshipInitializerFactory',
-  'ResourceMapperFactory',
-  'ResourceSerializerFactory',
-  'Inflector',
-  'PrimaryResourceTransformerFactory',
-  'EmbeddedRelationshipTransformerFactory',
-  'ResolvedEndpointFactory',
-  'LoadedDataEndpointFactory',
-  'TemplatedUrlFactory'])
 export default class SingleRelationshipDescription extends RelationshipDescription {
+  static get factoryNames() {
+    return ['SingleRelationshipInitializerFactory',
+      'ResourceMapperFactory',
+      'ResourceSerializerFactory',
+      'Inflector',
+      'PrimaryResourceTransformerFactory',
+      'EmbeddedRelationshipTransformerFactory',
+      'ResolvedEndpointFactory',
+      'LoadedDataEndpointFactory',
+      'TemplatedUrlFactory'];
+  }
+
   constructor(relationshipInitializerFactory,
     resourceMapperFactory,
     resourceSerializerFactory,

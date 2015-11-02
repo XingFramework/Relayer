@@ -1,7 +1,5 @@
 import PrimaryResourceTransformer from "./PrimaryResourceTransformer.js"
-import {SimpleFactory} from "../SimpleFactoryInjector.js"
 
-@SimpleFactory('CreateResourceTransformerFactory', [])
 export default class CreateResourceTransformer extends PrimaryResourceTransformer {
 
   transformResponse(endpoint, response) {

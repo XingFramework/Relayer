@@ -20,28 +20,7 @@ import Inflector from "xing-inflector";
 
 import * as classMap from './relayer/everything.js';
 
-@AsModule('relayer', [
-  Endpoints,
-  Serializers,
-  Mappers,
-  Transformers,
-  Initializers,
-  Decorators,
-  RelationshipDescriptions,
-  ListResource,
-  PrimaryResourceBuilder,
-  ResourceBuilder,
-  Transport,
-  UrlHelper,
-  TemplatedUrls,
-  ResourceDescription,
-  InitializedResourceClasses,
-  ResourceBuilder,
-  PrimaryResourceBuilder,
-  Inflector,
-  XingPromise,
-  RelationshipUtilities
-])
+@AsModule('relayer', [ ])
 @Provider('relayer', ['$provide'])
 export default class ResourceLayer {
 
@@ -67,24 +46,30 @@ export default class ResourceLayer {
     this.apis[apiName] = {
       topLevelResource, baseUrl
     };
-    this.$provide.factory(apiName, [ '$http', function( $http) {
+    this.$provide.factory(apiName, [ '$http', '$q', function( $http, $q ) {
       var {
         UrlHelper, Transport, TemplatedUrlFromUrl,
         PrimaryResourceTransformer, SingleRelationshipDescription,
         ResolvedEndpoint
       } = classMap;
+      classMap.setXingPromise(classMap.XingPromiseFactory.factory($q));
 
-      var orchestrator = new TopLevelOrchestrator(classMap, $http, topLevelResource);
+      InitializedResourceClasses.new(classMap);
+
+      var orchestrator = TopLevelOrchestrator.new(classMap, $http, topLevelResource, baseUrl);
       return orchestrator.arrange();
     }
     ]);
   }
 }
 
+// This is the first class built after the introduction of the Constructable top class.
+// Using construct instead of factoryNames is a goal state, but tests require
+// changing to make that happen
 import Constructable from './relayer/Constructable.js';
 class TopLevelOrchestrator extends Constructable {
-  constructor(classMap, $http, topLevelResource, baseUrl) {
-    super(classMap);
+  constructor($http, topLevelResource, baseUrl) {
+    super();
     this.$http = $http;
     this.topLevelResource = topLevelResource;
     this.baseUrl = baseUrl;

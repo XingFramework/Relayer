@@ -1,6 +1,7 @@
-import RL from "../../src/relayer.js"
+import RL from "../../src/relayer.js";
 import {Module, Injector, Config} from "a1atscript";
 import {TemplatedUrl} from "../../src/relayer/TemplatedUrl.js";
+import XingPromiseFactory from "xing-promise";
 
 class Chapter extends RL.Resource {
 }
@@ -24,12 +25,12 @@ class Section extends RL.Resource {
 RL.Describe(Section, (desc) => {
   desc.property("title", "");
   desc.property("kind", "");
-  desc.property("resolution", "")
+  desc.property("resolution", "");
   var chapter = desc.hasOne("chapter", Chapter);
   chapter.initializeOnCreate = false;
   var book = desc.hasOne("book", Book);
   book.initializeOnCreate = true;
-  var paragraphs = desc.hasList("paragraphs", Paragraph)
+  var paragraphs = desc.hasList("paragraphs", Paragraph);
   paragraphs.initializeOnCreate = false;
 });
 
@@ -40,7 +41,7 @@ class Paragraph extends RL.Resource {
 RL.Describe(Paragraph, (desc) => {
   desc.property("kind", "");
   desc.property("body", "");
-  desc.hasOne("book", Book)
+  desc.hasOne("book", Book);
   desc.hasOne("section", Section);
   desc.hasList("characters", Character);
 });
@@ -50,7 +51,7 @@ class Character extends RL.Resource {
 }
 
 RL.Describe(Character, (desc) => {
-  desc.property("name", "")
+  desc.property("name", "");
   desc.hasOne("book", Book);
 });
 
@@ -63,7 +64,7 @@ RL.Describe(SectionGroups, (desc) => {
   var book = desc.hasOne("book", Book);
   var first = desc.hasList("first", Section);
   first.ListResourceClass = SectionGroup;
-})
+});
 
 class SectionGroup extends RL.ListResource {
 
@@ -74,7 +75,7 @@ RL.Describe(SectionGroup, (desc) => {
   next.ListResourceClass = SectionGroup;
   var prev = desc.hasList("prev", Section);
   prev.ListResourceClass = SectionGroup;
-})
+});
 
 class Book extends RL.Resource {
 }
@@ -102,10 +103,10 @@ class Resources extends RL.Resource {
 }
 
 RL.Describe(Resources, (desc) => {
-  var books = desc.hasList("books", Book, [])
+  var books = desc.hasList("books", Book, []);
   books.linkTemplate = "book";
   books.canCreate = true;
-  var bookSigning = desc.hasOne("bookSigning", BookSigning)
+  var bookSigning = desc.hasOne("bookSigning", BookSigning);
   bookSigning.templated = true;
 });
 
@@ -113,7 +114,7 @@ RL.Describe(Resources, (desc) => {
 class AppConfig {
   @Config("relayerProvider")
   setupResources(relayerProvider) {
-    relayerProvider.createApi("resources", Resources, "http://www.example.com/resources")
+    relayerProvider.createApi("resources", Resources, "http://www.example.com/resources");
   }
 }
 
@@ -145,7 +146,7 @@ describe("Loading relationships test", function() {
           headers() {
             return {
               ETag: "1348"
-            }
+            };
           },
           data: {
             data: {},
@@ -162,7 +163,7 @@ describe("Loading relationships test", function() {
           headers() {
             return {
               ETag: "1567"
-            }
+            };
           },
           data: {
             links: {
@@ -196,7 +197,7 @@ describe("Loading relationships test", function() {
           headers() {
             return {
               ETag: "1448"
-            }
+            };
           },
           data: {
             links: {
@@ -229,7 +230,7 @@ describe("Loading relationships test", function() {
           headers() {
             return {
               ETag: "1449"
-            }
+            };
           },
           data: {
             links: {
@@ -254,7 +255,7 @@ describe("Loading relationships test", function() {
           headers() {
             return {
               ETag: "148"
-            }
+            };
           },
           data: {
             links: {
@@ -339,7 +340,7 @@ describe("Loading relationships test", function() {
           headers() {
             return {
               ETag: "999"
-            }
+            };
           },
           data: {
             data: {
@@ -361,7 +362,7 @@ describe("Loading relationships test", function() {
           headers() {
             return {
               ETag: "9999"
-            }
+            };
           },
           data: {
             links: {
@@ -394,7 +395,7 @@ describe("Loading relationships test", function() {
           headers() {
             return {
               ETag: "99999"
-            }
+            };
           },
           data: {
             links: {
@@ -428,7 +429,7 @@ describe("Loading relationships test", function() {
           headers() {
             return {
               ETag: "77777"
-            }
+            };
           },
           data: {
             links: {
@@ -439,14 +440,16 @@ describe("Loading relationships test", function() {
           }
         });
       }
-    }
+    };
     angular.mock.module(function($provide) {
-      $provide.factory("$http", function(XingPromise) {
+      $provide.factory("$http", function($q) {
+        var XingPromise = XingPromiseFactory.factory($q);
         return function(params) {
           return mockHttp(XingPromise, params);
         };
       });
     });
+
     inject(function($injector, _resources_, _$rootScope_) {
       resources = _resources_;
       $rootScope = _$rootScope_;
@@ -523,7 +526,7 @@ describe("Loading relationships test", function() {
         });
 
         it("should resolve the section", function() {
-          expect(character.name).toEqual("Hamlet")
+          expect(character.name).toEqual("Hamlet");
         });
       });
     });
@@ -540,9 +543,9 @@ describe("Loading relationships test", function() {
       });
 
       it("should load the right section group", function() {
-        expect(sectionGroup[0].title).toEqual("Hey man there's a beverage here")
-      })
-    })
+        expect(sectionGroup[0].title).toEqual("Hey man there's a beverage here");
+      });
+    });
   });
 
   describe("book signing", function() {

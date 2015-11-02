@@ -1,6 +1,6 @@
-import APIError from "./APIError.js"
-import {Service} from 'a1atscript'
-import {SimpleFactory} from "./SimpleFactoryInjector.js"
+import APIError from "./APIError.js";
+import {Service} from 'a1atscript';
+import Constructable from './Constructable.js';
 
 var resourcesToInitialize = [];
 
@@ -8,49 +8,64 @@ export function describeResource(resourceClass, defineFn){
   resourcesToInitialize.push({resourceClass, defineFn});
 }
 
-@Service('InitializedResourceClasses', ['ResourceDescriptionFactory'])
-export class InitializedResourceClasses {
+export class InitializedResourceClasses extends Constructable {
+  static get factoryNames(){
+    return ['ResourceDescriptionFactory'];
+  }
+
   constructor(resourceDescriptionFactory) {
+    super();
     this.resourceDescriptionFactory = resourceDescriptionFactory;
     this.initializeClasses();
   }
 
+  buildDescription(resourceToInitialize) {
+    var resourceClass = resourceToInitialize.resourceClass;
+    var defineFn = resourceToInitialize.defineFn;
+    var resourceDescription = resourceClass.description(this.resourceDescriptionFactory);
+    // wrap-around definitions because...
+    defineFn(resourceDescription);
+  }
+
+  applyDescription(resourceToInitialize){
+    var resourceClass = resourceToInitialize.resourceClass;
+    var resourceDescription = resourceClass.resourceDescription;
+    var errorClass = function (responseData) {
+      APIError.call(this, responseData);
+    };
+    errorClass.relationships = {};
+    errorClass.properties = {};
+    errorClass.prototype = Object.create(APIError.prototype);
+    errorClass.prototype.constructor = errorClass;
+    resourceDescription.applyToResource(resourceClass.prototype);
+    resourceDescription.applyToError(errorClass.prototype);
+    resourceClass.errorClass = errorClass;
+    return resourceClass;
+  }
+
   initializeClasses() {
     resourcesToInitialize.forEach((resourceToInitialize) => {
-      var resourceClass = resourceToInitialize.resourceClass;
-      var defineFn = resourceToInitialize.defineFn;
-      var resourceDescription = resourceClass.description(this.resourceDescriptionFactory);
-      // wrap-around definitions because...
-      defineFn(resourceDescription);
-
+      this.buildDescription(resourceToInitialize);
     });
 
     return resourcesToInitialize.map((resourceToInitialize) => {
-      var resourceClass = resourceToInitialize.resourceClass;
-      var resourceDescription = resourceClass.resourceDescription;
-      var errorClass = function (responseData) {
-        APIError.call(this, responseData);
-      }
-      errorClass.relationships = {};
-      errorClass.properties = {};
-      errorClass.prototype = Object.create(APIError.prototype);
-      errorClass.prototype.constructor = errorClass;
-      resourceDescription.applyToResource(resourceClass.prototype);
-      resourceDescription.applyToError(errorClass.prototype);
-      resourceClass.errorClass = errorClass;
-      return resourceClass;
+      this.applyDescription(resourceToInitialize);
     });
   }
 }
 
-@SimpleFactory('ResourceDescriptionFactory', ['JsonPropertyDecoratorFactory',
-  'RelatedResourceDecoratorFactory',
-  'SingleRelationshipDescriptionFactory',
-  'ManyRelationshipDescriptionFactory',
-  'ListRelationshipDescriptionFactory',
-  'MapRelationshipDescriptionFactory',
-  'Inflector'])
-export class ResourceDescription {
+export class ResourceDescription extends Constructable {
+  static get factoryNames(){
+    return [
+      'JsonPropertyDecoratorFactory',
+      'RelatedResourceDecoratorFactory',
+      'SingleRelationshipDescriptionFactory',
+      'ManyRelationshipDescriptionFactory',
+      'ListRelationshipDescriptionFactory',
+      'MapRelationshipDescriptionFactory',
+      'Inflector'
+    ];
+  }
 
   constructor(jsonPropertyDecoratorFactory,
     relatedResourceDecoratorFactory,
@@ -60,17 +75,19 @@ export class ResourceDescription {
     mapRelationshipDescriptionFactory,
     inflector) {
 
-    this.jsonPropertyDecoratorFactory = jsonPropertyDecoratorFactory;
-    this.relatedResourceDecoratorFactory = relatedResourceDecoratorFactory;
-    this.singleRelationshipDescriptionFactory = singleRelationshipDescriptionFactory;
-    this.manyRelationshipDescriptionFactory = manyRelationshipDescriptionFactory;
-    this.listRelationshipDescriptionFactory = listRelationshipDescriptionFactory;
-    this.mapRelationshipDescriptionFactory = mapRelationshipDescriptionFactory;
-    this.inflector = inflector;
+      super();
 
-    this.decorators = {};
-    this.allDecorators = [];
-    this.parentDescription = null; //automated inheritance?
+      this.jsonPropertyDecoratorFactory = jsonPropertyDecoratorFactory;
+      this.relatedResourceDecoratorFactory = relatedResourceDecoratorFactory;
+      this.singleRelationshipDescriptionFactory = singleRelationshipDescriptionFactory;
+      this.manyRelationshipDescriptionFactory = manyRelationshipDescriptionFactory;
+      this.listRelationshipDescriptionFactory = listRelationshipDescriptionFactory;
+      this.mapRelationshipDescriptionFactory = mapRelationshipDescriptionFactory;
+      this.inflector = inflector;
+
+      this.decorators = {};
+      this.allDecorators = [];
+      this.parentDescription = null; //automated inheritance?
   }
 
   chainFrom(other){
@@ -121,19 +138,19 @@ export class ResourceDescription {
   }
 
   hasOne(property, rezClass, initialValues){
-    return this.relatedResource(property, rezClass, initialValues, this.singleRelationshipDescriptionFactory)
+    return this.relatedResource(property, rezClass, initialValues, this.singleRelationshipDescriptionFactory);
   }
 
   hasMany(property, rezClass, initialValues) {
-    return this.relatedResource(property, rezClass, initialValues, this.manyRelationshipDescriptionFactory)
+    return this.relatedResource(property, rezClass, initialValues, this.manyRelationshipDescriptionFactory);
   }
 
   hasList(property, rezClass, initialValues) {
-    return this.relatedResource(property, rezClass, initialValues, this.listRelationshipDescriptionFactory)
+    return this.relatedResource(property, rezClass, initialValues, this.listRelationshipDescriptionFactory);
   }
 
   hasMap(property, rezClass, initialValue){
-    return this.relatedResource(property, rezClass, initialValue, this.mapRelationshipDescriptionFactory)
+    return this.relatedResource(property, rezClass, initialValue, this.mapRelationshipDescriptionFactory);
   }
 
   jsonProperty(name, path, value, options) {

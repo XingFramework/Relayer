@@ -1,10 +1,14 @@
 import ResourceDecorator from "./ResourceDecorator.js";
-import {SimpleFactory} from "../SimpleFactoryInjector.js";
 
-@SimpleFactory('JsonPropertyDecoratorFactory', ['LoadedDataEndpointFactory',
-  'EmbeddedPropertyTransformerFactory',
-  'PromiseEndpointFactory'])
 export default class JsonPropertyDecorator extends ResourceDecorator {
+  static get factoryNames() {
+    return [
+      'LoadedDataEndpointFactory',
+      'EmbeddedPropertyTransformerFactory',
+      'PromiseEndpointFactory'
+    ];
+  }
+
   constructor(loadedDataEndpointFactory,
     embeddedPropertyTransformerFactory,
     promiseEndpointFactory,

@@ -1,6 +1,8 @@
 import Constructable from "../src/relayer/Constructable.js";
 
 describe("Constructable.new works", () => {
+  var classMap = {};
+
   class Sub extends Constructable {
     constructor(x){ super(); this.x = x; }
   }
@@ -9,11 +11,11 @@ describe("Constructable.new works", () => {
   }
 
   it('creates an Constructable', function() {
-    expect(Constructable.new()).not.toBeUndefined();
+    expect(Constructable.new(classMap)).not.toBeUndefined();
   });
 
   it('subclasses work', function() {
-    var subsub = SubSub.new(1,2);
+    var subsub = SubSub.new(classMap, 1,2);
     expect(subsub.x).toEqual(1);
     expect(subsub.y).toEqual(2);
   });

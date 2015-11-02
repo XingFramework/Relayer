@@ -1,13 +1,15 @@
 import RL from "../../src/relayer.js";
 import {Module, Injector, Config} from "a1atscript";
+import XingPromiseFactory from "xing-promise";
 
 class Page extends RL.Resource {
 
-  static layouts = {
-    "one_column": {
+  static get layouts(){
+    return {
+      "one_column": {
       "label": "One Column",
       "template": {
-        "main": { type: "text/html" },
+        "main": { type: "text/html" }
       }
     },
     "two_column": {
@@ -18,6 +20,7 @@ class Page extends RL.Resource {
       }
     }
   };
+  }
 
   static get layoutKinds() {
     if (!Page._layoutKinds) {
@@ -242,12 +245,13 @@ describe("Page test", function() {
       } else if (params.method == "DELETE") {
         return Promise.resolve({});
       }
-    }
+    };
     var injector = new Injector();
     injector.instantiate(AppModule);
     angular.mock.module('AppModule');
     angular.mock.module(function($provide) {
-      $provide.factory("$http", function(XingPromise) {
+      $provide.factory("$http", function($q) {
+        var XingPromise = XingPromiseFactory.factory($q);
         return function(params) {
           return mockHttp(XingPromise, params);
         };

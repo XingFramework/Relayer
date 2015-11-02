@@ -1,10 +1,15 @@
-import {SimpleFactory} from "./SimpleFactoryInjector.js";
+import Constructable from './Constructable.js';
 
-@SimpleFactory("ResourceBuilderFactory", ["TemplatedUrlFromUrlFactory",
-  "ResolvedEndpointFactory",
-  "ThrowErrorTransformerFactory",
-  "CreateResourceTransformerFactory"])
-export default class ResourceBuilder {
+export default class ResourceBuilder extends Constructable {
+  static get factoryNames(){
+    return [
+      "TemplatedUrlFromUrlFactory",
+      "ResolvedEndpointFactory",
+      "ThrowErrorTransformerFactory",
+      "CreateResourceTransformerFactory"
+    ];
+  }
+
   constructor(templatedUrlFromUrlFactory,
     resolvedEndpointFactory,
     throwErrorTransformerFactory,
@@ -14,17 +19,18 @@ export default class ResourceBuilder {
     primaryResourceTransformer,
     ResourceClass,
     relationshipDescription) {
+      super();
 
-    this.transport = transport;
-    this.ResourceClass = ResourceClass;
-    this.relationshipDescription = relationshipDescription;
+      this.transport = transport;
+      this.ResourceClass = ResourceClass;
+      this.relationshipDescription = relationshipDescription;
 
-    this.templatedUrlFromUrlFactory = templatedUrlFromUrlFactory;
-    this.resolvedEndpointFactory = resolvedEndpointFactory;
-    this.throwErrorTransformerFactory = throwErrorTransformerFactory;
-    this.createResourceTransformerFactory = createResourceTransformerFactory;
-    this.response = response;
-    this.primaryResourceTransformer = primaryResourceTransformer;
+      this.templatedUrlFromUrlFactory = templatedUrlFromUrlFactory;
+      this.resolvedEndpointFactory = resolvedEndpointFactory;
+      this.throwErrorTransformerFactory = throwErrorTransformerFactory;
+      this.createResourceTransformerFactory = createResourceTransformerFactory;
+      this.response = response;
+      this.primaryResourceTransformer = primaryResourceTransformer;
 
   }
 

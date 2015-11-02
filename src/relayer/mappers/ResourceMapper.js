@@ -1,11 +1,12 @@
 import Mapper from "./Mapper.js";
-import {SimpleFactory} from "../SimpleFactoryInjector.js";
 
-@SimpleFactory("ResourceMapperFactory", ["TemplatedUrlFromUrlFactory",
-  "ResourceBuilderFactory",
-  "PrimaryResourceBuilderFactory",
-  "PrimaryResourceTransformerFactory"])
 export default class ResourceMapper extends Mapper {
+  static get factoryNames(){
+    return ["TemplatedUrlFromUrlFactory",
+      "ResourceBuilderFactory",
+      "PrimaryResourceBuilderFactory",
+      "PrimaryResourceTransformerFactory"];
+  }
 
   constructor(templatedUrlFromUrlFactory,
     resourceBuilderFactory,
@@ -32,12 +33,16 @@ export default class ResourceMapper extends Mapper {
     if (this.endpoint) {
       this.mapped = this.primaryResourceBuilderFactory(this.response, this.ResourceClass).build(this.endpoint);
     } else {
-      this.mapped = this.resourceBuilderFactory(this.transport, this.response, this.primaryResourceTransformer, this.ResourceClass, this.relationshipDescription).build(this.uriTemplate);
+      this.mapped = this.resourceBuilderFactory(this.transport, this.response,
+                                                this.primaryResourceTransformer,
+                                                this.ResourceClass,
+                                                this.relationshipDescription).build(this.uriTemplate);
     }
   }
 
   get primaryResourceTransformer() {
-    this._primaryResourceTransformer = this._primaryResourceTransformer || this.primaryResourceTransformerFactory(this.relationshipDescription)
+    this._primaryResourceTransformer = this._primaryResourceTransformer ||
+      this.primaryResourceTransformerFactory(this.relationshipDescription);
     return this._primaryResourceTransformer;
   }
 

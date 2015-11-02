@@ -1,14 +1,15 @@
-import {SimpleFactory} from "../SimpleFactoryInjector.js";
 import Mapper from "./Mapper.js";
 
-@SimpleFactory("MapResourceMapperFactory", ["SingleRelationshipDescriptionFactory"])
 export default class MapResourceMapper extends Mapper {
+  static get factoryNames(){
+    return ["SingleRelationshipDescriptionFactory"];
+  }
 
   constructor(singleRelationshipDescriptionFactory,
     transport, response, relationshipDescription, useErrors = false) {
     super(transport, response, relationshipDescription, useErrors);
     this.singleRelationshipDescription = singleRelationshipDescriptionFactory("", this.ResourceClass);
-  };
+  }
 
   initializeModel() {
     this.mapped = {};

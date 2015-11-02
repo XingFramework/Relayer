@@ -1,5 +1,8 @@
-export default class ResourceDecorator {
+import Constructable from '../Constructable.js';
+
+export default class ResourceDecorator extends Constructable {
   constructor(name){
+    super();
     this.name = name;
   }
 

@@ -1,6 +1,7 @@
-import RL from "../../src/relayer.js"
+import RL from "../../src/relayer.js";
 import {Module, Injector, Config} from "a1atscript";
 import {TemplatedUrl} from "../../src/relayer/TemplatedUrl.js";
+import XingPromiseFactory from "xing-promise";
 
 class Book extends RL.Resource {
 }
@@ -13,7 +14,7 @@ class Resources extends RL.Resource {
 }
 
 RL.Describe(Resources, (desc) => {
-  var books = desc.hasList("books", Book, [])
+  var books = desc.hasList("books", Book, []);
   books.linkTemplate = "book";
   books.canCreate = true;
 });
@@ -22,7 +23,7 @@ RL.Describe(Resources, (desc) => {
 class AppConfig {
   @Config("relayerProvider")
   setupResources(relayerProvider) {
-    relayerProvider.createApi("resources", Resources, "http://www.example.com/resources")
+    relayerProvider.createApi("resources", Resources, "http://www.example.com/resources");
   }
 }
 
@@ -49,7 +50,7 @@ describe("Delete test", function() {
             headers() {
               return {
                 ETag: "1348"
-              }
+              };
             },
             data: {
               data: {},
@@ -65,7 +66,7 @@ describe("Delete test", function() {
             headers() {
               return {
                 ETag: "1567"
-              }
+              };
             },
             data: {
               links: {
@@ -82,7 +83,7 @@ describe("Delete test", function() {
             headers() {
               return {
                 ETag: "4444"
-              }
+              };
             },
             data: {
               "data": {
@@ -96,7 +97,8 @@ describe("Delete test", function() {
         }
       });
     angular.mock.module(function($provide) {
-      $provide.factory("$http", function(XingPromise) {
+      $provide.factory("$http", function($q) {
+        var XingPromise = XingPromiseFactory.factory($q);
         return function(params) {
           return mockHttp(XingPromise, params);
         };

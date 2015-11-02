@@ -1,5 +1,7 @@
-export default class Mapper {
+import Constructable from '../Constructable.js';
+export default class Mapper extends Constructable {
   constructor(transport, response, relationshipDescription, useErrors = false) {
+    super();
     this.transport = transport;
     this.response = response;
     this.relationshipDescription = relationshipDescription;

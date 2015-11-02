@@ -1,9 +1,9 @@
-import {SimpleFactory} from "./SimpleFactoryInjector.js";
+import Constructable from './Constructable.js';
 
-@SimpleFactory('TransportFactory', [])
-export default class Transport {
+export default class Transport extends Constructable {
 
   constructor(urlHelper, $http){
+    super();
     this.http = $http;
     this.urlHelper = urlHelper;
   }
