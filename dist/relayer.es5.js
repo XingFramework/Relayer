@@ -3247,15 +3247,17 @@ define('relayer/transformers/CreateResourceTransformer',["./PrimaryResourceTrans
     $__2 = {default: $__2};
   var PrimaryResourceTransformer = $__0.default;
   var SimpleFactory = $__2.SimpleFactory;
-  var CreateResourceTransformer = function CreateResourceTransformer() {
-    $traceurRuntime.superConstructor($CreateResourceTransformer).apply(this, arguments);
-    ;
+  var CreateResourceTransformer = function CreateResourceTransformer(relationshipDescription, uriTemplate) {
+    $traceurRuntime.superConstructor($CreateResourceTransformer).call(this, relationshipDescription);
+    this.uriTemplate = uriTemplate;
   };
   var $CreateResourceTransformer = CreateResourceTransformer;
   ($traceurRuntime.createClass)(CreateResourceTransformer, {transformResponse: function(endpoint, response) {
       var $__4 = this;
       return response.then((function(resolvedResponse) {
-        var resource = $__4.primaryResourceMapperFactory(endpoint.transport, resolvedResponse.data, $__4.relationshipDescription).map();
+        var resourceMapper = $__4.primaryResourceMapperFactory(endpoint.transport, resolvedResponse.data, $__4.relationshipDescription);
+        resourceMapper.uriTemplate = $__4.uriTemplate;
+        var resource = resourceMapper.map();
         resource.templatedUrl.etag = resolvedResponse.etag;
         return resource;
       })).catch((function(resolvedError) {
@@ -4259,7 +4261,7 @@ define('relayer/relationshipDescriptions/ListRelationshipDescription',["./Relati
         templatedUrl.addDataPathLink(parent, this.linksPath);
         primaryResourceTransformer = this.listResourceTransformer();
         if (this.canCreate) {
-          createTransformer = this.createResourceTransformerFactory(this.createRelationshipDescription);
+          createTransformer = this.createResourceTransformerFactory(this.createRelationshipDescription, parent.pathGet(this._linkTemplatePath));
         }
       }
       var endpoint = this.resolvedEndpointFactory(transport, templatedUrl, primaryResourceTransformer, createTransformer);
@@ -4432,7 +4434,8 @@ define('relayer/ResourceBuilder',["./SimpleFactoryInjector"], function($__0) {
         }
         resource.templatedUrl.addDataPathLink(resource, "$.links.self");
         if (this.relationshipDescription.canCreate) {
-          var createResourceTransformer = this.createResourceTransformerFactory(this.relationshipDescription.createRelationshipDescription);
+          var createUriTemplate = uriTemplate || resource.pathGet("$.links.template");
+          var createResourceTransformer = this.createResourceTransformerFactory(this.relationshipDescription.createRelationshipDescription, createUriTemplate);
         } else {
           var createResourceTransformer = this.throwErrorTransformerFactory();
         }

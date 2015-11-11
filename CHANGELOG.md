@@ -1,3 +1,7 @@
+0.1.4 11-10-2015
+================
+* Fix create template links
+
 0.1.3 10-23-2015
 ================
 * Fix initialize on create
