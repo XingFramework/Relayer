@@ -132,7 +132,7 @@ export default class ListRelationshipDescription extends RelationshipDescription
       templatedUrl.addDataPathLink(parent, this.linksPath);
       primaryResourceTransformer = this.listResourceTransformer();
       if (this.canCreate) {
-        createTransformer = this.createResourceTransformerFactory(this.createRelationshipDescription);
+        createTransformer = this.createResourceTransformerFactory(this.createRelationshipDescription, parent.pathGet(this._linkTemplatePath));
       }
     }
 
