@@ -56,8 +56,8 @@ describe("ListRelationshipDescription", function() {
       });
 
     createResourceTransformerFactory = jasmine.createSpy("primaryResourceTransformerFactory").and.callFake(
-      function(relationship) {
-        return { relationship }
+      function(relationship, uriTemplate) {
+        return { relationship , uriTemplate }
       });
 
     embeddedRelationshipTransformerFactory = jasmine.createSpy("embeddedRelationshipTransformerFactory").and.callFake(
@@ -356,7 +356,8 @@ describe("ListRelationshipDescription", function() {
               mapperFactory: singleResourceMapperFactory,
               serializerFactory: singleResourceSerializerFactory,
               ResourceClass: ResourceClass
-            }
+            },
+            uriTemplate: "/awesomes/{id}"
           });
         expect(linkedEndpoint.new()).toEqual(new ResourceClass());
       });
