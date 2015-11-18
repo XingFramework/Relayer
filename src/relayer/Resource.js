@@ -135,6 +135,7 @@ export default class Resource extends DataWrapper {
       if (relationshipDescription.initializeOnCreate) {
         var relationship = relationshipDescription.initializer.initialize();
         this.relationships[relationshipName] = relationship;
+        this.pathBuild(relationshipDescription.dataPath, relationship.response);
       }
     });
   }

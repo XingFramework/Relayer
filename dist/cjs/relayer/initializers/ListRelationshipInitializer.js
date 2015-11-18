@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+var _bind = Function.prototype.bind;
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -18,13 +19,11 @@ var _RelationshipInitializerJs = require("./RelationshipInitializer.js");
 
 var _RelationshipInitializerJs2 = _interopRequireDefault(_RelationshipInitializerJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var ListRelationshipInitializer = (function (_RelationshipInitializer) {
   function ListRelationshipInitializer(ListResource, manyRelationshipInitializerFactory, ResourceClass, initialValues) {
-    _classCallCheck(this, _ListRelationshipInitializer);
+    _classCallCheck(this, ListRelationshipInitializer);
 
-    _get(Object.getPrototypeOf(_ListRelationshipInitializer.prototype), "constructor", this).call(this, ResourceClass, initialValues);
+    _get(Object.getPrototypeOf(ListRelationshipInitializer.prototype), "constructor", this).call(this, ResourceClass, initialValues);
 
     this.manyRelationshipInitializer = manyRelationshipInitializerFactory(ResourceClass, initialValues);
     this.ListResource = ListResource;
@@ -32,9 +31,7 @@ var ListRelationshipInitializer = (function (_RelationshipInitializer) {
 
   _inherits(ListRelationshipInitializer, _RelationshipInitializer);
 
-  var _ListRelationshipInitializer = ListRelationshipInitializer;
-
-  _createClass(_ListRelationshipInitializer, [{
+  _createClass(ListRelationshipInitializer, [{
     key: "initialize",
     value: function initialize() {
       var manyRelationships = this.manyRelationshipInitializer.initialize();
@@ -51,9 +48,19 @@ var ListRelationshipInitializer = (function (_RelationshipInitializer) {
       });
       return manyRelationships;
     }
+  }], [{
+    key: "new",
+    value: function _new(classMap) {
+      for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        args[_key2 - 1] = arguments[_key2];
+      }
+
+      var instance = new (_bind.apply(this, [null].concat([classMap.ListResource, this.buildFactory(classMap, "ManyRelationshipInitializer")], args)))();
+      instance.classMap = classMap;
+      return instance;
+    }
   }]);
 
-  ListRelationshipInitializer = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ListRelationshipInitializerFactory", ["ListResource", "ManyRelationshipInitializerFactory"])(ListRelationshipInitializer) || ListRelationshipInitializer;
   return ListRelationshipInitializer;
 })(_RelationshipInitializerJs2["default"]);
 

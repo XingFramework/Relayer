@@ -1,9 +1,6 @@
 import ResolvedEndpoint from "./ResolvedEndpoint.js";
-import {SimpleFactory} from "../SimpleFactoryInjector.js";
 
-@SimpleFactory('LoadedDataEndpointFactory', ['RelayerPromise'])
 export default class LoadedDataEndpoint extends ResolvedEndpoint {
-
   constructor(Promise, resolvedEndpoint, resource, resourceTransformers = [], createResourceTransformers = []) {
     super(Promise, resolvedEndpoint.transport,
       resolvedEndpoint.templatedUrl,

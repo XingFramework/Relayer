@@ -18,16 +18,14 @@ var _MapperJs = require("./Mapper.js");
 
 var _MapperJs2 = _interopRequireDefault(_MapperJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var ResourceMapper = (function (_Mapper) {
   function ResourceMapper(templatedUrlFromUrlFactory, resourceBuilderFactory, primaryResourceBuilderFactory, primaryResourceTransformerFactory, transport, response, relationshipDescription) {
     var endpoint = arguments[7] === undefined ? null : arguments[7];
     var useErrors = arguments[8] === undefined ? false : arguments[8];
 
-    _classCallCheck(this, _ResourceMapper);
+    _classCallCheck(this, ResourceMapper);
 
-    _get(Object.getPrototypeOf(_ResourceMapper.prototype), "constructor", this).call(this, transport, response, relationshipDescription, useErrors);
+    _get(Object.getPrototypeOf(ResourceMapper.prototype), "constructor", this).call(this, transport, response, relationshipDescription, useErrors);
 
     this.primaryResourceTransformerFactory = primaryResourceTransformerFactory;
     this.templatedUrlFromUrlFactory = templatedUrlFromUrlFactory;
@@ -38,15 +36,13 @@ var ResourceMapper = (function (_Mapper) {
 
   _inherits(ResourceMapper, _Mapper);
 
-  var _ResourceMapper = ResourceMapper;
-
-  _createClass(_ResourceMapper, [{
+  _createClass(ResourceMapper, [{
     key: "initializeModel",
     value: function initializeModel() {
       if (this.endpoint) {
         this.mapped = this.primaryResourceBuilderFactory(this.response, this.ResourceClass).build(this.endpoint);
       } else {
-        this.mapped = this.resourceBuilderFactory(this.transport, this.response, this.primaryResourceTransformer, this.ResourceClass).build(this.uriTemplate);
+        this.mapped = this.resourceBuilderFactory(this.transport, this.response, this.primaryResourceTransformer, this.ResourceClass, this.relationshipDescription).build(this.uriTemplate);
       }
     }
   }, {
@@ -76,9 +72,13 @@ var ResourceMapper = (function (_Mapper) {
         }
       }
     }
+  }], [{
+    key: "factoryNames",
+    get: function () {
+      return ["TemplatedUrlFromUrlFactory", "ResourceBuilderFactory", "PrimaryResourceBuilderFactory", "PrimaryResourceTransformerFactory"];
+    }
   }]);
 
-  ResourceMapper = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ResourceMapperFactory", ["TemplatedUrlFromUrlFactory", "ResourceBuilderFactory", "PrimaryResourceBuilderFactory", "PrimaryResourceTransformerFactory"])(ResourceMapper) || ResourceMapper;
   return ResourceMapper;
 })(_MapperJs2["default"]);
 

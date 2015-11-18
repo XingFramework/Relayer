@@ -1,8 +1,8 @@
-import {SimpleFactory} from "./SimpleFactoryInjector.js";
+import Constructable from './Constructable.js';
 
-@SimpleFactory('UrlHelperFactory', [])
-export default class UrlHelper {
+export default class UrlHelper extends Constructable {
   constructor(baseUrl) {
+    super();
     if (this.isFullUrl(baseUrl)) {
       baseUrl = this.fullUrlRegEx.exec(baseUrl)[1];
     }

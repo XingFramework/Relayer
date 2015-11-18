@@ -1,30 +1,29 @@
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
+var _bind = Function.prototype.bind;
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
-var _RelationshipDescriptionJs = require("./RelationshipDescription.js");
+var _RelationshipDescriptionJs = require('./RelationshipDescription.js');
 
 var _RelationshipDescriptionJs2 = _interopRequireDefault(_RelationshipDescriptionJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
+var ListRelationshipDescription = (function (_RelationshipDescription) {
+  function ListRelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, singleRelationshipDescriptionFactory, ListResource, primaryResourceTransformerFactory, embeddedRelationshipTransformerFactory, individualFromListTransformerFactory, createResourceTransformerFactory, resolvedEndpointFactory, loadedDataEndpointFactory, templatedUrlFromUrlFactory, templatedUrlFactory, name, ResourceClass, initialValues) {
+    _classCallCheck(this, ListRelationshipDescription);
 
-var SingleRelationshipDescription = (function (_RelationshipDescription) {
-  function SingleRelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, singleRelationshipDescriptionFactory, ListResource, primaryResourceTransformerFactory, embeddedRelationshipTransformerFactory, individualFromListTransformerFactory, createResourceTransformerFactory, resolvedEndpointFactory, loadedDataEndpointFactory, templatedUrlFromUrlFactory, templatedUrlFactory, name, ResourceClass, initialValues) {
-    _classCallCheck(this, _SingleRelationshipDescription);
-
-    _get(Object.getPrototypeOf(_SingleRelationshipDescription.prototype), "constructor", this).call(this, relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues);
+    _get(Object.getPrototypeOf(ListRelationshipDescription.prototype), 'constructor', this).call(this, relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues);
 
     this.singleRelationshipDescriptionFactory = singleRelationshipDescriptionFactory;
     this.ListResource = ListResource;
@@ -40,12 +39,10 @@ var SingleRelationshipDescription = (function (_RelationshipDescription) {
     this._linkTemplatePath = null;
   }
 
-  _inherits(SingleRelationshipDescription, _RelationshipDescription);
+  _inherits(ListRelationshipDescription, _RelationshipDescription);
 
-  var _SingleRelationshipDescription = SingleRelationshipDescription;
-
-  _createClass(_SingleRelationshipDescription, [{
-    key: "ListResourceClass",
+  _createClass(ListRelationshipDescription, [{
+    key: 'ListResourceClass',
     get: function () {
       return this._ListResourceClass || this.ListResource;
     },
@@ -53,27 +50,32 @@ var SingleRelationshipDescription = (function (_RelationshipDescription) {
       this._ListResourceClass = ListResourceClass;
     }
   }, {
-    key: "linkTemplate",
+    key: 'linkTemplate',
     get: function () {
       return this._linkTemplatePath;
     },
     set: function (linkTemplate) {
-      this._linkTemplatePath = "$.links." + linkTemplate;
+      this._linkTemplatePath = '$.links.' + this.inflector.underscore(linkTemplate);
     }
   }, {
-    key: "hasParams",
+    key: 'linkTemplatePath',
+    set: function (linkTemplatePath) {
+      this._linkTemplatePath = linkTemplatePath;
+    }
+  }, {
+    key: 'hasParams',
     value: function hasParams(uriParams) {
-      if (typeof uriParams == "string") {
+      if (typeof uriParams == 'string') {
         uriParams = this.ResourceClass.paramsFromShortLink(uriParams);
       }
-      if (typeof uriParams == "object" && Object.keys(uriParams).length > 0) {
+      if (typeof uriParams == 'object' && Object.keys(uriParams).length > 0) {
         return uriParams;
       } else {
         return false;
       }
     }
   }, {
-    key: "embeddedEndpoint",
+    key: 'embeddedEndpoint',
     value: function embeddedEndpoint(parent, uriParams) {
       var parentEndpoint = parent.self();
       var transformer;
@@ -86,17 +88,22 @@ var SingleRelationshipDescription = (function (_RelationshipDescription) {
       return this.loadedDataEndpointFactory(parentEndpoint, parent, transformer);
     }
   }, {
-    key: "listResourceTransformer",
+    key: 'listResourceTransformer',
     value: function listResourceTransformer() {
       return this.primaryResourceTransformerFactory(this);
     }
   }, {
-    key: "singleResourceTransformer",
+    key: 'singleResourceTransformer',
     value: function singleResourceTransformer() {
-      return this.primaryResourceTransformerFactory(this.singleRelationshipDescriptionFactory("", this.ResourceClass));
+      return this.primaryResourceTransformerFactory(this.singleRelationshipDescriptionFactory('', this.ResourceClass));
     }
   }, {
-    key: "linkedEndpoint",
+    key: 'createRelationshipDescription',
+    get: function () {
+      return this.singleRelationshipDescriptionFactory('', this.ResourceClass);
+    }
+  }, {
+    key: 'linkedEndpoint',
     value: function linkedEndpoint(parent, uriParams) {
 
       var transport = parent.self().transport;
@@ -116,14 +123,14 @@ var SingleRelationshipDescription = (function (_RelationshipDescription) {
         templatedUrl.addDataPathLink(parent, this.linksPath);
         primaryResourceTransformer = this.listResourceTransformer();
         if (this.canCreate) {
-          createTransformer = this.createResourceTransformerFactory(this.singleRelationshipDescriptionFactory("", this.ResourceClass));
+          createTransformer = this.createResourceTransformerFactory(this.createRelationshipDescription, parent.pathGet(this._linkTemplatePath));
         }
       }
 
       var endpoint = this.resolvedEndpointFactory(transport, templatedUrl, primaryResourceTransformer, createTransformer);
 
       if (createTransformer) {
-        endpoint["new"] = function () {
+        endpoint['new'] = function () {
           return new ResourceClass();
         };
       }
@@ -131,23 +138,33 @@ var SingleRelationshipDescription = (function (_RelationshipDescription) {
       return endpoint;
     }
   }, {
-    key: "decorateEndpoint",
+    key: 'decorateEndpoint',
     value: function decorateEndpoint(endpoint, uriParams) {
       var ResourceClass = this.ResourceClass;
 
       uriParams = this.hasParams(uriParams);
 
       if (!uriParams && this.canCreate) {
-        endpoint["new"] = function () {
+        endpoint['new'] = function () {
           return new ResourceClass();
         };
       }
     }
+  }], [{
+    key: 'new',
+    value: function _new(classMap) {
+      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      var instance = new (_bind.apply(this, [null].concat([this.buildFactory(classMap, 'ListRelationshipInitializer'), this.buildFactory(classMap, 'ListResourceMapper'), this.buildFactory(classMap, 'ListResourceSerializer'), this.buildSingleton(classMap, 'Inflector'), this.buildFactory(classMap, 'SingleRelationshipDescription'), classMap.ListResource, this.buildFactory(classMap, 'PrimaryResourceTransformer'), this.buildFactory(classMap, 'EmbeddedRelationshipTransformer'), this.buildFactory(classMap, 'IndividualFromListTransformer'), this.buildFactory(classMap, 'CreateResourceTransformer'), this.buildFactory(classMap, 'ResolvedEndpoint'), this.buildFactory(classMap, 'LoadedDataEndpoint'), this.buildFactory(classMap, 'TemplatedUrlFromUrl'), this.buildFactory(classMap, 'TemplatedUrl')], args)))();
+      instance.classMap = classMap;
+      return instance;
+    }
   }]);
 
-  SingleRelationshipDescription = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ListRelationshipDescriptionFactory", ["ListRelationshipInitializerFactory", "ListResourceMapperFactory", "ListResourceSerializerFactory", "Inflector", "SingleRelationshipDescriptionFactory", "ListResource", "PrimaryResourceTransformerFactory", "EmbeddedRelationshipTransformerFactory", "IndividualFromListTransformerFactory", "CreateResourceTransformerFactory", "ResolvedEndpointFactory", "LoadedDataEndpointFactory", "TemplatedUrlFromUrlFactory", "TemplatedUrlFactory"])(SingleRelationshipDescription) || SingleRelationshipDescription;
-  return SingleRelationshipDescription;
-})(_RelationshipDescriptionJs2["default"]);
+  return ListRelationshipDescription;
+})(_RelationshipDescriptionJs2['default']);
 
-exports["default"] = SingleRelationshipDescription;
-module.exports = exports["default"];
+exports['default'] = ListRelationshipDescription;
+module.exports = exports['default'];

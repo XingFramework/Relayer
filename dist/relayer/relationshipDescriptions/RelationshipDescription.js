@@ -1,4 +1,5 @@
-export default class RelationshipDescription {
+import Constructable from '../Constructable.js';
+export default class RelationshipDescription extends Constructable {
   constructor(relationshipInitializerFactory,
     resourceMapperFactory,
     resourceSerializerFactory,
@@ -6,21 +7,21 @@ export default class RelationshipDescription {
     name,
     ResourceClass,
     initialValues) {
+      super();
 
-
-    this.initializer = relationshipInitializerFactory(ResourceClass, initialValues);
-    this.mapperFactory = resourceMapperFactory;
-    this.serializerFactory = resourceSerializerFactory;
-    this.inflector = inflector;
-    this.name = name;
-    this.ResourceClass = ResourceClass;
-    this.initialValues = initialValues;
-    this.async = true;
-    if (initialValues == undefined) {
-      this.initializeOnCreate = false;
-    } else {
-      this.initializeOnCreate = true;
-    }
+      this.initializer = relationshipInitializerFactory(ResourceClass, initialValues);
+      this.mapperFactory = resourceMapperFactory;
+      this.serializerFactory = resourceSerializerFactory;
+      this.inflector = inflector;
+      this.name = name;
+      this.ResourceClass = ResourceClass;
+      this.initialValues = initialValues;
+      this.async = true;
+      if (initialValues === undefined) {
+        this.initializeOnCreate = false;
+      } else {
+        this.initializeOnCreate = true;
+      }
   }
 
   get linksPath() {

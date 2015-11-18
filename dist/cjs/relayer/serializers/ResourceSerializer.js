@@ -16,13 +16,11 @@ var _SerializerJs = require("./Serializer.js");
 
 var _SerializerJs2 = _interopRequireDefault(_SerializerJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var _TemplatedUrlJs = require("../TemplatedUrl.js");
 
 var ResourceSerializer = (function (_Serializer) {
   function ResourceSerializer() {
-    _classCallCheck(this, _ResourceSerializer);
+    _classCallCheck(this, ResourceSerializer);
 
     if (_Serializer != null) {
       _Serializer.apply(this, arguments);
@@ -31,9 +29,7 @@ var ResourceSerializer = (function (_Serializer) {
 
   _inherits(ResourceSerializer, _Serializer);
 
-  var _ResourceSerializer = ResourceSerializer;
-
-  _createClass(_ResourceSerializer, [{
+  _createClass(ResourceSerializer, [{
     key: "serialize",
     value: function serialize() {
       var _this = this;
@@ -53,7 +49,6 @@ var ResourceSerializer = (function (_Serializer) {
     }
   }]);
 
-  ResourceSerializer = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ResourceSerializerFactory", [])(ResourceSerializer) || ResourceSerializer;
   return ResourceSerializer;
 })(_SerializerJs2["default"]);
 

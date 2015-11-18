@@ -187,7 +187,7 @@ describe("ResourceBuilder", function() {
     });
 
     it("should setup the transformers", function() {
-      expect(createResourceTransformerFactory).toHaveBeenCalledWith(createRelationshipDescription);
+      expect(createResourceTransformerFactory).toHaveBeenCalledWith(createRelationshipDescription, "/cheese/{type}");
     });
 
     it("should setup the endpoint properly", function() {

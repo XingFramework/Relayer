@@ -1,24 +1,37 @@
-import {SimpleFactory} from "./SimpleFactoryInjector.js";
+import Constructable from './Constructable.js';
 
-@SimpleFactory("ResourceBuilderFactory", ["TemplatedUrlFromUrlFactory",
-  "ResolvedEndpointFactory",
-  "ThrowErrorTransformerFactory"])
-export default class ResourceBuilder {
+export default class ResourceBuilder extends Constructable {
+  static get factoryNames(){
+    return [
+      "TemplatedUrlFromUrlFactory",
+      "ResolvedEndpointFactory",
+      "ThrowErrorTransformerFactory",
+      "CreateResourceTransformerFactory"
+    ];
+  }
+
   constructor(templatedUrlFromUrlFactory,
     resolvedEndpointFactory,
     throwErrorTransformerFactory,
+    createResourceTransformerFactory,
     transport,
     response,
     primaryResourceTransformer,
-    ResourceClass) {
+    ResourceClass,
+    relationshipDescription) {
+      super();
 
-    this.transport = transport;
-    this.ResourceClass = ResourceClass;
-    this.templatedUrlFromUrlFactory = templatedUrlFromUrlFactory;
-    this.resolvedEndpointFactory = resolvedEndpointFactory;
-    this.throwErrorTransformerFactory = throwErrorTransformerFactory;
-    this.response = response;
-    this.primaryResourceTransformer = primaryResourceTransformer;
+      this.transport = transport;
+      this.ResourceClass = ResourceClass;
+      this.relationshipDescription = relationshipDescription;
+
+      this.templatedUrlFromUrlFactory = templatedUrlFromUrlFactory;
+      this.resolvedEndpointFactory = resolvedEndpointFactory;
+      this.throwErrorTransformerFactory = throwErrorTransformerFactory;
+      this.createResourceTransformerFactory = createResourceTransformerFactory;
+      this.response = response;
+      this.primaryResourceTransformer = primaryResourceTransformer;
+
   }
 
   build(uriTemplate = null) {
@@ -30,7 +43,12 @@ export default class ResourceBuilder {
         resource.templatedUrl = this.templatedUrlFromUrlFactory(resource.pathGet("$.links.self"), resource.pathGet("$.links.self"));
       }
       resource.templatedUrl.addDataPathLink(resource, "$.links.self");
-      var createResourceTransformer = this.throwErrorTransformerFactory();
+      if (this.relationshipDescription.canCreate) {
+        var createUriTemplate = uriTemplate || resource.pathGet("$.links.template");
+        var createResourceTransformer = this.createResourceTransformerFactory(this.relationshipDescription.createRelationshipDescription, createUriTemplate);
+      } else {
+        var createResourceTransformer = this.throwErrorTransformerFactory();
+      }
       var endpoint = this.resolvedEndpointFactory(this.transport, resource.templatedUrl, this.primaryResourceTransformer, createResourceTransformer);
       resource.self = function() { return endpoint; }
     }

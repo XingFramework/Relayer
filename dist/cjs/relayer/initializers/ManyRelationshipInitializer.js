@@ -18,21 +18,17 @@ var _RelationshipInitializerJs = require("./RelationshipInitializer.js");
 
 var _RelationshipInitializerJs2 = _interopRequireDefault(_RelationshipInitializerJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var ManyRelationshipInitializer = (function (_RelationshipInitializer) {
   function ManyRelationshipInitializer(singleRelationshipInitializerFactory, ResourceClass, initialValues) {
-    _classCallCheck(this, _ManyRelationshipInitializer);
+    _classCallCheck(this, ManyRelationshipInitializer);
 
-    _get(Object.getPrototypeOf(_ManyRelationshipInitializer.prototype), "constructor", this).call(this, ResourceClass, initialValues);
+    _get(Object.getPrototypeOf(ManyRelationshipInitializer.prototype), "constructor", this).call(this, ResourceClass, initialValues);
     this.singleRelationshipInitializerFactory = singleRelationshipInitializerFactory;
   }
 
   _inherits(ManyRelationshipInitializer, _RelationshipInitializer);
 
-  var _ManyRelationshipInitializer = ManyRelationshipInitializer;
-
-  _createClass(_ManyRelationshipInitializer, [{
+  _createClass(ManyRelationshipInitializer, [{
     key: "initialize",
     value: function initialize() {
       var _this = this;
@@ -49,9 +45,13 @@ var ManyRelationshipInitializer = (function (_RelationshipInitializer) {
       }
       return relationship;
     }
+  }], [{
+    key: "factoryNames",
+    get: function () {
+      return ["SingleRelationshipInitializerFactory"];
+    }
   }]);
 
-  ManyRelationshipInitializer = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ManyRelationshipInitializerFactory", ["SingleRelationshipInitializerFactory"])(ManyRelationshipInitializer) || ManyRelationshipInitializer;
   return ManyRelationshipInitializer;
 })(_RelationshipInitializerJs2["default"]);
 

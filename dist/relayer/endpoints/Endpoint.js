@@ -1,6 +1,8 @@
-export default class Endpoint {
+import Constructable from '../Constructable.js';
 
+export default class Endpoint extends Constructable {
   constructor() {
+    super();
 
   }
 

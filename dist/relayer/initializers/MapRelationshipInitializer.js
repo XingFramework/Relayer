@@ -1,8 +1,10 @@
 import RelationshipInitializer from "./RelationshipInitializer.js";
-import {SimpleFactory} from "../SimpleFactoryInjector.js";
 
-@SimpleFactory('MapRelationshipInitializerFactory', ['SingleRelationshipInitializerFactory'])
 export default class MapRelationshipInitializer extends RelationshipInitializer {
+  static get factoryNames(){
+    return ['SingleRelationshipInitializerFactory'];
+  }
+
   constructor(singleRelationshipInitializerFactory,
     ResourceClass,
     initialValues) {

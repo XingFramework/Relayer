@@ -14,8 +14,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var _MapperJs = require("./Mapper.js");
 
 var _MapperJs2 = _interopRequireDefault(_MapperJs);
@@ -24,17 +22,15 @@ var ManyResourceMapper = (function (_Mapper) {
   function ManyResourceMapper(singleRelationshipDescriptionFactory, transport, response, relationshipDescription) {
     var useErrors = arguments[4] === undefined ? false : arguments[4];
 
-    _classCallCheck(this, _ManyResourceMapper);
+    _classCallCheck(this, ManyResourceMapper);
 
-    _get(Object.getPrototypeOf(_ManyResourceMapper.prototype), "constructor", this).call(this, transport, response, relationshipDescription, useErrors);
+    _get(Object.getPrototypeOf(ManyResourceMapper.prototype), "constructor", this).call(this, transport, response, relationshipDescription, useErrors);
     this.singleRelationshipDescription = singleRelationshipDescriptionFactory("", this.ResourceClass);
   }
 
   _inherits(ManyResourceMapper, _Mapper);
 
-  var _ManyResourceMapper = ManyResourceMapper;
-
-  _createClass(_ManyResourceMapper, [{
+  _createClass(ManyResourceMapper, [{
     key: "initializeModel",
     value: function initializeModel() {
       this.mapped = [];
@@ -50,9 +46,13 @@ var ManyResourceMapper = (function (_Mapper) {
         _this.mapped.push(resourceMapper.map());
       });
     }
+  }], [{
+    key: "factoryNames",
+    get: function () {
+      return ["SingleRelationshipDescriptionFactory"];
+    }
   }]);
 
-  ManyResourceMapper = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ManyResourceMapperFactory", ["SingleRelationshipDescriptionFactory"])(ManyResourceMapper) || ManyResourceMapper;
   return ManyResourceMapper;
 })(_MapperJs2["default"]);
 

@@ -18,21 +18,17 @@ var _RelationshipInitializerJs = require("./RelationshipInitializer.js");
 
 var _RelationshipInitializerJs2 = _interopRequireDefault(_RelationshipInitializerJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var MapRelationshipInitializer = (function (_RelationshipInitializer) {
   function MapRelationshipInitializer(singleRelationshipInitializerFactory, ResourceClass, initialValues) {
-    _classCallCheck(this, _MapRelationshipInitializer);
+    _classCallCheck(this, MapRelationshipInitializer);
 
-    _get(Object.getPrototypeOf(_MapRelationshipInitializer.prototype), "constructor", this).call(this, ResourceClass, initialValues);
+    _get(Object.getPrototypeOf(MapRelationshipInitializer.prototype), "constructor", this).call(this, ResourceClass, initialValues);
     this.singleRelationshipInitializerFactory = singleRelationshipInitializerFactory;
   }
 
   _inherits(MapRelationshipInitializer, _RelationshipInitializer);
 
-  var _MapRelationshipInitializer = MapRelationshipInitializer;
-
-  _createClass(_MapRelationshipInitializer, [{
+  _createClass(MapRelationshipInitializer, [{
     key: "initialize",
     value: function initialize() {
       var _this = this;
@@ -49,9 +45,13 @@ var MapRelationshipInitializer = (function (_RelationshipInitializer) {
       }
       return relationship;
     }
+  }], [{
+    key: "factoryNames",
+    get: function () {
+      return ["SingleRelationshipInitializerFactory"];
+    }
   }]);
 
-  MapRelationshipInitializer = (0, _SimpleFactoryInjectorJs.SimpleFactory)("MapRelationshipInitializerFactory", ["SingleRelationshipInitializerFactory"])(MapRelationshipInitializer) || MapRelationshipInitializer;
   return MapRelationshipInitializer;
 })(_RelationshipInitializerJs2["default"]);
 

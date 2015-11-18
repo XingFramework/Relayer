@@ -1,8 +1,15 @@
 import RelationshipInitializer from "./RelationshipInitializer.js";
-import {SimpleFactory} from "../SimpleFactoryInjector.js";
 
-@SimpleFactory('ListRelationshipInitializerFactory', ['ListResource', 'ManyRelationshipInitializerFactory'])
 export default class ListRelationshipInitializer extends RelationshipInitializer {
+  static new(classMap, ...args){
+    var instance = new this(
+      classMap.ListResource,
+      this.buildFactory(classMap, "ManyRelationshipInitializer"),
+      ...args);
+    instance.classMap = classMap;
+    return instance;
+  }
+
   constructor(ListResource,
     manyRelationshipInitializerFactory,
     ResourceClass,

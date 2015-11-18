@@ -14,8 +14,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var _MapperJs = require("./Mapper.js");
 
 var _MapperJs2 = _interopRequireDefault(_MapperJs);
@@ -24,17 +22,15 @@ var MapResourceMapper = (function (_Mapper) {
   function MapResourceMapper(singleRelationshipDescriptionFactory, transport, response, relationshipDescription) {
     var useErrors = arguments[4] === undefined ? false : arguments[4];
 
-    _classCallCheck(this, _MapResourceMapper);
+    _classCallCheck(this, MapResourceMapper);
 
-    _get(Object.getPrototypeOf(_MapResourceMapper.prototype), "constructor", this).call(this, transport, response, relationshipDescription, useErrors);
+    _get(Object.getPrototypeOf(MapResourceMapper.prototype), "constructor", this).call(this, transport, response, relationshipDescription, useErrors);
     this.singleRelationshipDescription = singleRelationshipDescriptionFactory("", this.ResourceClass);
   }
 
   _inherits(MapResourceMapper, _Mapper);
 
-  var _MapResourceMapper = MapResourceMapper;
-
-  _createClass(_MapResourceMapper, [{
+  _createClass(MapResourceMapper, [{
     key: "initializeModel",
     value: function initializeModel() {
       this.mapped = {};
@@ -50,9 +46,13 @@ var MapResourceMapper = (function (_Mapper) {
         _this.mapped[responseKey] = singleResourceMapper.map();
       });
     }
+  }], [{
+    key: "factoryNames",
+    get: function () {
+      return ["SingleRelationshipDescriptionFactory"];
+    }
   }]);
 
-  MapResourceMapper = (0, _SimpleFactoryInjectorJs.SimpleFactory)("MapResourceMapperFactory", ["SingleRelationshipDescriptionFactory"])(MapResourceMapper) || MapResourceMapper;
   return MapResourceMapper;
 })(_MapperJs2["default"]);
 

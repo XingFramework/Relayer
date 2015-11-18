@@ -379,5 +379,8 @@ describe("Page test", function() {
       expect(page.metadata.pageStyles).toEqual('p { font-weight: bold; }');
     });
 
+    it("should resolve shortlink", function() {
+      expect(page.shortLink).toEqual("awesome")
+    })
   });
 });

@@ -1,8 +1,8 @@
-import {SimpleFactory} from "./SimpleFactoryInjector.js";
+import Constructable from './Constructable.js';
 
-@SimpleFactory("PrimaryResourceBuilderFactory", [])
-export default class PrimaryResourceBuilder {
+export default class PrimaryResourceBuilder extends Constructable {
   constructor(response, ResourceClass) {
+    super();
     this.response = response;
     this.ResourceClass = ResourceClass;
   }

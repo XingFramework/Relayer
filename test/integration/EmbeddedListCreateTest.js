@@ -124,5 +124,9 @@ describe("Embedded List Create test", function() {
     it("should resolve the book", function() {
       expect(book.title).toEqual("Hamlet");
     });
+
+    it("should resolve short link", function() {
+      expect(book.shortLink).toEqual("1");
+    })
   });
 });

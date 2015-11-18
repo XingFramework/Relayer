@@ -1,13 +1,18 @@
 import PrimaryResourceTransformer from "./PrimaryResourceTransformer.js"
-import {SimpleFactory} from "../SimpleFactoryInjector.js"
 
-@SimpleFactory('CreateResourceTransformerFactory', [])
 export default class CreateResourceTransformer extends PrimaryResourceTransformer {
+
+  constructor(relationshipDescription, uriTemplate) {
+    super(relationshipDescription);
+    this.uriTemplate = uriTemplate;
+  }
 
   transformResponse(endpoint, response) {
     return response.then(
       (resolvedResponse) => {
-        var resource = this.primaryResourceMapperFactory(endpoint.transport, resolvedResponse.data, this.relationshipDescription).map();
+        var resourceMapper = this.primaryResourceMapperFactory(endpoint.transport, resolvedResponse.data, this.relationshipDescription);
+        resourceMapper.uriTemplate = this.uriTemplate;
+        var resource = resourceMapper.map();
         resource.templatedUrl.etag = resolvedResponse.etag;
         return resource;
       }

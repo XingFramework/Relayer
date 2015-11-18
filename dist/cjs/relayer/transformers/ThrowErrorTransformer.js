@@ -16,11 +16,9 @@ var _ResourceTransformerJs = require("./ResourceTransformer.js");
 
 var _ResourceTransformerJs2 = _interopRequireDefault(_ResourceTransformerJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var ThrowErrorTransformer = (function (_ResourceTransformer) {
   function ThrowErrorTransformer() {
-    _classCallCheck(this, _ThrowErrorTransformer);
+    _classCallCheck(this, ThrowErrorTransformer);
 
     if (_ResourceTransformer != null) {
       _ResourceTransformer.apply(this, arguments);
@@ -29,9 +27,7 @@ var ThrowErrorTransformer = (function (_ResourceTransformer) {
 
   _inherits(ThrowErrorTransformer, _ResourceTransformer);
 
-  var _ThrowErrorTransformer = ThrowErrorTransformer;
-
-  _createClass(_ThrowErrorTransformer, [{
+  _createClass(ThrowErrorTransformer, [{
     key: "transformRequest",
     value: function transformRequest(endpoint, resource) {
       throw "This Resource Cannot Be Updated Or Created";
@@ -43,7 +39,6 @@ var ThrowErrorTransformer = (function (_ResourceTransformer) {
     }
   }]);
 
-  ThrowErrorTransformer = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ThrowErrorTransformerFactory")(ThrowErrorTransformer) || ThrowErrorTransformer;
   return ThrowErrorTransformer;
 })(_ResourceTransformerJs2["default"]);
 

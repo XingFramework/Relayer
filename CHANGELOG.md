@@ -1,3 +1,25 @@
+0.1.4 11-10-2015
+================
+* Fix create template links
+
+0.1.3 10-23-2015
+================
+* Fix initialize on create
+
+0.1.2 10-17-2015
+================
+* Fixed tests
+* Fixed build
+* Forgot to make distribution
+
+0.1.1 10-17-2015
+================
+* Allow templated singular resources
+* Refactory Promise To Seperate Repo
+* Inflect Link Template Names
+* Fix create on embedded list resources
+* Move repo to XingFramework organization
+
 0.1.0 09-28-2015
 ================
 * Fix error responses

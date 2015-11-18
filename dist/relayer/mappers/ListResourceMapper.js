@@ -1,13 +1,16 @@
-import {SimpleFactory} from "../SimpleFactoryInjector.js";
 import ResourceMapper from "./ResourceMapper.js";
 
-@SimpleFactory('ListResourceMapperFactory', [
-  'TemplatedUrlFromUrlFactory',
-  'ResourceBuilderFactory',
-  'PrimaryResourceBuilderFactory',
-  'PrimaryResourceTransformerFactory',
-  'ManyResourceMapperFactory'])
 export default class ListResourceMapper extends ResourceMapper {
+  static get factoryNames(){
+    return [
+      'TemplatedUrlFromUrlFactory',
+      'ResourceBuilderFactory',
+      'PrimaryResourceBuilderFactory',
+      'PrimaryResourceTransformerFactory',
+      'ManyResourceMapperFactory'
+    ];
+  }
+
   constructor(templatedUrlFromUrlFactory,
       resourceBuilderFactory,
       primaryResourceBuilderFactory,

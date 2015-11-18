@@ -1,8 +1,9 @@
 import jsonPath from './jsonpath.js';
-import {SimpleFactory} from "./SimpleFactoryInjector.js"
+import Constructable from './Constructable.js';
 
-export default class DataWrapper {
+export default class DataWrapper extends Constructable {
   constructor(response){
+    super();
     this._response = response;
   }
 

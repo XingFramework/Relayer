@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+var _bind = Function.prototype.bind;
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -18,8 +19,6 @@ var _EndpointJs = require("./Endpoint.js");
 
 var _EndpointJs2 = _interopRequireDefault(_EndpointJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var ResolvedEndpoint = (function (_Endpoint) {
   function ResolvedEndpoint(Promise, transport, templatedUrl) {
     var _this = this;
@@ -27,9 +26,9 @@ var ResolvedEndpoint = (function (_Endpoint) {
     var resourceTransformers = arguments[3] === undefined ? [] : arguments[3];
     var createResourceTransformers = arguments[4] === undefined ? [] : arguments[4];
 
-    _classCallCheck(this, _ResolvedEndpoint);
+    _classCallCheck(this, ResolvedEndpoint);
 
-    _get(Object.getPrototypeOf(_ResolvedEndpoint.prototype), "constructor", this).call(this);
+    _get(Object.getPrototypeOf(ResolvedEndpoint.prototype), "constructor", this).call(this);
     this.transport = transport;
     this.templatedUrl = templatedUrl;
     if (Array.isArray(resourceTransformers)) {
@@ -49,9 +48,7 @@ var ResolvedEndpoint = (function (_Endpoint) {
 
   _inherits(ResolvedEndpoint, _Endpoint);
 
-  var _ResolvedEndpoint = ResolvedEndpoint;
-
-  _createClass(_ResolvedEndpoint, [{
+  _createClass(ResolvedEndpoint, [{
     key: "_load",
     value: function _load() {
       var response = this.transport.get(this.templatedUrl.url, this.templatedUrl.etag);
@@ -95,9 +92,19 @@ var ResolvedEndpoint = (function (_Endpoint) {
     value: function _remove() {
       return this.transport["delete"](this.templatedUrl.url);
     }
+  }], [{
+    key: "new",
+    value: function _new(classMap) {
+      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      var instance = new (_bind.apply(this, [null].concat([classMap.XingPromise], args)))();
+      instance.classMap = classMap;
+      return instance;
+    }
   }]);
 
-  ResolvedEndpoint = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ResolvedEndpointFactory", ["RelayerPromise"])(ResolvedEndpoint) || ResolvedEndpoint;
   return ResolvedEndpoint;
 })(_EndpointJs2["default"]);
 

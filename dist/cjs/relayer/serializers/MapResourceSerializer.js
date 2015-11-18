@@ -18,21 +18,17 @@ var _SerializerJs = require("./Serializer.js");
 
 var _SerializerJs2 = _interopRequireDefault(_SerializerJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var MapResourceSerializer = (function (_Serializer) {
   function MapResourceSerializer(resourceSerializerFactory, resource) {
-    _classCallCheck(this, _MapResourceSerializer);
+    _classCallCheck(this, MapResourceSerializer);
 
-    _get(Object.getPrototypeOf(_MapResourceSerializer.prototype), "constructor", this).call(this, resource);
+    _get(Object.getPrototypeOf(MapResourceSerializer.prototype), "constructor", this).call(this, resource);
     this.resourceSerializerFactory = resourceSerializerFactory;
   }
 
   _inherits(MapResourceSerializer, _Serializer);
 
-  var _MapResourceSerializer = MapResourceSerializer;
-
-  _createClass(_MapResourceSerializer, [{
+  _createClass(MapResourceSerializer, [{
     key: "serialize",
     value: function serialize() {
       var _this = this;
@@ -42,9 +38,13 @@ var MapResourceSerializer = (function (_Serializer) {
         return data;
       }, {});
     }
+  }], [{
+    key: "factoryNames",
+    get: function () {
+      return ["ResourceSerializerFactory"];
+    }
   }]);
 
-  MapResourceSerializer = (0, _SimpleFactoryInjectorJs.SimpleFactory)("MapResourceSerializerFactory", ["ResourceSerializerFactory"])(MapResourceSerializer) || MapResourceSerializer;
   return MapResourceSerializer;
 })(_SerializerJs2["default"]);
 
