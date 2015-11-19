@@ -1,12 +1,5 @@
 import {describeResource, InitializedResourceClasses, ResourceDescription}from "./relayer/ResourceDescription.js";
 import Resource from "./relayer/Resource.js";
-import * as Endpoints from "./relayer/endpoints.js";
-import * as Serializers from "./relayer/serializers.js";
-import * as Mappers from "./relayer/mappers.js";
-import * as Transformers from "./relayer/transformers.js";
-import * as Initializers from "./relayer/initializers.js";
-import * as Decorators from "./relayer/decorators.js";
-import * as RelationshipDescriptions from "./relayer/relationshipDescriptions.js";
 import ListResource from "./relayer/ListResource.js";
 import PrimaryResourceBuilder from "./relayer/PrimaryResourceBuilder.js";
 import ResourceBuilder from "./relayer/ResourceBuilder.js";
@@ -17,8 +10,6 @@ import XingPromise from "xing-promise";
 import RelationshipUtilities from "./relayer/RelationshipUtilities.js";
 import {AsModule, Provider} from "a1atscript";
 import Inflector from "xing-inflector";
-
-import * as classMap from './relayer/everything.js';
 
 @AsModule('relayer', [ ])
 @Provider('relayer', ['$provide'])

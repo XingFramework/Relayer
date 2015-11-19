@@ -1,4 +1,6 @@
 import ResolvedEndpoint from "./ResolvedEndpoint.js";
+import XingPromise from "xing-promise";
+import {Inject, value} from "../injector.js";
 
 export default class LoadedDataEndpoint extends ResolvedEndpoint {
   constructor(Promise, resolvedEndpoint, resource, resourceTransformers = [], createResourceTransformers = []) {
@@ -24,3 +26,5 @@ export default class LoadedDataEndpoint extends ResolvedEndpoint {
   }
 
 }
+
+Inject(value(XingPromise))(LoadedDataEndpoint);

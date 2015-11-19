@@ -1,10 +1,10 @@
 import ResourceDecorator from "./ResourceDecorator.js";
 import {TemplatedUrl} from "../TemplatedUrl.js";
+import {Inject, factory} from "../injector.js";
+import PromiseEndpoint from "../endpoints/PromiseEndpoint.js";
+import RelationshipUtilities from "../RelationshipUtilities.js";
 
 export default class RelatedResourceDecorator extends ResourceDecorator {
-  static get factoryNames(){
-    return ['PromiseEndpointFactory', 'RelationshipUtilities'];
-  }
 
 
   constructor(promiseEndpointFactory, relationshipUtilities, name, relationship){
@@ -131,3 +131,5 @@ export default class RelatedResourceDecorator extends ResourceDecorator {
     this.addFunction(target, this.endpointFn);
   }
 }
+
+Inject(factory(PromiseEndpoint), RelationshipUtilities)(RelatedResourceDecorator);

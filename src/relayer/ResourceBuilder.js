@@ -1,14 +1,10 @@
-import Constructable from './Constructable.js';
+import {TemplatedUrlFromUrl} from "./TemplatedUrl.js";
+import ResolvedEndpoint from "./endpoints/ResolvedEndpoint.js";
+import ThrowErrorTransformer from "./transformers/ThrowErrorTransformer.js";
+import CreateResourceTransformer from "./transformers/CreateResourceTransformer.js";
+import {Inject, factory} from "./injector.js";
 
 export default class ResourceBuilder extends Constructable {
-  static get factoryNames(){
-    return [
-      "TemplatedUrlFromUrlFactory",
-      "ResolvedEndpointFactory",
-      "ThrowErrorTransformerFactory",
-      "CreateResourceTransformerFactory"
-    ];
-  }
 
   constructor(templatedUrlFromUrlFactory,
     resolvedEndpointFactory,
@@ -55,3 +51,10 @@ export default class ResourceBuilder extends Constructable {
     return resource;
   }
 }
+
+Inject(
+  factory(TemplatedUrlFromUrl),
+  factory(ResolvedEndpoint),
+  factory(ThrowErrorTransformer),
+  factory(CreateResourceTransformer)
+)(ResourceBuilder);

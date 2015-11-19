@@ -1,8 +1,5 @@
-import Constructable from './Constructable.js';
-
-export default class PrimaryResourceBuilder extends Constructable {
+export default class PrimaryResourceBuilder {
   constructor(response, ResourceClass) {
-    super();
     this.response = response;
     this.ResourceClass = ResourceClass;
   }

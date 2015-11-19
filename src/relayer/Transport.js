@@ -1,6 +1,4 @@
-import Constructable from './Constructable.js';
-
-export default class Transport extends Constructable {
+export default class Transport {
 
   constructor(urlHelper, $http){
     super();

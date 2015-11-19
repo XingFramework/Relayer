@@ -1,9 +1,7 @@
 import jsonPath from './jsonpath.js';
-import Constructable from './Constructable.js';
 
-export default class DataWrapper extends Constructable {
+export default class DataWrapper {
   constructor(response){
-    super();
     this._response = response;
   }
 
