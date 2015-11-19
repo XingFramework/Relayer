@@ -1,5 +1,4 @@
-import Constructable from '../Constructable.js';
-export default class RelationshipDescription extends Constructable {
+export default class RelationshipDescription {
   constructor(relationshipInitializerFactory,
     resourceMapperFactory,
     resourceSerializerFactory,
@@ -7,7 +6,6 @@ export default class RelationshipDescription extends Constructable {
     name,
     ResourceClass,
     initialValues) {
-      super();
 
       this.initializer = relationshipInitializerFactory(ResourceClass, initialValues);
       this.mapperFactory = resourceMapperFactory;

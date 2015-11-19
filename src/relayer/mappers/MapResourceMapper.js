@@ -1,9 +1,8 @@
 import Mapper from "./Mapper.js";
+import SingleRelationshipDescription from "../relationshipDescriptions/SingleRelationshipDescription.js";
+import {Inject, factory} from "../injector.js";
 
 export default class MapResourceMapper extends Mapper {
-  static get factoryNames(){
-    return ["SingleRelationshipDescriptionFactory"];
-  }
 
   constructor(singleRelationshipDescriptionFactory,
     transport, response, relationshipDescription, useErrors = false) {
@@ -25,3 +24,5 @@ export default class MapResourceMapper extends Mapper {
   }
 
 }
+
+Inject(factory(SingleRelationshipDescription)(MapResourceMapper);

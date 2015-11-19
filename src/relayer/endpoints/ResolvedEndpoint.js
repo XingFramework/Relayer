@@ -1,11 +1,8 @@
 import Endpoint from "./Endpoint.js";
+import XingPromise from "xing-promise";
+import {Inject, value} from "../injector.js";
 
 export default class ResolvedEndpoint extends Endpoint {
-  static new(classMap, ...args) {
-    var instance = new this(classMap.XingPromise, ...args);
-    instance.classMap = classMap;
-    return instance;
-  }
 
   constructor(Promise, transport, templatedUrl, resourceTransformers = [], createResourceTransformers = []) {
     super();
@@ -57,3 +54,5 @@ export default class ResolvedEndpoint extends Endpoint {
     return this.transport.delete(this.templatedUrl.url);
   }
 }
+
+Inject(value(XingPromise))(ResolvedEndpoint);

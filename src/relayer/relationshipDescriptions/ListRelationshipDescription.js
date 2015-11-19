@@ -1,26 +1,20 @@
 import RelationshipDescription from "./RelationshipDescription.js";
+import ListRelationshipInitializer from "../initializers/ListRelationshipInitializer.js";
+import ListResourceMapper from "../mappers/ListResourceMapper.js";
+import ListResourceSerializer from "../serializers/ListResourceSerializer.js";
+import Inflector from "xing-inflector";
+import SingleRelationshipDescription from "./SingleRelationshipDescription.js";
+import ListResource from "../ListResource.js";
+import PrimaryResourceTransformer from "../transformers/PrimaryResourceTransformer.js";
+import EmbeddedRelationshipTransformer from "../transformers/EmbeddedRelationshipTransformerFactory.js";
+import IndividualFromListTransformer from "../transformers/IndividualFromListTransformer.js";
+import CreateResourceTransformer from "../transformers/CreateResourceTransformer.js";
+import ResolvedEndpoint from "../endpoints/ResolvedEndpoint.js";
+import LoadedDataEndpoint from "../endpoints/LoadedDataEndpoint.js";
+import {TemplatedUrl, TemplatedUrlFromUrl} from "../TemplatedUrl.js";
+import {Inject, factory, value} from "../injector.js";
 
 export default class ListRelationshipDescription extends RelationshipDescription {
-  static new(classMap, ...args) {
-    var instance = new this(
-      this.buildFactory(classMap, 'ListRelationshipInitializer'),
-      this.buildFactory(classMap, 'ListResourceMapper'),
-      this.buildFactory(classMap, 'ListResourceSerializer'),
-      this.buildSingleton(classMap, 'Inflector'),
-      this.buildFactory(classMap, "SingleRelationshipDescription"),
-      classMap.ListResource,
-      this.buildFactory(classMap, 'PrimaryResourceTransformer'),
-      this.buildFactory(classMap, 'EmbeddedRelationshipTransformer'),
-      this.buildFactory(classMap, 'IndividualFromListTransformer'),
-      this.buildFactory(classMap, 'CreateResourceTransformer'),
-      this.buildFactory(classMap, 'ResolvedEndpoint'),
-      this.buildFactory(classMap, 'LoadedDataEndpoint'),
-      this.buildFactory(classMap, 'TemplatedUrlFromUrl'),
-      this.buildFactory(classMap, 'TemplatedUrl'),
-      ...args);
-    instance.classMap = classMap;
-    return instance;
-  }
 
   constructor(relationshipInitializerFactory,
     resourceMapperFactory,
@@ -166,3 +160,20 @@ export default class ListRelationshipDescription extends RelationshipDescription
   }
 
 }
+
+Inject(
+  factory(ListRelationshipInitializer),
+  factory(ListResourceMapper),
+  factory(ListResourceSerializer),
+  Inflector,
+  factory(SingleRelationshipDescription),
+  value(ListResource),
+  factory(PrimaryResourceTransformer),
+  factory(EmbeddedRelationshipTransformer),
+  factory(IndividualFromListTransformer),
+  factory(CreateResourceTransformer),
+  factory(ResolvedEndpoint),
+  factory(LoadedDataEndpoint),
+  factory(TemplatedUrlFromUrl),
+  factory(TemplatedUrl)
+)(ListRelationshipDescription);

@@ -1,15 +1,12 @@
 import ResourceMapper from "./ResourceMapper.js";
+import {TemplatedUrlFromUrl} from "../TemplatedUrl.js";
+import ResourceBuilder from "../ResourceBuilder.js";
+import PrimaryResourceBuilder from "../PrimaryResourceBuilder.js";
+import PrimaryResourceTransformer from "../transformers/PrimaryResourceTransformer.js";
+import ManyResourceMapper from "./ManyResourceMapper.js";
+import {Inject, factory} from "../injector.js";
 
 export default class ListResourceMapper extends ResourceMapper {
-  static get factoryNames(){
-    return [
-      'TemplatedUrlFromUrlFactory',
-      'ResourceBuilderFactory',
-      'PrimaryResourceBuilderFactory',
-      'PrimaryResourceTransformerFactory',
-      'ManyResourceMapperFactory'
-    ];
-  }
 
   constructor(templatedUrlFromUrlFactory,
       resourceBuilderFactory,
@@ -79,3 +76,11 @@ export default class ListResourceMapper extends ResourceMapper {
     this.mapped.new = function() { return new ItemResourceClass(); }
   }
 }
+
+Inject(
+  factory(TemplatedUrlFromUrl),
+  factory(ResourceBuilder),
+  factory(PrimaryResourceBuilder),
+  factory(PrimaryResourceTransformer),
+  factory(ManyResourceMapper)
+)(ListResourceMapper);

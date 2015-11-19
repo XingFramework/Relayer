@@ -1,12 +1,11 @@
 import Mapper from "./Mapper.js";
+import {TemplatedUrlFromUrl} from "../TemplatedUrl.js";
+import ResourceBuilder from "../ResourceBuilder.js";
+import PrimaryResourceBuilder from "../PrimaryResourceBuilder.js";
+import PrimaryResourceTransformer from "../transformers/PrimaryResourceTransformer.js";
+import {Inject, factory} from "../injector.js";
 
 export default class ResourceMapper extends Mapper {
-  static get factoryNames(){
-    return ["TemplatedUrlFromUrlFactory",
-      "ResourceBuilderFactory",
-      "PrimaryResourceBuilderFactory",
-      "PrimaryResourceTransformerFactory"];
-  }
 
   constructor(templatedUrlFromUrlFactory,
     resourceBuilderFactory,
@@ -66,3 +65,10 @@ export default class ResourceMapper extends Mapper {
     }
   }
 }
+
+Inject(
+    factory(TemplatedUrlFromUrl),
+    factory(ResourceBuilder),
+    factory(PrimaryResourceBuilder),
+    factory(PrimaryResourceTransformer)
+)(ResourceMapper);

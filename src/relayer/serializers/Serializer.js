@@ -1,8 +1,5 @@
-import Constructable from '../Constructable.js';
-
-export default class Serializer extends Constructable {
+export default class Serializer {
   constructor(resource) {
-    super();
     this.resource = resource;
   }
 

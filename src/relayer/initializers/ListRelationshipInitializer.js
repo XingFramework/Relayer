@@ -1,14 +1,9 @@
 import RelationshipInitializer from "./RelationshipInitializer.js";
+import ListResource from "../ListResource.js";
+import ManyRelationshipInitializer from "./ManyRelationshipInitializer.js";
+import {Inject, factory, value} from "../injector.js";
 
 export default class ListRelationshipInitializer extends RelationshipInitializer {
-  static new(classMap, ...args){
-    var instance = new this(
-      classMap.ListResource,
-      this.buildFactory(classMap, "ManyRelationshipInitializer"),
-      ...args);
-    instance.classMap = classMap;
-    return instance;
-  }
 
   constructor(ListResource,
     manyRelationshipInitializerFactory,
@@ -33,3 +28,5 @@ export default class ListRelationshipInitializer extends RelationshipInitializer
     return manyRelationships;
   }
 }
+
+Inject(value(ListResource), factory(ManyRelationshipInitializer))(ListRelationshipInitializer);

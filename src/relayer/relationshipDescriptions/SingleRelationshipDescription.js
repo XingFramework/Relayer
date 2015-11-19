@@ -1,17 +1,16 @@
 import RelationshipDescription from "./RelationshipDescription.js";
+import SingleRelationshipInitializer from "../initializers/SingleRelationshipInitializer.js";
+import ResourceMapper from "../mappers/ResourceMapper.js";
+import ResourceSerializer from "../serializers/ResourceSerializerFactory";
+import Inflector from "xing-inflector";
+import PrimaryResourceTransformer from "../transformers/PrimaryResourceTransformer.js";
+import EmbeddedRelationshipTransformer from "../transformers/EmbeddedRelationshipTransformer.js";
+import ResolvedEndpoint from "../endpoints/ResolvedEndpoint.js";
+import LoadedDataEndpoint from "../endpoints/LoadedDataEndpoint.js";
+import TemplatedUrl from "../TemplatedUrl.js";
+import {Inject, factory} from "../injector.js";
 
 export default class SingleRelationshipDescription extends RelationshipDescription {
-  static get factoryNames() {
-    return ['SingleRelationshipInitializerFactory',
-      'ResourceMapperFactory',
-      'ResourceSerializerFactory',
-      'Inflector',
-      'PrimaryResourceTransformerFactory',
-      'EmbeddedRelationshipTransformerFactory',
-      'ResolvedEndpointFactory',
-      'LoadedDataEndpointFactory',
-      'TemplatedUrlFactory'];
-  }
 
   constructor(relationshipInitializerFactory,
     resourceMapperFactory,
@@ -72,3 +71,15 @@ export default class SingleRelationshipDescription extends RelationshipDescripti
   }
 
 }
+
+Inject(
+  factory(SingleRelationshipInitializer),
+  factory(ResourceMapper),
+  factory(ResourceSerializer),
+  Inflector,
+  factory(PrimaryResourceTransformer),
+  factory(EmbeddedRelationshipTransformer),
+  factory(ResolvedEndpoint),
+  factory(LoadedDataEndpoint),
+  factory(TemplatedUrl)
+)(SingleRelationshipDescription)

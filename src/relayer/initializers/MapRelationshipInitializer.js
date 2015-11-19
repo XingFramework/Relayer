@@ -1,9 +1,8 @@
 import RelationshipInitializer from "./RelationshipInitializer.js";
+import SingleRelationshipInitializer from "./SingleRelationshipInitializer";
+import {Inject, factory} from "../injector.js";
 
 export default class MapRelationshipInitializer extends RelationshipInitializer {
-  static get factoryNames(){
-    return ['SingleRelationshipInitializerFactory'];
-  }
 
   constructor(singleRelationshipInitializerFactory,
     ResourceClass,
@@ -26,3 +25,5 @@ export default class MapRelationshipInitializer extends RelationshipInitializer 
     return relationship;
   }
 }
+
+Inject(factory(SingleRelationshipInitializer))(MapRelationshipInitializer);

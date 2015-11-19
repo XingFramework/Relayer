@@ -1,9 +1,8 @@
 import ResourceTransformer from "./ResourceTransformer.js";
+import {TemplatedUrl} from "../TemplatedUrl.js";
+import {Inject, factory} from "../injector.js";
 
 export default class IndividualFromListTransformer extends ResourceTransformer {
-  static get factoryNames(){
-    return ['TemplatedUrlFactory'];
-  }
 
   constructor(templatedUrlFactory, relationshipName, uriParams) {
     super();
@@ -44,3 +43,5 @@ export default class IndividualFromListTransformer extends ResourceTransformer {
     });
   }
 }
+
+Inject(factory(TemplatedUrl))(IndividualFromListTransformer);
