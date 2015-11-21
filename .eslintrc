@@ -1,6 +1,4 @@
-Features": {
-    "jsx": true
-  },
+{
   "env": {
     "browser": true,
     "node": true,
