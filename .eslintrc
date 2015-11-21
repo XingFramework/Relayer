@@ -6,13 +6,5 @@
   },
   "ecmaFeatures": { 
     "modules": true 
-  },
-  "rules": {
-    "strict": 0,
-    "no-underscore-dangle": 0,
-    "quotes": [
-      2,
-      "single"
-    ]
   }
 }
