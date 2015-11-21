@@ -1,4 +1,4 @@
-import {} from 'reflect-metadata';
+import 'reflect-metadata';
 
 function metadataValueOrCall(key, target, cb) {
   if (Reflect.hasOwnMetadata(key, target)) {
