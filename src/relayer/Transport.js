@@ -1,7 +1,6 @@
 export default class Transport {
 
   constructor(urlHelper, $http){
-    super();
     this.http = $http;
     this.urlHelper = urlHelper;
   }

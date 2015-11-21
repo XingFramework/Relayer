@@ -4,7 +4,7 @@ import ThrowErrorTransformer from "./transformers/ThrowErrorTransformer.js";
 import CreateResourceTransformer from "./transformers/CreateResourceTransformer.js";
 import {Inject, factory} from "./injector.js";
 
-export default class ResourceBuilder extends Constructable {
+export default class ResourceBuilder  {
 
   constructor(templatedUrlFromUrlFactory,
     resolvedEndpointFactory,
@@ -15,7 +15,6 @@ export default class ResourceBuilder extends Constructable {
     primaryResourceTransformer,
     ResourceClass,
     relationshipDescription) {
-      super();
 
       this.transport = transport;
       this.ResourceClass = ResourceClass;

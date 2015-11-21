@@ -25,4 +25,4 @@ export default class MapResourceMapper extends Mapper {
 
 }
 
-Inject(factory(SingleRelationshipDescription)(MapResourceMapper);
+Inject(factory(SingleRelationshipDescription))(MapResourceMapper);

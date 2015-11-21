@@ -23,4 +23,4 @@ export default class ManyResourceMapper extends Mapper {
   }
 }
 
-Inject(factory(SingleRelationshipDescription)(ManyResourceMapper);
+Inject(factory(SingleRelationshipDescription))(ManyResourceMapper);

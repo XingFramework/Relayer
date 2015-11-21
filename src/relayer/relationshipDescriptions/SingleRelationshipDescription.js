@@ -1,13 +1,13 @@
 import RelationshipDescription from "./RelationshipDescription.js";
 import SingleRelationshipInitializer from "../initializers/SingleRelationshipInitializer.js";
 import ResourceMapper from "../mappers/ResourceMapper.js";
-import ResourceSerializer from "../serializers/ResourceSerializerFactory";
+import ResourceSerializer from "../serializers/ResourceSerializer.js";
 import Inflector from "xing-inflector";
 import PrimaryResourceTransformer from "../transformers/PrimaryResourceTransformer.js";
 import EmbeddedRelationshipTransformer from "../transformers/EmbeddedRelationshipTransformer.js";
 import ResolvedEndpoint from "../endpoints/ResolvedEndpoint.js";
 import LoadedDataEndpoint from "../endpoints/LoadedDataEndpoint.js";
-import TemplatedUrl from "../TemplatedUrl.js";
+import {TemplatedUrl} from "../TemplatedUrl.js";
 import {Inject, factory} from "../injector.js";
 
 export default class SingleRelationshipDescription extends RelationshipDescription {

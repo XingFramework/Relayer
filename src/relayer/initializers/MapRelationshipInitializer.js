@@ -1,5 +1,5 @@
 import RelationshipInitializer from "./RelationshipInitializer.js";
-import SingleRelationshipInitializer from "./SingleRelationshipInitializer";
+import SingleRelationshipInitializer from "./SingleRelationshipInitializer.js";
 import {Inject, factory} from "../injector.js";
 
 export default class MapRelationshipInitializer extends RelationshipInitializer {

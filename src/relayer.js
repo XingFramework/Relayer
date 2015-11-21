@@ -1,15 +1,15 @@
-import {describeResource, InitializedResourceClasses, ResourceDescription}from "./relayer/ResourceDescription.js";
+import {describeResource, InitializedResourceClasses}from "./relayer/ResourceDescription.js";
 import Resource from "./relayer/Resource.js";
 import ListResource from "./relayer/ListResource.js";
-import PrimaryResourceBuilder from "./relayer/PrimaryResourceBuilder.js";
-import ResourceBuilder from "./relayer/ResourceBuilder.js";
 import Transport from "./relayer/Transport.js";
 import UrlHelper from "./relayer/UrlHelper.js";
-import * as TemplatedUrls from "./relayer/TemplatedUrl.js";
-import XingPromise from "xing-promise";
-import RelationshipUtilities from "./relayer/RelationshipUtilities.js";
+import PrimaryResourceTransformer from "./relayer/transformers/PrimaryResourceTransformer.js";
+import SingleRelationshipDescription from "./relayer/relationshipDescriptions/SingleRelationshipDescription.js";
+import ResolvedEndpoint from "./relayer/endpoints/ResolvedEndpoint.js";
+import {TemplatedUrlFromUrl} from "./relayer/TemplatedUrl.js";
 import {AsModule, Provider} from "a1atscript";
-import Inflector from "xing-inflector";
+import XingPromiseFactory from "xing-promise"
+import {default as injector, instance} from "./relayer/injector.js";
 
 @AsModule('relayer', [ ])
 @Provider('relayer', ['$provide'])
@@ -22,6 +22,9 @@ export default class ResourceLayer {
   static get Describe() { return describeResource; }
 
   constructor($provide) {
+
+    injector.reset();
+
     this.apis = {};
     this.$provide = $provide;
     this.$get = ['$injector', ($injector) => {
@@ -38,47 +41,38 @@ export default class ResourceLayer {
       topLevelResource, baseUrl
     };
     this.$provide.factory(apiName, [ '$http', '$q', function( $http, $q ) {
-      var {
-        UrlHelper, Transport, TemplatedUrlFromUrl,
-        PrimaryResourceTransformer, SingleRelationshipDescription,
-        ResolvedEndpoint
-      } = classMap;
-      classMap.setXingPromise(classMap.XingPromiseFactory.factory($q));
 
-      InitializedResourceClasses.new(classMap);
+      var XingPromise = XingPromiseFactory.factory($q);
+      injector.XingPromise.value = XingPromise;
 
-      var orchestrator = TopLevelOrchestrator.new(classMap, $http, topLevelResource, baseUrl);
-      return orchestrator.arrange();
+      injector.instantiate(InitializedResourceClasses);
+
+      var apiBuilder = new APIBuilder($http, topLevelResource, baseUrl);
+      return apiBuilder.build();
     }
     ]);
   }
 }
 
-// This is the first class built after the introduction of the Constructable top class.
-// Using construct instead of factoryNames is a goal state, but tests require
-// changing to make that happen
-import Constructable from './relayer/Constructable.js';
-class TopLevelOrchestrator extends Constructable {
+class APIBuilder {
   constructor($http, topLevelResource, baseUrl) {
-    super();
     this.$http = $http;
     this.topLevelResource = topLevelResource;
     this.baseUrl = baseUrl;
   }
 
-  arrange() {
+  build() {
     var {$http, topLevelResource, baseUrl} = this;
 
-    var urlHelper = this.construct("UrlHelper", baseUrl);
+    var urlHelper = injector.instantiate(instance(UrlHelper), baseUrl);
     var wellKnownUrl = urlHelper.fullUrlRegEx.exec(baseUrl)[3];
 
-    var transport = this.construct("Transport", urlHelper, $http);
-    var templatedUrl = this.construct("TemplatedUrlFromUrl", wellKnownUrl, wellKnownUrl);
-    var transformer = this.construct("PrimaryResourceTransformer",
-                                this.construct("SingleRelationshipDescription", "",
-                                          topLevelResource));
+    var transport = injector.instantiate(instance(Transport), urlHelper, $http);
+    var templatedUrl = injector.instantiate(instance(TemplatedUrlFromUrl), wellKnownUrl, wellKnownUrl);
+    var relationshipDescription = injector.instantiate(instance(SingleRelationshipDescription),"", topLevelResource);
+    var transformer = injector.instantiate(instance(PrimaryResourceTransformer), relationshipDescription);
 
-    var endpoint = this.construct("ResolvedEndpoint", transport, templatedUrl, transformer);
+    var endpoint = injector.instantiate(instance(ResolvedEndpoint), transport, templatedUrl, transformer);
     topLevelResource.resourceDescription.applyToEndpoint(endpoint);
     return endpoint;
   }

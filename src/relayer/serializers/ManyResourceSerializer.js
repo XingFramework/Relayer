@@ -1,6 +1,6 @@
 import Serializer from "./Serializer.js";
 import ResourceSerializer from "./ResourceSerializer.js";
-import {Inject, factory} from "../injectors.js";
+import {Inject, factory} from "../injector.js";
 
 export default class ManyResourceSerializer extends Serializer {
 

@@ -1,7 +1,7 @@
 import MultipleRelationshipDescription from "./MultipleRelationshipDescription.js";
 import MapRelationshipInitializer from "../initializers/MapRelationshipInitializer.js";
 import MapResourceMapper from "../mappers/MapResourceMapper.js";
-import MapResourceSerializer from "../mappers/MapResourceSerializer.js";
+import MapResourceSerializer from "../serializers/MapResourceSerializer.js";
 import Inflector from "xing-inflector";
 import EmbeddedRelationshipTransformer from "../transformers/EmbeddedRelationshipTransformer.js";
 import SingleFromManyTransformer from "../transformers/SingleFromManyTransformer.js";
@@ -20,4 +20,4 @@ Inject(
   factory(EmbeddedRelationshipTransformer),
   factory(SingleFromManyTransformer),
   factory(LoadedDataEndpoint)
-)(MultipleRelationshipDescription);
+)(MapRelationshipDescription);

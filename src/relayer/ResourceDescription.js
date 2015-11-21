@@ -17,7 +17,6 @@ export function describeResource(resourceClass, defineFn){
 export class InitializedResourceClasses {
 
   constructor(resourceDescriptionFactory) {
-    super();
     this.resourceDescriptionFactory = resourceDescriptionFactory;
     this.initializeClasses();
   }
@@ -57,9 +56,7 @@ export class InitializedResourceClasses {
   }
 }
 
-Inject(factory(ResourceDescription))(InitializedResourceClasses);
-
-export class ResourceDescription extends Constructable {
+export class ResourceDescription {
 
   constructor(jsonPropertyDecoratorFactory,
     relatedResourceDecoratorFactory,
@@ -68,8 +65,6 @@ export class ResourceDescription extends Constructable {
     listRelationshipDescriptionFactory,
     mapRelationshipDescriptionFactory,
     inflector) {
-
-      super();
 
       this.jsonPropertyDecoratorFactory = jsonPropertyDecoratorFactory;
       this.relatedResourceDecoratorFactory = relatedResourceDecoratorFactory;
@@ -158,6 +153,8 @@ export class ResourceDescription extends Constructable {
   }
 
 }
+
+Inject(factory(ResourceDescription))(InitializedResourceClasses);
 
 Inject(
   factory(JsonPropertyDecorator),

@@ -6,7 +6,7 @@ import Inflector from "xing-inflector";
 import SingleRelationshipDescription from "./SingleRelationshipDescription.js";
 import ListResource from "../ListResource.js";
 import PrimaryResourceTransformer from "../transformers/PrimaryResourceTransformer.js";
-import EmbeddedRelationshipTransformer from "../transformers/EmbeddedRelationshipTransformerFactory.js";
+import EmbeddedRelationshipTransformer from "../transformers/EmbeddedRelationshipTransformer.js";
 import IndividualFromListTransformer from "../transformers/IndividualFromListTransformer.js";
 import CreateResourceTransformer from "../transformers/CreateResourceTransformer.js";
 import ResolvedEndpoint from "../endpoints/ResolvedEndpoint.js";

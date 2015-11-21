@@ -1,6 +1,5 @@
 import Endpoint from "./Endpoint.js";
-import XingPromise from "xing-promise";
-import {Inject, value} from "../injector.js";
+import {Inject, value, default as injector} from "../injector.js";
 
 export default class ResolvedEndpoint extends Endpoint {
 
@@ -55,4 +54,4 @@ export default class ResolvedEndpoint extends Endpoint {
   }
 }
 
-Inject(value(XingPromise))(ResolvedEndpoint);
+Inject(injector.XingPromise)(ResolvedEndpoint);

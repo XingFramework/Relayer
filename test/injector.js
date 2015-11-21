@@ -1,4 +1,4 @@
-import {Inject, Factory, instantiate} from "../src/relayer/injector.js"
+import {Inject, factory, default as injector} from "../src/relayer/injector.js"
 
 describe("injector", function() {
   class First {
@@ -26,7 +26,7 @@ describe("injector", function() {
   var third;
 
   beforeEach(function() {
-    var third = instantiate(Third, "something");
+    third = injector.instantiate(Third, "something");
   });
 
   it("should instantiate singletons", function() {
