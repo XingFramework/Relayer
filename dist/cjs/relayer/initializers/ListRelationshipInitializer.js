@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var _bind = Function.prototype.bind;
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -18,6 +17,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var _RelationshipInitializerJs = require("./RelationshipInitializer.js");
 
 var _RelationshipInitializerJs2 = _interopRequireDefault(_RelationshipInitializerJs);
+
+var _ListResourceJs = require("../ListResource.js");
+
+var _ListResourceJs2 = _interopRequireDefault(_ListResourceJs);
+
+var _ManyRelationshipInitializerJs = require("./ManyRelationshipInitializer.js");
+
+var _ManyRelationshipInitializerJs2 = _interopRequireDefault(_ManyRelationshipInitializerJs);
+
+var _injectorJs = require("../injector.js");
 
 var ListRelationshipInitializer = (function (_RelationshipInitializer) {
   function ListRelationshipInitializer(ListResource, manyRelationshipInitializerFactory, ResourceClass, initialValues) {
@@ -48,21 +57,12 @@ var ListRelationshipInitializer = (function (_RelationshipInitializer) {
       });
       return manyRelationships;
     }
-  }], [{
-    key: "new",
-    value: function _new(classMap) {
-      for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-        args[_key2 - 1] = arguments[_key2];
-      }
-
-      var instance = new (_bind.apply(this, [null].concat([classMap.ListResource, this.buildFactory(classMap, "ManyRelationshipInitializer")], args)))();
-      instance.classMap = classMap;
-      return instance;
-    }
   }]);
 
   return ListRelationshipInitializer;
 })(_RelationshipInitializerJs2["default"]);
 
 exports["default"] = ListRelationshipInitializer;
+
+(0, _injectorJs.Inject)((0, _injectorJs.value)(_ListResourceJs2["default"]), (0, _injectorJs.factory)(_ManyRelationshipInitializerJs2["default"]))(ListRelationshipInitializer);
 module.exports = exports["default"];

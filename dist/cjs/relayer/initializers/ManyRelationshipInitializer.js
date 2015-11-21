@@ -18,6 +18,12 @@ var _RelationshipInitializerJs = require("./RelationshipInitializer.js");
 
 var _RelationshipInitializerJs2 = _interopRequireDefault(_RelationshipInitializerJs);
 
+var _SingleRelationshipInitializerJs = require("./SingleRelationshipInitializer.js");
+
+var _SingleRelationshipInitializerJs2 = _interopRequireDefault(_SingleRelationshipInitializerJs);
+
+var _injectorJs = require("../injector.js");
+
 var ManyRelationshipInitializer = (function (_RelationshipInitializer) {
   function ManyRelationshipInitializer(singleRelationshipInitializerFactory, ResourceClass, initialValues) {
     _classCallCheck(this, ManyRelationshipInitializer);
@@ -45,15 +51,12 @@ var ManyRelationshipInitializer = (function (_RelationshipInitializer) {
       }
       return relationship;
     }
-  }], [{
-    key: "factoryNames",
-    get: function () {
-      return ["SingleRelationshipInitializerFactory"];
-    }
   }]);
 
   return ManyRelationshipInitializer;
 })(_RelationshipInitializerJs2["default"]);
 
 exports["default"] = ManyRelationshipInitializer;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_SingleRelationshipInitializerJs2["default"]))(ManyRelationshipInitializer);
 module.exports = exports["default"];

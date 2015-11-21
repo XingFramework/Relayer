@@ -44,7 +44,7 @@
   },
   "scripts": {
     "test": "./node_modules/.bin/gulp test:firefox; ./node_modules/.bin/karma start karma.conf.babel.js --browsers Firefox --single-run",
-    "xing-traceur-amd": "./node_modules/.bin/xing-traceur --annotations --types --modules='amd' --dir src build/amd --maps moduleMaps.json; ./node_modules/.bin/xing-traceur --annotations --types --modules='amd' --dir ./node_modules/a1atscript/src build/amd --maps moduleMaps.json; ./node_modules/.bin/xing-traceur --annotations --types --modules='amd' --dir ./node_modules/xing-inflector/src build/amd --maps moduleMaps.json; ./node_modules/.bin/xing-traceur --annotations --types --modules='amd' --dir ./node_modules/xing-promise/src build/amd --maps moduleMaps.json;",
+    "xing-traceur-amd": "./node_modules/.bin/xing-traceur --annotations --types --modules='amd' --dir src build/amd --maps moduleMaps.json; ./node_modules/.bin/xing-traceur --annotations --types --modules='amd' --dir ./node_modules/a1atscript/src build/amd --maps moduleMaps.json; ./node_modules/.bin/xing-traceur --annotations --types --modules='amd' --dir ./node_modules/xing-inflector/src build/amd --maps moduleMaps.json; ./node_modules/.bin/xing-traceur --annotations --types --modules='amd' --dir ./node_modules/xing-promise/src build/amd --maps moduleMaps.json; ./node_modules/.bin/xing-traceur --annotations --types --modules='amd' ./node_modules/reflect-metadata/Reflect.js --out build/amd/reflect-metadata.js --maps moduleMaps.json;",
     "babel-cjs": "./node_modules/.bin/babel src/relayer.js src --stage 0 --out-dir dist/cjs",
     "rjs": "./node_modules/.bin/r.js -o out=./dist/relayer.es5.js baseUrl=./build/amd name=relayer optimize=none",
     "amd": "npm run-script xing-traceur-amd; npm run-script rjs",

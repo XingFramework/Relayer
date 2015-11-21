@@ -1,9 +1,8 @@
 import Serializer from "./Serializer.js";
+import ResourceSerializer from "./ResourceSerializer.js";
+import {Inject, factory} from "../injector.js";
 
 export default class MapResourceSerializer extends Serializer {
-  static get factoryNames(){
-    return ['ResourceSerializerFactory'];
-  }
 
   constructor(resourceSerializerFactory, resource) {
     super(resource);
@@ -17,3 +16,5 @@ export default class MapResourceSerializer extends Serializer {
     }, {});
   }
 }
+
+Inject(factory(ResourceSerializer))(MapResourceSerializer);

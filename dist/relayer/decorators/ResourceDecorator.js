@@ -1,8 +1,5 @@
-import Constructable from '../Constructable.js';
-
-export default class ResourceDecorator extends Constructable {
+export default class ResourceDecorator {
   constructor(name){
-    super();
     this.name = name;
   }
 

@@ -18,6 +18,10 @@ var _ResolvedEndpointJs = require("./ResolvedEndpoint.js");
 
 var _ResolvedEndpointJs2 = _interopRequireDefault(_ResolvedEndpointJs);
 
+var _injectorJs = require("../injector.js");
+
+var _injectorJs2 = _interopRequireDefault(_injectorJs);
+
 var LoadedDataEndpoint = (function (_ResolvedEndpoint) {
   function LoadedDataEndpoint(Promise, resolvedEndpoint, resource) {
     var resourceTransformers = arguments[3] === undefined ? [] : arguments[3];
@@ -57,4 +61,6 @@ var LoadedDataEndpoint = (function (_ResolvedEndpoint) {
 })(_ResolvedEndpointJs2["default"]);
 
 exports["default"] = LoadedDataEndpoint;
+
+(0, _injectorJs.Inject)(_injectorJs2["default"].XingPromise)(LoadedDataEndpoint);
 module.exports = exports["default"];

@@ -1,9 +1,8 @@
 import Serializer from "./Serializer.js";
+import ManyResourceSerializer from "./ManyResourceSerializer.js";
+import {Inject, factory} from "../injector.js";
 
 export default class ListResourceSerializer extends Serializer {
-  static get factoryNames(){
-    return ['ManyResourceSerializerFactory'];
-  }
 
   constructor(manyResourceSerializerFactory,
     resource) {
@@ -17,3 +16,5 @@ export default class ListResourceSerializer extends Serializer {
     return this.resource.resource.response;
   }
 }
+
+Inject(factory(ManyResourceSerializer))(ListResourceSerializer);

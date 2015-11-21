@@ -18,6 +18,12 @@ var _RelationshipInitializerJs = require("./RelationshipInitializer.js");
 
 var _RelationshipInitializerJs2 = _interopRequireDefault(_RelationshipInitializerJs);
 
+var _SingleRelationshipInitializerJs = require("./SingleRelationshipInitializer.js");
+
+var _SingleRelationshipInitializerJs2 = _interopRequireDefault(_SingleRelationshipInitializerJs);
+
+var _injectorJs = require("../injector.js");
+
 var MapRelationshipInitializer = (function (_RelationshipInitializer) {
   function MapRelationshipInitializer(singleRelationshipInitializerFactory, ResourceClass, initialValues) {
     _classCallCheck(this, MapRelationshipInitializer);
@@ -45,15 +51,12 @@ var MapRelationshipInitializer = (function (_RelationshipInitializer) {
       }
       return relationship;
     }
-  }], [{
-    key: "factoryNames",
-    get: function () {
-      return ["SingleRelationshipInitializerFactory"];
-    }
   }]);
 
   return MapRelationshipInitializer;
 })(_RelationshipInitializerJs2["default"]);
 
 exports["default"] = MapRelationshipInitializer;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_SingleRelationshipInitializerJs2["default"]))(MapRelationshipInitializer);
 module.exports = exports["default"];

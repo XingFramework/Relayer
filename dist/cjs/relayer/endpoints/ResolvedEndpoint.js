@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var _bind = Function.prototype.bind;
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -18,6 +17,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var _EndpointJs = require("./Endpoint.js");
 
 var _EndpointJs2 = _interopRequireDefault(_EndpointJs);
+
+var _injectorJs = require("../injector.js");
+
+var _injectorJs2 = _interopRequireDefault(_injectorJs);
 
 var ResolvedEndpoint = (function (_Endpoint) {
   function ResolvedEndpoint(Promise, transport, templatedUrl) {
@@ -92,21 +95,12 @@ var ResolvedEndpoint = (function (_Endpoint) {
     value: function _remove() {
       return this.transport["delete"](this.templatedUrl.url);
     }
-  }], [{
-    key: "new",
-    value: function _new(classMap) {
-      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
-
-      var instance = new (_bind.apply(this, [null].concat([classMap.XingPromise], args)))();
-      instance.classMap = classMap;
-      return instance;
-    }
   }]);
 
   return ResolvedEndpoint;
 })(_EndpointJs2["default"]);
 
 exports["default"] = ResolvedEndpoint;
+
+(0, _injectorJs.Inject)(_injectorJs2["default"].XingPromise)(ResolvedEndpoint);
 module.exports = exports["default"];

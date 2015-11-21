@@ -1,22 +1,42 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
-var _ResourceMapperJs = require('./ResourceMapper.js');
+var _ResourceMapperJs = require("./ResourceMapper.js");
 
 var _ResourceMapperJs2 = _interopRequireDefault(_ResourceMapperJs);
+
+var _TemplatedUrlJs = require("../TemplatedUrl.js");
+
+var _ResourceBuilderJs = require("../ResourceBuilder.js");
+
+var _ResourceBuilderJs2 = _interopRequireDefault(_ResourceBuilderJs);
+
+var _PrimaryResourceBuilderJs = require("../PrimaryResourceBuilder.js");
+
+var _PrimaryResourceBuilderJs2 = _interopRequireDefault(_PrimaryResourceBuilderJs);
+
+var _transformersPrimaryResourceTransformerJs = require("../transformers/PrimaryResourceTransformer.js");
+
+var _transformersPrimaryResourceTransformerJs2 = _interopRequireDefault(_transformersPrimaryResourceTransformerJs);
+
+var _ManyResourceMapperJs = require("./ManyResourceMapper.js");
+
+var _ManyResourceMapperJs2 = _interopRequireDefault(_ManyResourceMapperJs);
+
+var _injectorJs = require("../injector.js");
 
 var ListResourceMapper = (function (_ResourceMapper) {
   function ListResourceMapper(templatedUrlFromUrlFactory, resourceBuilderFactory, primaryResourceBuilderFactory, primaryResourceTransformerFactory, manyResourceMapperFactory, transport, response, relationshipDescription, endpoint) {
@@ -24,36 +44,36 @@ var ListResourceMapper = (function (_ResourceMapper) {
 
     _classCallCheck(this, ListResourceMapper);
 
-    _get(Object.getPrototypeOf(ListResourceMapper.prototype), 'constructor', this).call(this, templatedUrlFromUrlFactory, resourceBuilderFactory, primaryResourceBuilderFactory, primaryResourceTransformerFactory, transport, response, relationshipDescription, endpoint, useErrors);
+    _get(Object.getPrototypeOf(ListResourceMapper.prototype), "constructor", this).call(this, templatedUrlFromUrlFactory, resourceBuilderFactory, primaryResourceBuilderFactory, primaryResourceTransformerFactory, transport, response, relationshipDescription, endpoint, useErrors);
     this.manyResourceMapperFactory = manyResourceMapperFactory;
   }
 
   _inherits(ListResourceMapper, _ResourceMapper);
 
   _createClass(ListResourceMapper, [{
-    key: 'ResourceClass',
+    key: "ResourceClass",
     get: function () {
       return this.relationshipDescription.ListResourceClass;
     }
   }, {
-    key: 'ItemResourceClass',
+    key: "ItemResourceClass",
     get: function () {
       return this.relationshipDescription.ResourceClass;
     }
   }, {
-    key: 'mapNestedRelationships',
+    key: "mapNestedRelationships",
     value: function mapNestedRelationships() {
       var _this = this;
 
       // add mappings for list resource
-      _get(Object.getPrototypeOf(ListResourceMapper.prototype), 'mapNestedRelationships', this).call(this);
+      _get(Object.getPrototypeOf(ListResourceMapper.prototype), "mapNestedRelationships", this).call(this);
 
       this.resource = this.mapped;
-      var manyResourceMapper = this.manyResourceMapperFactory(this.transport, this.resource.pathGet('$.data'), this.relationshipDescription);
-      manyResourceMapper.uriTemplate = this.resource.pathGet('$.links.template');
+      var manyResourceMapper = this.manyResourceMapperFactory(this.transport, this.resource.pathGet("$.data"), this.relationshipDescription);
+      manyResourceMapper.uriTemplate = this.resource.pathGet("$.links.template");
       this.mapped = manyResourceMapper.map();
       this.mapped.resource = this.resource;
-      ['url', 'uriTemplate', 'uriParams'].forEach(function (func) {
+      ["url", "uriTemplate", "uriParams"].forEach(function (func) {
         _this.mapped[func] = function () {
           var _resource;
 
@@ -65,7 +85,7 @@ var ListResourceMapper = (function (_ResourceMapper) {
         };
       });
       var mapped = this.mapped;
-      ['remove', 'update', 'load'].forEach(function (func) {
+      ["remove", "update", "load"].forEach(function (func) {
         _this.mapped[func] = function () {
           var _resource$self;
 
@@ -102,19 +122,16 @@ var ListResourceMapper = (function (_ResourceMapper) {
         });
       };
       var ItemResourceClass = this.ItemResourceClass;
-      this.mapped['new'] = function () {
+      this.mapped["new"] = function () {
         return new ItemResourceClass();
       };
-    }
-  }], [{
-    key: 'factoryNames',
-    get: function () {
-      return ['TemplatedUrlFromUrlFactory', 'ResourceBuilderFactory', 'PrimaryResourceBuilderFactory', 'PrimaryResourceTransformerFactory', 'ManyResourceMapperFactory'];
     }
   }]);
 
   return ListResourceMapper;
-})(_ResourceMapperJs2['default']);
+})(_ResourceMapperJs2["default"]);
 
-exports['default'] = ListResourceMapper;
-module.exports = exports['default'];
+exports["default"] = ListResourceMapper;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_TemplatedUrlJs.TemplatedUrlFromUrl), (0, _injectorJs.factory)(_ResourceBuilderJs2["default"]), (0, _injectorJs.factory)(_PrimaryResourceBuilderJs2["default"]), (0, _injectorJs.factory)(_transformersPrimaryResourceTransformerJs2["default"]), (0, _injectorJs.factory)(_ManyResourceMapperJs2["default"]))(ListResourceMapper);
+module.exports = exports["default"];

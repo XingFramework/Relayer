@@ -212,88 +212,14 @@ define('relayer/jsonpath',[], function() {
   };
 });
 
-define('relayer/Constructable',[], function() {
-  
-  var Constructable = function Constructable() {
-    ;
-  };
-  ($traceurRuntime.createClass)(Constructable, {construct: function(className) {
-      var $__5;
-      for (var args = [],
-          $__2 = 1; $__2 < arguments.length; $__2++)
-        args[$__2 - 1] = arguments[$__2];
-      return ($__5 = this.classMap[className]).new.apply($__5, $traceurRuntime.spread([this.classMap], args));
-    }}, {
-    new: function(classMap) {
-      for (var args = [],
-          $__3 = 1; $__3 < arguments.length; $__3++)
-        args[$__3 - 1] = arguments[$__3];
-      var instance = new (Function.prototype.bind.apply(this, $traceurRuntime.spread([null], this.buildInjectors(classMap), args)))();
-      instance.classMap = classMap;
-      return instance;
-    },
-    buildInjectors: function(classMap) {
-      var $__0 = this;
-      var factoryNames = this.factoryNames;
-      return factoryNames.map((function(name) {
-        if (classMap[name]) {
-          return $__0.buildSingleton(classMap, name);
-        } else {
-          var noFac = name.replace(/factory$/i, "");
-          if (classMap[noFac]) {
-            name = noFac;
-            return $__0.buildFactory(classMap, noFac);
-          } else {
-            return null;
-          }
-        }
-      }));
-    },
-    buildSingleton: function(classMap, name) {
-      if (!classMap.singletons) {
-        classMap.singletons = {};
-      }
-      if (!classMap.singletons[name]) {
-        classMap.singletons[name] = new classMap[name]();
-      }
-      return classMap.singletons[name];
-    },
-    buildFactory: function(classMap, name) {
-      var namedClass = classMap[name];
-      return (function() {
-        var $__5;
-        for (var args = [],
-            $__4 = 0; $__4 < arguments.length; $__4++)
-          args[$__4] = arguments[$__4];
-        return ($__5 = namedClass).new.apply($__5, $traceurRuntime.spread([classMap], args));
-      });
-    },
-    get factoryNames() {
-      return [];
-    }
-  });
-  var $__default = Constructable;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/DataWrapper',["./jsonpath", "./Constructable"], function($__0,$__2) {
+define('relayer/DataWrapper',["./jsonpath"], function($__0) {
   
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
-  if (!$__2 || !$__2.__esModule)
-    $__2 = {default: $__2};
   var jsonPath = $__0.default;
-  var Constructable = $__2.default;
   var DataWrapper = function DataWrapper(response) {
-    $traceurRuntime.superConstructor($DataWrapper).call(this);
     this._response = response;
   };
-  var $DataWrapper = DataWrapper;
   ($traceurRuntime.createClass)(DataWrapper, {
     pathBuild: function(path, value) {
       var segments = path.split(".");
@@ -339,28 +265,28 @@ define('relayer/DataWrapper',["./jsonpath", "./Constructable"], function($__0,$_
         var root = path.shift();
         var target = path.pop();
         var thumb = this._response;
-        var $__8 = true;
-        var $__9 = false;
-        var $__10 = undefined;
+        var $__6 = true;
+        var $__7 = false;
+        var $__8 = undefined;
         try {
-          for (var $__6 = void 0,
-              $__5 = (path)[$traceurRuntime.toProperty(Symbol.iterator)](); !($__8 = ($__6 = $__5.next()).done); $__8 = true) {
-            var segment = $__6.value;
+          for (var $__4 = void 0,
+              $__3 = (path)[$traceurRuntime.toProperty(Symbol.iterator)](); !($__6 = ($__4 = $__3.next()).done); $__6 = true) {
+            var segment = $__4.value;
             {
               thumb = thumb[segment];
             }
           }
-        } catch ($__11) {
-          $__9 = true;
-          $__10 = $__11;
+        } catch ($__9) {
+          $__7 = true;
+          $__8 = $__9;
         } finally {
           try {
-            if (!$__8 && $__5.return != null) {
-              $__5.return();
+            if (!$__6 && $__3.return != null) {
+              $__3.return();
             }
           } finally {
-            if ($__9) {
-              throw $__10;
+            if ($__7) {
+              throw $__8;
             }
           }
         }
@@ -385,34 +311,34 @@ define('relayer/DataWrapper',["./jsonpath", "./Constructable"], function($__0,$_
       var root = path.shift();
       var target = path.pop();
       var thumb = this._response;
-      var $__8 = true;
-      var $__9 = false;
-      var $__10 = undefined;
+      var $__6 = true;
+      var $__7 = false;
+      var $__8 = undefined;
       try {
-        for (var $__6 = void 0,
-            $__5 = (path)[$traceurRuntime.toProperty(Symbol.iterator)](); !($__8 = ($__6 = $__5.next()).done); $__8 = true) {
-          var segment = $__6.value;
+        for (var $__4 = void 0,
+            $__3 = (path)[$traceurRuntime.toProperty(Symbol.iterator)](); !($__6 = ($__4 = $__3.next()).done); $__6 = true) {
+          var segment = $__4.value;
           {
             thumb = thumb[segment];
           }
         }
-      } catch ($__11) {
-        $__9 = true;
-        $__10 = $__11;
+      } catch ($__9) {
+        $__7 = true;
+        $__8 = $__9;
       } finally {
         try {
-          if (!$__8 && $__5.return != null) {
-            $__5.return();
+          if (!$__6 && $__3.return != null) {
+            $__3.return();
           }
         } finally {
-          if ($__9) {
-            throw $__10;
+          if ($__7) {
+            throw $__8;
           }
         }
       }
       delete thumb[target];
     }
-  }, {}, Constructable);
+  }, {});
   var $__default = DataWrapper;
   return {
     get default() {
@@ -450,6 +376,1777 @@ define('relayer/APIError',["./DataWrapper"], function($__0) {
       }
     }}, {}, DataWrapper);
   var $__default = APIError;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/decorators/ResourceDecorator',[], function() {
+  
+  var ResourceDecorator = function ResourceDecorator(name) {
+    this.name = name;
+  };
+  ($traceurRuntime.createClass)(ResourceDecorator, {
+    addFunction: function(target, func) {
+      if (!(target.hasOwnProperty(this.name))) {
+        target[this.name] = func;
+      }
+    },
+    resourceApply: function(resource) {},
+    errorsApply: function(errors) {},
+    endpointApply: function(endpoint) {}
+  }, {});
+  var $__default = ResourceDecorator;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/endpoints/Endpoint',[], function() {
+  
+  var Endpoint = function Endpoint() {};
+  ($traceurRuntime.createClass)(Endpoint, {
+    create: function(resource, res, rej) {
+      return this.endpointPromise().then((function(endpoint) {
+        if (endpoint._create) {
+          return endpoint._create(resource);
+        } else {
+          return endpoint.create(resource);
+        }
+      })).then(res, rej);
+    },
+    update: function(resource, res, rej) {
+      return this.endpointPromise().then((function(endpoint) {
+        if (endpoint._update) {
+          return endpoint._update(resource);
+        } else {
+          return endpoint.update(resource);
+        }
+      })).then(res, rej);
+    },
+    load: function(res, rej) {
+      return this.endpointPromise().then((function(endpoint) {
+        if (endpoint._load) {
+          return endpoint._load();
+        } else {
+          return endpoint.load();
+        }
+      })).then(res, rej);
+    },
+    get: function(prop) {
+      for (var args = [],
+          $__1 = 1; $__1 < arguments.length; $__1++)
+        args[$__1 - 1] = arguments[$__1];
+      return this.load().then((function(response) {
+        var $__2;
+        if (typeof response[prop] == 'function') {
+          return ($__2 = response)[prop].apply($__2, $traceurRuntime.spread(args));
+        } else {
+          return response[prop];
+        }
+      }));
+    },
+    remove: function(res, rej) {
+      return this.endpointPromise().then((function(endpoint) {
+        return endpoint._remove();
+      })).then(res, rej);
+    }
+  }, {});
+  var $__default = Endpoint;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('reflect-metadata',[], function() {
+  
+  
+  var Reflect;
+  (function(Reflect) {
+    var functionPrototype = Object.getPrototypeOf(Function);
+    var _Map = typeof Map === "function" ? Map : CreateMapPolyfill();
+    var _Set = typeof Set === "function" ? Set : CreateSetPolyfill();
+    var _WeakMap = typeof WeakMap === "function" ? WeakMap : CreateWeakMapPolyfill();
+    var __Metadata__ = new _WeakMap();
+    function decorate(decorators, target, targetKey, targetDescriptor) {
+      if (!IsUndefined(targetDescriptor)) {
+        if (!IsArray(decorators)) {
+          throw new TypeError();
+        } else if (!IsObject(target)) {
+          throw new TypeError();
+        } else if (IsUndefined(targetKey)) {
+          throw new TypeError();
+        } else if (!IsObject(targetDescriptor)) {
+          throw new TypeError();
+        }
+        targetKey = ToPropertyKey(targetKey);
+        return DecoratePropertyWithDescriptor(decorators, target, targetKey, targetDescriptor);
+      } else if (!IsUndefined(targetKey)) {
+        if (!IsArray(decorators)) {
+          throw new TypeError();
+        } else if (!IsObject(target)) {
+          throw new TypeError();
+        }
+        targetKey = ToPropertyKey(targetKey);
+        return DecoratePropertyWithoutDescriptor(decorators, target, targetKey);
+      } else {
+        if (!IsArray(decorators)) {
+          throw new TypeError();
+        } else if (!IsConstructor(target)) {
+          throw new TypeError();
+        }
+        return DecorateConstructor(decorators, target);
+      }
+    }
+    Reflect.decorate = decorate;
+    function metadata(metadataKey, metadataValue) {
+      function decorator(target, targetKey) {
+        if (!IsUndefined(targetKey)) {
+          if (!IsObject(target)) {
+            throw new TypeError();
+          }
+          targetKey = ToPropertyKey(targetKey);
+          OrdinaryDefineOwnMetadata(metadataKey, metadataValue, target, targetKey);
+        } else {
+          if (!IsConstructor(target)) {
+            throw new TypeError();
+          }
+          OrdinaryDefineOwnMetadata(metadataKey, metadataValue, target, undefined);
+        }
+      }
+      return decorator;
+    }
+    Reflect.metadata = metadata;
+    function defineMetadata(metadataKey, metadataValue, target, targetKey) {
+      if (!IsObject(target)) {
+        throw new TypeError();
+      } else if (!IsUndefined(targetKey)) {
+        targetKey = ToPropertyKey(targetKey);
+      }
+      return OrdinaryDefineOwnMetadata(metadataKey, metadataValue, target, targetKey);
+    }
+    Reflect.defineMetadata = defineMetadata;
+    function hasMetadata(metadataKey, target, targetKey) {
+      if (!IsObject(target)) {
+        throw new TypeError();
+      } else if (!IsUndefined(targetKey)) {
+        targetKey = ToPropertyKey(targetKey);
+      }
+      return OrdinaryHasMetadata(metadataKey, target, targetKey);
+    }
+    Reflect.hasMetadata = hasMetadata;
+    function hasOwnMetadata(metadataKey, target, targetKey) {
+      if (!IsObject(target)) {
+        throw new TypeError();
+      } else if (!IsUndefined(targetKey)) {
+        targetKey = ToPropertyKey(targetKey);
+      }
+      return OrdinaryHasOwnMetadata(metadataKey, target, targetKey);
+    }
+    Reflect.hasOwnMetadata = hasOwnMetadata;
+    function getMetadata(metadataKey, target, targetKey) {
+      if (!IsObject(target)) {
+        throw new TypeError();
+      } else if (!IsUndefined(targetKey)) {
+        targetKey = ToPropertyKey(targetKey);
+      }
+      return OrdinaryGetMetadata(metadataKey, target, targetKey);
+    }
+    Reflect.getMetadata = getMetadata;
+    function getOwnMetadata(metadataKey, target, targetKey) {
+      if (!IsObject(target)) {
+        throw new TypeError();
+      } else if (!IsUndefined(targetKey)) {
+        targetKey = ToPropertyKey(targetKey);
+      }
+      return OrdinaryGetOwnMetadata(metadataKey, target, targetKey);
+    }
+    Reflect.getOwnMetadata = getOwnMetadata;
+    function getMetadataKeys(target, targetKey) {
+      if (!IsObject(target)) {
+        throw new TypeError();
+      } else if (!IsUndefined(targetKey)) {
+        targetKey = ToPropertyKey(targetKey);
+      }
+      return OrdinaryMetadataKeys(target, targetKey);
+    }
+    Reflect.getMetadataKeys = getMetadataKeys;
+    function getOwnMetadataKeys(target, targetKey) {
+      if (!IsObject(target)) {
+        throw new TypeError();
+      } else if (!IsUndefined(targetKey)) {
+        targetKey = ToPropertyKey(targetKey);
+      }
+      return OrdinaryOwnMetadataKeys(target, targetKey);
+    }
+    Reflect.getOwnMetadataKeys = getOwnMetadataKeys;
+    function deleteMetadata(metadataKey, target, targetKey) {
+      if (!IsObject(target)) {
+        throw new TypeError();
+      } else if (!IsUndefined(targetKey)) {
+        targetKey = ToPropertyKey(targetKey);
+      }
+      var metadataMap = GetOrCreateMetadataMap(target, targetKey, false);
+      if (IsUndefined(metadataMap)) {
+        return false;
+      }
+      if (!metadataMap.delete(metadataKey)) {
+        return false;
+      }
+      if (metadataMap.size > 0) {
+        return true;
+      }
+      var targetMetadata = __Metadata__.get(target);
+      targetMetadata.delete(targetKey);
+      if (targetMetadata.size > 0) {
+        return true;
+      }
+      __Metadata__.delete(target);
+      return true;
+    }
+    Reflect.deleteMetadata = deleteMetadata;
+    function DecorateConstructor(decorators, target) {
+      for (var i = decorators.length - 1; i >= 0; --i) {
+        var decorator = decorators[i];
+        var decorated = decorator(target);
+        if (!IsUndefined(decorated)) {
+          if (!IsConstructor(decorated)) {
+            throw new TypeError();
+          }
+          target = decorated;
+        }
+      }
+      return target;
+    }
+    function DecoratePropertyWithDescriptor(decorators, target, propertyKey, descriptor) {
+      for (var i = decorators.length - 1; i >= 0; --i) {
+        var decorator = decorators[i];
+        var decorated = decorator(target, propertyKey, descriptor);
+        if (!IsUndefined(decorated)) {
+          if (!IsObject(decorated)) {
+            throw new TypeError();
+          }
+          descriptor = decorated;
+        }
+      }
+      return descriptor;
+    }
+    function DecoratePropertyWithoutDescriptor(decorators, target, propertyKey) {
+      for (var i = decorators.length - 1; i >= 0; --i) {
+        var decorator = decorators[i];
+        decorator(target, propertyKey);
+      }
+    }
+    function GetOrCreateMetadataMap(target, targetKey, create) {
+      var targetMetadata = __Metadata__.get(target);
+      if (!targetMetadata) {
+        if (!create) {
+          return undefined;
+        }
+        targetMetadata = new _Map();
+        __Metadata__.set(target, targetMetadata);
+      }
+      var keyMetadata = targetMetadata.get(targetKey);
+      if (!keyMetadata) {
+        if (!create) {
+          return undefined;
+        }
+        keyMetadata = new _Map();
+        targetMetadata.set(targetKey, keyMetadata);
+      }
+      return keyMetadata;
+    }
+    function OrdinaryHasMetadata(MetadataKey, O, P) {
+      var hasOwn = OrdinaryHasOwnMetadata(MetadataKey, O, P);
+      if (hasOwn) {
+        return true;
+      }
+      var parent = GetPrototypeOf(O);
+      if (parent !== null) {
+        return OrdinaryHasMetadata(MetadataKey, parent, P);
+      }
+      return false;
+    }
+    function OrdinaryHasOwnMetadata(MetadataKey, O, P) {
+      var metadataMap = GetOrCreateMetadataMap(O, P, false);
+      if (metadataMap === undefined) {
+        return false;
+      }
+      return Boolean(metadataMap.has(MetadataKey));
+    }
+    function OrdinaryGetMetadata(MetadataKey, O, P) {
+      var hasOwn = OrdinaryHasOwnMetadata(MetadataKey, O, P);
+      if (hasOwn) {
+        return OrdinaryGetOwnMetadata(MetadataKey, O, P);
+      }
+      var parent = GetPrototypeOf(O);
+      if (parent !== null) {
+        return OrdinaryGetMetadata(MetadataKey, parent, P);
+      }
+      return undefined;
+    }
+    function OrdinaryGetOwnMetadata(MetadataKey, O, P) {
+      var metadataMap = GetOrCreateMetadataMap(O, P, false);
+      if (metadataMap === undefined) {
+        return undefined;
+      }
+      return metadataMap.get(MetadataKey);
+    }
+    function OrdinaryDefineOwnMetadata(MetadataKey, MetadataValue, O, P) {
+      var metadataMap = GetOrCreateMetadataMap(O, P, true);
+      metadataMap.set(MetadataKey, MetadataValue);
+    }
+    function OrdinaryMetadataKeys(O, P) {
+      var ownKeys = OrdinaryOwnMetadataKeys(O, P);
+      var parent = GetPrototypeOf(O);
+      if (parent === null) {
+        return ownKeys;
+      }
+      var parentKeys = OrdinaryMetadataKeys(parent, P);
+      if (parentKeys.length <= 0) {
+        return ownKeys;
+      }
+      if (ownKeys.length <= 0) {
+        return parentKeys;
+      }
+      var set = new _Set();
+      var keys = [];
+      for (var _i = 0; _i < ownKeys.length; _i++) {
+        var key = ownKeys[_i];
+        var hasKey = set.has(key);
+        if (!hasKey) {
+          set.add(key);
+          keys.push(key);
+        }
+      }
+      for (var _a = 0; _a < parentKeys.length; _a++) {
+        var key = parentKeys[_a];
+        var hasKey = set.has(key);
+        if (!hasKey) {
+          set.add(key);
+          keys.push(key);
+        }
+      }
+      return keys;
+    }
+    function OrdinaryOwnMetadataKeys(target, targetKey) {
+      var metadataMap = GetOrCreateMetadataMap(target, targetKey, false);
+      var keys = [];
+      if (metadataMap) {
+        metadataMap.forEach(function(_, key) {
+          return keys.push(key);
+        });
+      }
+      return keys;
+    }
+    function IsUndefined(x) {
+      return x === undefined;
+    }
+    function IsArray(x) {
+      return Array.isArray(x);
+    }
+    function IsObject(x) {
+      return typeof x === "object" ? x !== null : typeof x === "function";
+    }
+    function IsConstructor(x) {
+      return typeof x === "function";
+    }
+    function IsSymbol(x) {
+      return typeof x === "symbol";
+    }
+    function ToPropertyKey(value) {
+      if (IsSymbol(value)) {
+        return value;
+      }
+      return String(value);
+    }
+    function GetPrototypeOf(O) {
+      var proto = Object.getPrototypeOf(O);
+      if (typeof O !== "function" || O === functionPrototype) {
+        return proto;
+      }
+      if (proto !== functionPrototype) {
+        return proto;
+      }
+      var prototype = O.prototype;
+      var prototypeProto = Object.getPrototypeOf(prototype);
+      if (prototypeProto == null || prototypeProto === Object.prototype) {
+        return proto;
+      }
+      var constructor = prototypeProto.constructor;
+      if (typeof constructor !== "function") {
+        return proto;
+      }
+      if (constructor === O) {
+        return proto;
+      }
+      return constructor;
+    }
+    function CreateMapPolyfill() {
+      var cacheSentinel = {};
+      function Map() {
+        this._keys = [];
+        this._values = [];
+        this._cache = cacheSentinel;
+      }
+      Map.prototype = {
+        get size() {
+          return this._keys.length;
+        },
+        has: function(key) {
+          if (key === this._cache) {
+            return true;
+          }
+          if (this._find(key) >= 0) {
+            this._cache = key;
+            return true;
+          }
+          return false;
+        },
+        get: function(key) {
+          var index = this._find(key);
+          if (index >= 0) {
+            this._cache = key;
+            return this._values[index];
+          }
+          return undefined;
+        },
+        set: function(key, value) {
+          this.delete(key);
+          this._keys.push(key);
+          this._values.push(value);
+          this._cache = key;
+          return this;
+        },
+        delete: function(key) {
+          var index = this._find(key);
+          if (index >= 0) {
+            this._keys.splice(index, 1);
+            this._values.splice(index, 1);
+            this._cache = cacheSentinel;
+            return true;
+          }
+          return false;
+        },
+        clear: function() {
+          this._keys.length = 0;
+          this._values.length = 0;
+          this._cache = cacheSentinel;
+        },
+        forEach: function(callback, thisArg) {
+          var size = this.size;
+          for (var i = 0; i < size; ++i) {
+            var key = this._keys[i];
+            var value = this._values[i];
+            this._cache = key;
+            callback.call(this, value, key, this);
+          }
+        },
+        _find: function(key) {
+          var keys = this._keys;
+          var size = keys.length;
+          for (var i = 0; i < size; ++i) {
+            if (keys[i] === key) {
+              return i;
+            }
+          }
+          return -1;
+        }
+      };
+      return Map;
+    }
+    function CreateSetPolyfill() {
+      var cacheSentinel = {};
+      function Set() {
+        this._map = new _Map();
+      }
+      Set.prototype = {
+        get size() {
+          return this._map.length;
+        },
+        has: function(value) {
+          return this._map.has(value);
+        },
+        add: function(value) {
+          this._map.set(value, value);
+          return this;
+        },
+        delete: function(value) {
+          return this._map.delete(value);
+        },
+        clear: function() {
+          this._map.clear();
+        },
+        forEach: function(callback, thisArg) {
+          this._map.forEach(callback, thisArg);
+        }
+      };
+      return Set;
+    }
+    function CreateWeakMapPolyfill() {
+      var UUID_SIZE = 16;
+      var isNode = typeof global !== "undefined" && Object.prototype.toString.call(global.process) === '[object process]';
+      var nodeCrypto = isNode && require("crypto");
+      var hasOwn = Object.prototype.hasOwnProperty;
+      var keys = {};
+      var rootKey = CreateUniqueKey();
+      function WeakMap() {
+        this._key = CreateUniqueKey();
+      }
+      WeakMap.prototype = {
+        has: function(target) {
+          var table = GetOrCreateWeakMapTable(target, false);
+          if (table) {
+            return this._key in table;
+          }
+          return false;
+        },
+        get: function(target) {
+          var table = GetOrCreateWeakMapTable(target, false);
+          if (table) {
+            return table[this._key];
+          }
+          return undefined;
+        },
+        set: function(target, value) {
+          var table = GetOrCreateWeakMapTable(target, true);
+          table[this._key] = value;
+          return this;
+        },
+        delete: function(target) {
+          var table = GetOrCreateWeakMapTable(target, false);
+          if (table && this._key in table) {
+            return delete table[this._key];
+          }
+          return false;
+        },
+        clear: function() {
+          this._key = CreateUniqueKey();
+        }
+      };
+      function FillRandomBytes(buffer, size) {
+        for (var i = 0; i < size; ++i) {
+          buffer[i] = Math.random() * 255 | 0;
+        }
+      }
+      function GenRandomBytes(size) {
+        if (nodeCrypto) {
+          var data = nodeCrypto.randomBytes(size);
+          return data;
+        } else if (typeof Uint8Array === "function") {
+          var data = new Uint8Array(size);
+          if (typeof crypto !== "undefined") {
+            crypto.getRandomValues(data);
+          } else if (typeof msCrypto !== "undefined") {
+            msCrypto.getRandomValues(data);
+          } else {
+            FillRandomBytes(data, size);
+          }
+          return data;
+        } else {
+          var data = new Array(size);
+          FillRandomBytes(data, size);
+          return data;
+        }
+      }
+      function CreateUUID() {
+        var data = GenRandomBytes(UUID_SIZE);
+        data[6] = data[6] & 0x4f | 0x40;
+        data[8] = data[8] & 0xbf | 0x80;
+        var result = "";
+        for (var offset = 0; offset < UUID_SIZE; ++offset) {
+          var byte = data[offset];
+          if (offset === 4 || offset === 6 || offset === 8) {
+            result += "-";
+          }
+          if (byte < 16) {
+            result += "0";
+          }
+          result += byte.toString(16).toLowerCase();
+        }
+        return result;
+      }
+      function CreateUniqueKey() {
+        var key;
+        do {
+          key = "@@WeakMap@@" + CreateUUID();
+        } while (hasOwn.call(keys, key));
+        keys[key] = true;
+        return key;
+      }
+      function GetOrCreateWeakMapTable(target, create) {
+        if (!hasOwn.call(target, rootKey)) {
+          if (!create) {
+            return undefined;
+          }
+          Object.defineProperty(target, rootKey, {value: Object.create(null)});
+        }
+        return target[rootKey];
+      }
+      return WeakMap;
+    }
+    (function(__global) {
+      if (typeof __global.Reflect !== "undefined") {
+        if (__global.Reflect !== Reflect) {
+          for (var p in Reflect) {
+            __global.Reflect[p] = Reflect[p];
+          }
+        }
+      } else {
+        __global.Reflect = Reflect;
+      }
+    })(typeof window !== "undefined" ? window : typeof WorkerGlobalScope !== "undefined" ? self : typeof global !== "undefined" ? global : Function("return this;")());
+  })(Reflect || (Reflect = {}));
+  return {};
+});
+
+define('relayer/injector',["reflect-metadata"], function($__0) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  $__0;
+  function metadataValueOrCall(key, target, cb) {
+    if (Reflect.hasOwnMetadata(key, target)) {
+      return Reflect.getMetadata(key, target);
+    } else {
+      var value = cb();
+      Reflect.defineMetadata(key, value, target);
+      return value;
+    }
+  }
+  function Inject() {
+    for (var dependencies = [],
+        $__3 = 0; $__3 < arguments.length; $__3++)
+      dependencies[$__3] = arguments[$__3];
+    return function(target) {
+      Reflect.defineMetadata('injectables', dependencies, target);
+    };
+  }
+  function factory(Target) {
+    return metadataValueOrCall('factory', Target, (function() {
+      return new FactoryInjectable(Target);
+    }));
+  }
+  function value(Target) {
+    return metadataValueOrCall('value', Target, (function() {
+      return new ValueInjectable(Target);
+    }));
+  }
+  function singleton(Target) {
+    return metadataValueOrCall('singleton', Target, (function() {
+      return new SingletonInjectable(Target);
+    }));
+  }
+  function instance(Target) {
+    return metadataValueOrCall('instance', Target, (function() {
+      return new InstanceInjectable(Target);
+    }));
+  }
+  var Injectable = function Injectable() {};
+  ($traceurRuntime.createClass)(Injectable, {instantiate: function() {
+      for (var args = [],
+          $__4 = 0; $__4 < arguments.length; $__4++)
+        args[$__4] = arguments[$__4];
+      var $__1 = this;
+      return metadataValueOrCall('instantiated', this, (function() {
+        var $__8;
+        var instantiated = ($__8 = $__1)._instantiate.apply($__8, $traceurRuntime.spread(args));
+        injector.recordInstantiation(instantiated);
+        return instantiated;
+      }));
+    }}, {});
+  var ValueInjectable = function ValueInjectable(value) {
+    $traceurRuntime.superConstructor($ValueInjectable).call(this);
+    this.value = value;
+  };
+  var $ValueInjectable = ValueInjectable;
+  ($traceurRuntime.createClass)(ValueInjectable, {_instantiate: function() {
+      return this.value;
+    }}, {}, Injectable);
+  var FactoryInjectable = function FactoryInjectable(Target) {
+    $traceurRuntime.superConstructor($FactoryInjectable).call(this);
+    this.Target = Target;
+  };
+  var $FactoryInjectable = FactoryInjectable;
+  ($traceurRuntime.createClass)(FactoryInjectable, {_instantiate: function() {
+      var $__1 = this;
+      return (function() {
+        var $__8;
+        for (var args = [],
+            $__5 = 0; $__5 < arguments.length; $__5++)
+          args[$__5] = arguments[$__5];
+        return ($__8 = injector).instantiate.apply($__8, $traceurRuntime.spread([instance($__1.Target)], args));
+      });
+    }}, {}, Injectable);
+  var ConstructableInjectable = function ConstructableInjectable(Target) {
+    $traceurRuntime.superConstructor($ConstructableInjectable).call(this);
+    this.Target = Target;
+  };
+  var $ConstructableInjectable = ConstructableInjectable;
+  ($traceurRuntime.createClass)(ConstructableInjectable, {_instantiate: function() {
+      for (var args = [],
+          $__5 = 0; $__5 < arguments.length; $__5++)
+        args[$__5] = arguments[$__5];
+      var finalArgs;
+      if (Reflect.hasOwnMetadata('injectables', this.Target)) {
+        var instantiatedInjectables = injector.instantiateInjectables(Reflect.getMetadata('injectables', this.Target));
+        finalArgs = instantiatedInjectables.concat(args);
+      } else {
+        finalArgs = args;
+      }
+      return new (Function.prototype.bind.apply(this.Target, $traceurRuntime.spread([null], finalArgs)))();
+    }}, {}, Injectable);
+  var SingletonInjectable = function SingletonInjectable() {
+    $traceurRuntime.superConstructor($SingletonInjectable).apply(this, arguments);
+    ;
+  };
+  var $SingletonInjectable = SingletonInjectable;
+  ($traceurRuntime.createClass)(SingletonInjectable, {}, {}, ConstructableInjectable);
+  var InstanceInjectable = function InstanceInjectable() {
+    $traceurRuntime.superConstructor($InstanceInjectable).apply(this, arguments);
+    ;
+  };
+  var $InstanceInjectable = InstanceInjectable;
+  ($traceurRuntime.createClass)(InstanceInjectable, {instantiate: function() {
+      var $__8;
+      for (var args = [],
+          $__6 = 0; $__6 < arguments.length; $__6++)
+        args[$__6] = arguments[$__6];
+      return ($__8 = this)._instantiate.apply($__8, $traceurRuntime.spread(args));
+    }}, {}, ConstructableInjectable);
+  var Injector = function Injector() {
+    this._instantiations = [];
+  };
+  ($traceurRuntime.createClass)(Injector, {
+    recordInstantiation: function(instantiated) {
+      this._instantiations.push(instantiated);
+    },
+    reset: function() {
+      this._instantiations.forEach((function(instantiated) {
+        return Reflect.deleteMetadata("instantiated", instantiated);
+      }));
+    },
+    instantiateInjectables: function(injectables) {
+      var $__1 = this;
+      return injectables.map((function(injectable) {
+        return $__1.instantiate(injectable);
+      }));
+    },
+    instantiate: function(Target) {
+      var $__8;
+      for (var args = [],
+          $__7 = 1; $__7 < arguments.length; $__7++)
+        args[$__7 - 1] = arguments[$__7];
+      var injectable;
+      if (!(Target instanceof Injectable)) {
+        injectable = singleton(Target);
+      } else {
+        injectable = Target;
+      }
+      return ($__8 = injectable).instantiate.apply($__8, $traceurRuntime.spread(args));
+    },
+    get XingPromise() {
+      this._XingPromise = this._XingPromise || new ValueInjectable();
+      return this._XingPromise;
+    }
+  }, {});
+  var injector = new Injector();
+  var $__default = injector;
+  return {
+    get Inject() {
+      return Inject;
+    },
+    get factory() {
+      return factory;
+    },
+    get value() {
+      return value;
+    },
+    get singleton() {
+      return singleton;
+    },
+    get instance() {
+      return instance;
+    },
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/endpoints/ResolvedEndpoint',["./Endpoint", "../injector"], function($__0,$__2) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  var Endpoint = $__0.default;
+  var $__3 = $__2,
+      Inject = $__3.Inject,
+      value = $__3.value,
+      injector = $__3.default;
+  var ResolvedEndpoint = function ResolvedEndpoint(Promise, transport, templatedUrl) {
+    var resourceTransformers = arguments[3] !== (void 0) ? arguments[3] : [];
+    var createResourceTransformers = arguments[4] !== (void 0) ? arguments[4] : [];
+    var $__4;
+    $traceurRuntime.superConstructor($ResolvedEndpoint).call(this);
+    this.transport = transport;
+    this.templatedUrl = templatedUrl;
+    if (Array.isArray(resourceTransformers)) {
+      this.resourceTransformers = resourceTransformers;
+    } else {
+      this.resourceTransformers = [resourceTransformers];
+    }
+    if (Array.isArray(createResourceTransformers)) {
+      this.createResourceTransformers = createResourceTransformers;
+    } else {
+      this.createResourceTransformers = [createResourceTransformers];
+    }
+    this.endpointPromise = ($__4 = this, function() {
+      return Promise.resolve($__4);
+    });
+  };
+  var $ResolvedEndpoint = ResolvedEndpoint;
+  ($traceurRuntime.createClass)(ResolvedEndpoint, {
+    _load: function() {
+      var response = this.transport.get(this.templatedUrl.url, this.templatedUrl.etag);
+      return this._transformResponse(this.resourceTransformers, response);
+    },
+    _update: function(resource) {
+      var request = this._transformRequest(this.resourceTransformers, resource);
+      var response = this.transport.put(this.templatedUrl.url, request, this.templatedUrl.etag);
+      return this._transformResponse(this.resourceTransformers, response);
+    },
+    _create: function(resource) {
+      var request = this._transformRequest(this.createResourceTransformers, resource);
+      var response = this.transport.post(this.templatedUrl.url, request);
+      return this._transformResponse(this.createResourceTransformers, response);
+    },
+    _transformResponse: function(transformers, response) {
+      var $__4 = this;
+      return transformers.reduce((function(interimResponse, transformer) {
+        return transformer.transformResponse($__4, interimResponse);
+      }), response);
+    },
+    _transformRequest: function(transformers, request) {
+      var $__4 = this;
+      return transformers.slice(0).reverse().reduce((function(interimRequest, transformer) {
+        return transformer.transformRequest($__4, interimRequest);
+      }), request);
+    },
+    _remove: function() {
+      return this.transport.delete(this.templatedUrl.url);
+    }
+  }, {}, Endpoint);
+  var $__default = ResolvedEndpoint;
+  Inject(injector.XingPromise)(ResolvedEndpoint);
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/endpoints/LoadedDataEndpoint',["./ResolvedEndpoint", "../injector"], function($__0,$__2) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  var ResolvedEndpoint = $__0.default;
+  var $__3 = $__2,
+      Inject = $__3.Inject,
+      injector = $__3.default;
+  var LoadedDataEndpoint = function LoadedDataEndpoint(Promise, resolvedEndpoint, resource) {
+    var resourceTransformers = arguments[3] !== (void 0) ? arguments[3] : [];
+    var createResourceTransformers = arguments[4] !== (void 0) ? arguments[4] : [];
+    $traceurRuntime.superConstructor($LoadedDataEndpoint).call(this, Promise, resolvedEndpoint.transport, resolvedEndpoint.templatedUrl, resolvedEndpoint.resourceTransformers.concat(resourceTransformers), resolvedEndpoint.createResourceTransformers.concat(createResourceTransformers));
+    this.resource = resource;
+    this.Promise = Promise;
+    this.data = resolvedEndpoint._transformRequest(resolvedEndpoint.resourceTransformers, resource);
+  };
+  var $LoadedDataEndpoint = LoadedDataEndpoint;
+  ($traceurRuntime.createClass)(LoadedDataEndpoint, {
+    _load: function() {
+      return this._transformResponse(this.resourceTransformers, this.Promise.resolve({
+        data: this.data,
+        etag: this.templatedUrl.etag
+      }));
+    },
+    _update: function(resource) {
+      var $__4 = this;
+      var request = this._transformRequest(this.resourceTransformers, resource);
+      var response = this.transport.put(this.templatedUrl.url, request);
+      response = response.then((function(data) {
+        $__4.data = data.data;
+        return data;
+      }));
+      return this._transformResponse(this.resourceTransformers, response);
+    }
+  }, {}, ResolvedEndpoint);
+  var $__default = LoadedDataEndpoint;
+  Inject(injector.XingPromise)(LoadedDataEndpoint);
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/transformers/ResourceTransformer',[], function() {
+  
+  var ResourceTransformer = function ResourceTransformer() {};
+  ($traceurRuntime.createClass)(ResourceTransformer, {
+    transformRequest: function(endpoint, resource) {
+      return resource;
+    },
+    transformResponse: function(endpoint, response) {
+      return response;
+    }
+  }, {});
+  var $__default = ResourceTransformer;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/transformers/EmbeddedPropertyTransformer',["./ResourceTransformer"], function($__0) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  var ResourceTransformer = $__0.default;
+  var EmbeddedPropertyTransformer = function EmbeddedPropertyTransformer(path) {
+    $traceurRuntime.superConstructor($EmbeddedPropertyTransformer).call(this);
+    this.path = path;
+  };
+  var $EmbeddedPropertyTransformer = EmbeddedPropertyTransformer;
+  ($traceurRuntime.createClass)(EmbeddedPropertyTransformer, {
+    transformRequest: function(endpoint, value) {
+      var resource = endpoint.resource;
+      resource.pathSet(this.path, value);
+      return resource;
+    },
+    transformResponse: function(endpoint, response) {
+      var $__2 = this;
+      return response.then((function(resource) {
+        endpoint.resource = resource;
+        return resource.pathGet($__2.path);
+      })).catch((function(error) {
+        throw error.pathGet($__2.path);
+      }));
+    }
+  }, {}, ResourceTransformer);
+  var $__default = EmbeddedPropertyTransformer;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/endpoints/PromiseEndpoint',["./Endpoint"], function($__0) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  var Endpoint = $__0.default;
+  var PromiseEndpoint = function PromiseEndpoint(promiseFunction) {
+    $traceurRuntime.superConstructor($PromiseEndpoint).call(this);
+    this.endpointPromise = promiseFunction;
+  };
+  var $PromiseEndpoint = PromiseEndpoint;
+  ($traceurRuntime.createClass)(PromiseEndpoint, {}, {}, Endpoint);
+  var $__default = PromiseEndpoint;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/decorators/JsonPropertyDecorator',["./ResourceDecorator", "../endpoints/LoadedDataEndpoint", "../transformers/EmbeddedPropertyTransformer", "../endpoints/PromiseEndpoint", "../injector"], function($__0,$__2,$__4,$__6,$__8) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  if (!$__6 || !$__6.__esModule)
+    $__6 = {default: $__6};
+  if (!$__8 || !$__8.__esModule)
+    $__8 = {default: $__8};
+  var ResourceDecorator = $__0.default;
+  var LoadedDataEndpoint = $__2.default;
+  var EmbeddedPropertyTransformer = $__4.default;
+  var PromiseEndpoint = $__6.default;
+  var $__9 = $__8,
+      Inject = $__9.Inject,
+      factory = $__9.factory;
+  var JsonPropertyDecorator = function JsonPropertyDecorator(loadedDataEndpointFactory, embeddedPropertyTransformerFactory, promiseEndpointFactory, name, path, value, options) {
+    $traceurRuntime.superConstructor($JsonPropertyDecorator).call(this, name);
+    this.path = path;
+    this.options = options || {};
+    this.loadedDataEndpointFactory = loadedDataEndpointFactory;
+    this.embeddedPropertyTransformerFactory = embeddedPropertyTransformerFactory;
+    this.promiseEndpointFactory = promiseEndpointFactory;
+    this.value = value;
+  };
+  var $JsonPropertyDecorator = JsonPropertyDecorator;
+  ($traceurRuntime.createClass)(JsonPropertyDecorator, {
+    recordApply: function(target) {
+      target.constructor.properties[this.name] = this.path;
+      if (!(target.hasOwnProperty(this.name))) {
+        var afterSet = this.options.afterSet;
+        var path = this.path;
+        Object.defineProperty(target, this.name, {
+          enumerable: true,
+          configurable: true,
+          get: function() {
+            return this.pathGet(path);
+          },
+          set: function(value) {
+            var result = this.pathSet(path, value);
+            if (afterSet) {
+              afterSet.call(this);
+            }
+            return result;
+          }
+        });
+      }
+    },
+    resourceApply: function(resource) {
+      if (this.value !== undefined) {
+        resource.setInitialValue(this.path, this.value);
+      }
+      this.recordApply(resource);
+    },
+    errorsApply: function(errors) {
+      this.recordApply(errors);
+    },
+    get endpointFn() {
+      if (!this._endpointFn) {
+        var path = this.path;
+        var promiseEndpointFactory = this.promiseEndpointFactory;
+        var loadedDataEndpointFactory = this.loadedDataEndpointFactory;
+        var embeddedPropertyTransformerFactory = this.embeddedPropertyTransformerFactory;
+        this._endpointFn = function() {
+          var uriParams = arguments[0] !== (void 0) ? arguments[0] : {};
+          var $__10 = this;
+          var newPromise = (function() {
+            return $__10.load().then((function(resource) {
+              return loadedDataEndpointFactory(resource.self(), resource, [embeddedPropertyTransformerFactory(path)]);
+            }));
+          });
+          var newEndpoint = promiseEndpointFactory(newPromise);
+          return newEndpoint;
+        };
+      }
+      return this._endpointFn;
+    },
+    endpointApply: function(target) {
+      this.addFunction(target, this.endpointFn);
+    }
+  }, {}, ResourceDecorator);
+  var $__default = JsonPropertyDecorator;
+  Inject(factory(LoadedDataEndpoint), factory(EmbeddedPropertyTransformer), factory(PromiseEndpoint))(JsonPropertyDecorator);
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/TemplatedUrl',[], function() {
+  
+  var TemplatedUrl = function TemplatedUrl(uriTemplate) {
+    var uriParams = arguments[1] !== (void 0) ? arguments[1] : {};
+    this._uriTemplate = new UriTemplate(uriTemplate);
+    this._uriParams = uriParams;
+    this._paths = [];
+    this._url = this._uriTemplate.fillFromObject(this._uriParams);
+  };
+  ($traceurRuntime.createClass)(TemplatedUrl, {
+    get uriTemplate() {
+      return this._uriTemplate.toString();
+    },
+    get uriParams() {
+      return this._uriParams;
+    },
+    get url() {
+      return this._url;
+    },
+    _setUrl: function(url) {
+      var uriParams = this._uriTemplate.fromUri(url);
+      this._uriParams = uriParams;
+      this._url = url;
+    },
+    addDataPathLink: function(resource, path) {
+      var overwrite = arguments[2] !== (void 0) ? arguments[2] : true;
+      if (overwrite) {
+        var newUrl = resource.pathGet(path);
+        if (newUrl) {
+          this._setUrl(newUrl);
+          this._paths.forEach((function(path) {
+            path.resource.pathSet(path.path, newUrl);
+          }));
+        }
+      } else {
+        resource.pathSet(path, this.url);
+      }
+      this._paths.push({
+        resource: resource,
+        path: path
+      });
+    },
+    removeDataPathLink: function(resource, path) {
+      this._paths = this._paths.filter((function(pathLink) {
+        return (pathLink.resource != resource) || (pathLink.path != path);
+      }));
+    }
+  }, {});
+  var TemplatedUrlFromUrl = function TemplatedUrlFromUrl(uriTemplate, url) {
+    $traceurRuntime.superConstructor($TemplatedUrlFromUrl).call(this, uriTemplate);
+    $traceurRuntime.superGet(this, $TemplatedUrlFromUrl.prototype, "_setUrl").call(this, url);
+  };
+  var $TemplatedUrlFromUrl = TemplatedUrlFromUrl;
+  ($traceurRuntime.createClass)(TemplatedUrlFromUrl, {}, {}, TemplatedUrl);
+  return {
+    get TemplatedUrl() {
+      return TemplatedUrl;
+    },
+    get TemplatedUrlFromUrl() {
+      return TemplatedUrlFromUrl;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/RelationshipUtilities',["./TemplatedUrl"], function($__0) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  var TemplatedUrl = $__0.TemplatedUrl;
+  var RelationshipUtilities = function RelationshipUtilities() {
+    ;
+  };
+  ($traceurRuntime.createClass)(RelationshipUtilities, {addMethods: function(target, resource, name) {
+      target.get = function() {
+        return resource.relationships[name];
+      };
+      target.present = function() {
+        return resource.relationships[name] ? true : false;
+      };
+      target.set = function(newRelationship) {
+        var linksPath = resource.constructor.relationships[name].linksPath;
+        if (resource.relationships[name] instanceof TemplatedUrl) {
+          resource.relationships[name].removeDataPathLink(resource, linksPath);
+          if (!newRelationship) {
+            resource.pathSet(linksPath, "");
+          }
+        }
+        if (newRelationship instanceof TemplatedUrl) {
+          newRelationship.addDataPathLink(resource, linksPath, false);
+        }
+        resource.relationships[name] = newRelationship;
+        if (!resource.relationships[name]) {
+          delete resource.relationships[name];
+        }
+      };
+    }}, {});
+  var $__default = RelationshipUtilities;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/decorators/RelatedResourceDecorator',["./ResourceDecorator", "../TemplatedUrl", "../injector", "../endpoints/PromiseEndpoint", "../RelationshipUtilities"], function($__0,$__2,$__4,$__6,$__8) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  if (!$__6 || !$__6.__esModule)
+    $__6 = {default: $__6};
+  if (!$__8 || !$__8.__esModule)
+    $__8 = {default: $__8};
+  var ResourceDecorator = $__0.default;
+  var TemplatedUrl = $__2.TemplatedUrl;
+  var $__5 = $__4,
+      Inject = $__5.Inject,
+      factory = $__5.factory;
+  var PromiseEndpoint = $__6.default;
+  var RelationshipUtilities = $__8.default;
+  var RelatedResourceDecorator = function RelatedResourceDecorator(promiseEndpointFactory, relationshipUtilities, name, relationship) {
+    $traceurRuntime.superConstructor($RelatedResourceDecorator).call(this, name);
+    this.promiseEndpointFactory = promiseEndpointFactory;
+    this.relationshipUtilities = relationshipUtilities;
+    this.relationship = relationship;
+  };
+  var $RelatedResourceDecorator = RelatedResourceDecorator;
+  ($traceurRuntime.createClass)(RelatedResourceDecorator, {
+    get resourceFn() {
+      if (!this._resourceFn) {
+        var name = this.name;
+        var relationship = this.relationship;
+        var promiseEndpointFactory = this.promiseEndpointFactory;
+        var relationshipUtilities = this.relationshipUtilities;
+        this._resourceFn = function(uriParams) {
+          var recursiveCall = arguments[1] !== (void 0) ? arguments[1] : false;
+          var $__10 = this;
+          if (relationship.async && this.isPersisted) {
+            var endpoint;
+            if (!this.relationships[name]) {
+              if (recursiveCall === false) {
+                endpoint = promiseEndpointFactory((function() {
+                  return $__10.self().load().then((function(resource) {
+                    return resource[name](uriParams, true);
+                  }));
+                }));
+              } else {
+                throw "Error: Unable to find relationship, even on canonical resource";
+              }
+            } else if (this.relationships[name] instanceof TemplatedUrl) {
+              endpoint = relationship.linkedEndpoint(this, uriParams);
+            } else {
+              endpoint = relationship.embeddedEndpoint(this, uriParams);
+            }
+            relationship.ResourceClass.resourceDescription.applyToEndpoint(endpoint);
+            relationshipUtilities.addMethods(endpoint, this, name);
+            return endpoint;
+          } else {
+            if (this.relationships[name] instanceof TemplatedUrl) {
+              throw "Error: non-async relationships must be embedded";
+            } else {
+              if (uriParams) {
+                return this.relationships[name][uriParams];
+              } else {
+                return this.relationships[name];
+              }
+            }
+          }
+        };
+      }
+      return this._resourceFn;
+    },
+    get errorFn() {
+      if (!this._errorFn) {
+        var name = this.name;
+        var path = this.path;
+        var relationship = this.relationship;
+        this._errorFn = function(uriParams) {
+          if (this.relationships[name] instanceof TemplatedUrl) {
+            throw "Error: non-async relationships must be embedded";
+          } else {
+            if (uriParams) {
+              return this.relationships[name][uriParams];
+            } else {
+              return this.relationships[name];
+            }
+          }
+        };
+      }
+      return this._errorFn;
+    },
+    get endpointFn() {
+      if (!this._endpointFn) {
+        var name = this.name;
+        var description = this.relationship.ResourceClass.resourceDescription;
+        var relationship = this.relationship;
+        var promiseEndpointFactory = this.promiseEndpointFactory;
+        this._endpointFn = function() {
+          var uriParams = arguments[0] !== (void 0) ? arguments[0] : {};
+          var $__10 = this;
+          var newPromise = (function() {
+            return $__10.load().then((function(resource) {
+              if (relationship.async) {
+                return resource[name](uriParams);
+              } else {
+                var endpoint = relationship.embeddedEndpoint(resource, uriParams);
+                description.applyToEndpoint(endpoint);
+                return endpoint;
+              }
+            }));
+          });
+          var newEndpoint = promiseEndpointFactory(newPromise);
+          relationship.decorateEndpoint(newEndpoint, uriParams);
+          description.applyToEndpoint(newEndpoint);
+          return newEndpoint;
+        };
+      }
+      return this._endpointFn;
+    },
+    resourceApply: function(target) {
+      target.constructor.relationships[this.name] = this.relationship;
+      this.addFunction(target, this.resourceFn);
+    },
+    errorsApply: function(target) {
+      target.constructor.relationships[this.name] = this.relationship;
+      this.addFunction(target, this.errorFn);
+    },
+    endpointApply: function(target) {
+      this.addFunction(target, this.endpointFn);
+    }
+  }, {}, ResourceDecorator);
+  var $__default = RelatedResourceDecorator;
+  Inject(factory(PromiseEndpoint), RelationshipUtilities)(RelatedResourceDecorator);
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/relationshipDescriptions/RelationshipDescription',[], function() {
+  
+  var RelationshipDescription = function RelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues) {
+    this.initializer = relationshipInitializerFactory(ResourceClass, initialValues);
+    this.mapperFactory = resourceMapperFactory;
+    this.serializerFactory = resourceSerializerFactory;
+    this.inflector = inflector;
+    this.name = name;
+    this.ResourceClass = ResourceClass;
+    this.initialValues = initialValues;
+    this.async = true;
+    if (initialValues === undefined) {
+      this.initializeOnCreate = false;
+    } else {
+      this.initializeOnCreate = true;
+    }
+  };
+  ($traceurRuntime.createClass)(RelationshipDescription, {
+    get linksPath() {
+      this._linksPath = this._linksPath || ("$.links." + this.inflector.underscore(this.name));
+      return this._linksPath;
+    },
+    set linksPath(linksPath) {
+      this._linksPath = linksPath;
+      return this._linksPath;
+    },
+    get dataPath() {
+      this._dataPath = this._dataPath || ("$.data." + this.inflector.underscore(this.name));
+      return this._dataPath;
+    },
+    set dataPath(dataPath) {
+      this._dataPath = dataPath;
+      return this._dataPath;
+    },
+    decorateEndpoint: function(endpoint, uriParams) {}
+  }, {});
+  var $__default = RelationshipDescription;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/initializers/RelationshipInitializer',[], function() {
+  
+  var RelationshipInitializer = function RelationshipInitializer(ResourceClass, initialValues) {
+    this.ResourceClass = ResourceClass;
+    this.initialValues = initialValues;
+  };
+  ($traceurRuntime.createClass)(RelationshipInitializer, {initialize: function() {}}, {});
+  var $__default = RelationshipInitializer;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/initializers/SingleRelationshipInitializer',["./RelationshipInitializer"], function($__0) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  var RelationshipInitializer = $__0.default;
+  var SingleRelationshipInitializer = function SingleRelationshipInitializer() {
+    $traceurRuntime.superConstructor($SingleRelationshipInitializer).apply(this, arguments);
+    ;
+  };
+  var $SingleRelationshipInitializer = SingleRelationshipInitializer;
+  ($traceurRuntime.createClass)(SingleRelationshipInitializer, {initialize: function() {
+      var $__2 = this;
+      var relationship = new this.ResourceClass();
+      if (this.initialValues) {
+        Object.keys(this.initialValues).forEach((function(property) {
+          relationship[property] = $__2.initialValues[property];
+        }));
+      }
+      return relationship;
+    }}, {}, RelationshipInitializer);
+  var $__default = SingleRelationshipInitializer;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/mappers/Mapper',[], function() {
+  
+  var Mapper = function Mapper(transport, response, relationshipDescription) {
+    var useErrors = arguments[3] !== (void 0) ? arguments[3] : false;
+    this.transport = transport;
+    this.response = response;
+    this.relationshipDescription = relationshipDescription;
+    this.useErrors = useErrors;
+  };
+  ($traceurRuntime.createClass)(Mapper, {
+    get ResourceClass() {
+      if (this.useErrors) {
+        return this.relationshipDescription.ResourceClass.errorClass;
+      } else {
+        return this.relationshipDescription.ResourceClass;
+      }
+    },
+    get mapperFactory() {
+      return this.relationshipDescription.mapperFactory;
+    },
+    get serializerFactory() {
+      return this.relationshipDescription.serializerFactory;
+    },
+    map: function() {
+      this.initializeModel();
+      this.mapNestedRelationships();
+      return this.mapped;
+    }
+  }, {});
+  var $__default = Mapper;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/transformers/ThrowErrorTransformer',["./ResourceTransformer"], function($__0) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  var ResourceTransformer = $__0.default;
+  var ThrowErrorTransformer = function ThrowErrorTransformer() {
+    $traceurRuntime.superConstructor($ThrowErrorTransformer).apply(this, arguments);
+    ;
+  };
+  var $ThrowErrorTransformer = ThrowErrorTransformer;
+  ($traceurRuntime.createClass)(ThrowErrorTransformer, {
+    transformRequest: function(endpoint, resource) {
+      throw "This Resource Cannot Be Updated Or Created";
+    },
+    transformResponse: function(endpoint, response) {
+      throw "There is no Resource To Create From This Response";
+    }
+  }, {}, ResourceTransformer);
+  var $__default = ThrowErrorTransformer;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/transformers/PrimaryResourceTransformer',["./ResourceTransformer"], function($__0) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  var ResourceTransformer = $__0.default;
+  var PrimaryResourceTransformer = function PrimaryResourceTransformer(relationshipDescription) {
+    $traceurRuntime.superConstructor($PrimaryResourceTransformer).call(this);
+    this.relationshipDescription = relationshipDescription;
+  };
+  var $PrimaryResourceTransformer = PrimaryResourceTransformer;
+  ($traceurRuntime.createClass)(PrimaryResourceTransformer, {
+    get primaryResourceSerializerFactory() {
+      return this.relationshipDescription.serializerFactory;
+    },
+    get primaryResourceMapperFactory() {
+      return this.relationshipDescription.mapperFactory;
+    },
+    transformRequest: function(endpoint, resource) {
+      return this.primaryResourceSerializerFactory(resource).serialize();
+    },
+    transformResponse: function(endpoint, response) {
+      var $__2 = this;
+      return response.then((function(resolvedResponse) {
+        endpoint.templatedUrl.etag = resolvedResponse.etag;
+        return $__2.primaryResourceMapperFactory(endpoint.transport, resolvedResponse.data, $__2.relationshipDescription, endpoint).map();
+      })).catch((function(resolvedError) {
+        throw $__2.primaryResourceMapperFactory(endpoint.transport, resolvedError.data, $__2.relationshipDescription, endpoint, true).map();
+      }));
+    }
+  }, {}, ResourceTransformer);
+  var $__default = PrimaryResourceTransformer;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/transformers/CreateResourceTransformer',["./PrimaryResourceTransformer"], function($__0) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  var PrimaryResourceTransformer = $__0.default;
+  var CreateResourceTransformer = function CreateResourceTransformer(relationshipDescription, uriTemplate) {
+    $traceurRuntime.superConstructor($CreateResourceTransformer).call(this, relationshipDescription);
+    this.uriTemplate = uriTemplate;
+  };
+  var $CreateResourceTransformer = CreateResourceTransformer;
+  ($traceurRuntime.createClass)(CreateResourceTransformer, {transformResponse: function(endpoint, response) {
+      var $__2 = this;
+      return response.then((function(resolvedResponse) {
+        var resourceMapper = $__2.primaryResourceMapperFactory(endpoint.transport, resolvedResponse.data, $__2.relationshipDescription);
+        resourceMapper.uriTemplate = $__2.uriTemplate;
+        var resource = resourceMapper.map();
+        resource.templatedUrl.etag = resolvedResponse.etag;
+        return resource;
+      })).catch((function(resolvedError) {
+        throw $__2.primaryResourceMapperFactory(endpoint.transport, resolvedError.data, $__2.relationshipDescription, null, true).map();
+      }));
+    }}, {}, PrimaryResourceTransformer);
+  var $__default = CreateResourceTransformer;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/ResourceBuilder',["./TemplatedUrl", "./endpoints/ResolvedEndpoint", "./transformers/ThrowErrorTransformer", "./transformers/CreateResourceTransformer", "./injector"], function($__0,$__2,$__4,$__6,$__8) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  if (!$__6 || !$__6.__esModule)
+    $__6 = {default: $__6};
+  if (!$__8 || !$__8.__esModule)
+    $__8 = {default: $__8};
+  var TemplatedUrlFromUrl = $__0.TemplatedUrlFromUrl;
+  var ResolvedEndpoint = $__2.default;
+  var ThrowErrorTransformer = $__4.default;
+  var CreateResourceTransformer = $__6.default;
+  var $__9 = $__8,
+      Inject = $__9.Inject,
+      factory = $__9.factory;
+  var ResourceBuilder = function ResourceBuilder(templatedUrlFromUrlFactory, resolvedEndpointFactory, throwErrorTransformerFactory, createResourceTransformerFactory, transport, response, primaryResourceTransformer, ResourceClass, relationshipDescription) {
+    this.transport = transport;
+    this.ResourceClass = ResourceClass;
+    this.relationshipDescription = relationshipDescription;
+    this.templatedUrlFromUrlFactory = templatedUrlFromUrlFactory;
+    this.resolvedEndpointFactory = resolvedEndpointFactory;
+    this.throwErrorTransformerFactory = throwErrorTransformerFactory;
+    this.createResourceTransformerFactory = createResourceTransformerFactory;
+    this.response = response;
+    this.primaryResourceTransformer = primaryResourceTransformer;
+  };
+  ($traceurRuntime.createClass)(ResourceBuilder, {build: function() {
+      var uriTemplate = arguments[0] !== (void 0) ? arguments[0] : null;
+      var resource = new this.ResourceClass(this.response);
+      if (resource.pathGet("$.links.self")) {
+        if (uriTemplate) {
+          resource.templatedUrl = this.templatedUrlFromUrlFactory(uriTemplate, resource.pathGet("$.links.self"));
+        } else {
+          resource.templatedUrl = this.templatedUrlFromUrlFactory(resource.pathGet("$.links.self"), resource.pathGet("$.links.self"));
+        }
+        resource.templatedUrl.addDataPathLink(resource, "$.links.self");
+        if (this.relationshipDescription.canCreate) {
+          var createUriTemplate = uriTemplate || resource.pathGet("$.links.template");
+          var createResourceTransformer = this.createResourceTransformerFactory(this.relationshipDescription.createRelationshipDescription, createUriTemplate);
+        } else {
+          var createResourceTransformer = this.throwErrorTransformerFactory();
+        }
+        var endpoint = this.resolvedEndpointFactory(this.transport, resource.templatedUrl, this.primaryResourceTransformer, createResourceTransformer);
+        resource.self = function() {
+          return endpoint;
+        };
+      }
+      return resource;
+    }}, {});
+  var $__default = ResourceBuilder;
+  Inject(factory(TemplatedUrlFromUrl), factory(ResolvedEndpoint), factory(ThrowErrorTransformer), factory(CreateResourceTransformer))(ResourceBuilder);
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/PrimaryResourceBuilder',[], function() {
+  
+  var PrimaryResourceBuilder = function PrimaryResourceBuilder(response, ResourceClass) {
+    this.response = response;
+    this.ResourceClass = ResourceClass;
+  };
+  ($traceurRuntime.createClass)(PrimaryResourceBuilder, {build: function(endpoint) {
+      var resource = new this.ResourceClass(this.response);
+      resource.templatedUrl = endpoint.templatedUrl;
+      resource.templatedUrl.addDataPathLink(resource, "$.links.self");
+      resource.self = function() {
+        return endpoint;
+      };
+      return resource;
+    }}, {});
+  var $__default = PrimaryResourceBuilder;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/mappers/ResourceMapper',["./Mapper", "../TemplatedUrl", "../ResourceBuilder", "../PrimaryResourceBuilder", "../transformers/PrimaryResourceTransformer", "../injector"], function($__0,$__2,$__4,$__6,$__8,$__10) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  if (!$__6 || !$__6.__esModule)
+    $__6 = {default: $__6};
+  if (!$__8 || !$__8.__esModule)
+    $__8 = {default: $__8};
+  if (!$__10 || !$__10.__esModule)
+    $__10 = {default: $__10};
+  var Mapper = $__0.default;
+  var TemplatedUrlFromUrl = $__2.TemplatedUrlFromUrl;
+  var ResourceBuilder = $__4.default;
+  var PrimaryResourceBuilder = $__6.default;
+  var PrimaryResourceTransformer = $__8.default;
+  var $__11 = $__10,
+      Inject = $__11.Inject,
+      factory = $__11.factory;
+  var ResourceMapper = function ResourceMapper(templatedUrlFromUrlFactory, resourceBuilderFactory, primaryResourceBuilderFactory, primaryResourceTransformerFactory, transport, response, relationshipDescription) {
+    var endpoint = arguments[7] !== (void 0) ? arguments[7] : null;
+    var useErrors = arguments[8] !== (void 0) ? arguments[8] : false;
+    $traceurRuntime.superConstructor($ResourceMapper).call(this, transport, response, relationshipDescription, useErrors);
+    this.primaryResourceTransformerFactory = primaryResourceTransformerFactory;
+    this.templatedUrlFromUrlFactory = templatedUrlFromUrlFactory;
+    this.resourceBuilderFactory = resourceBuilderFactory;
+    this.primaryResourceBuilderFactory = primaryResourceBuilderFactory;
+    this.endpoint = endpoint;
+  };
+  var $ResourceMapper = ResourceMapper;
+  ($traceurRuntime.createClass)(ResourceMapper, {
+    initializeModel: function() {
+      if (this.endpoint) {
+        this.mapped = this.primaryResourceBuilderFactory(this.response, this.ResourceClass).build(this.endpoint);
+      } else {
+        this.mapped = this.resourceBuilderFactory(this.transport, this.response, this.primaryResourceTransformer, this.ResourceClass, this.relationshipDescription).build(this.uriTemplate);
+      }
+    },
+    get primaryResourceTransformer() {
+      this._primaryResourceTransformer = this._primaryResourceTransformer || this.primaryResourceTransformerFactory(this.relationshipDescription);
+      return this._primaryResourceTransformer;
+    },
+    mapNestedRelationships: function() {
+      var relationship;
+      this.mapped.relationships = {};
+      for (var relationshipName in this.ResourceClass.relationships) {
+        if (typeof this.ResourceClass.relationships[relationshipName] == 'object') {
+          relationship = this.ResourceClass.relationships[relationshipName];
+          if (this.mapped.pathGet(relationship.dataPath)) {
+            var subMapper = relationship.mapperFactory(this.transport, this.mapped.pathGet(relationship.dataPath), relationship, this.useErrors);
+            this.mapped.relationships[relationshipName] = subMapper.map();
+          } else if (this.mapped.pathGet(relationship.linksPath)) {
+            var templatedUrl = this.templatedUrlFromUrlFactory(this.mapped.pathGet(relationship.linksPath), this.mapped.pathGet(relationship.linksPath));
+            templatedUrl.addDataPathLink(this.mapped, relationship.linksPath);
+            this.mapped.relationships[relationshipName] = templatedUrl;
+          }
+        }
+      }
+    }
+  }, {}, Mapper);
+  var $__default = ResourceMapper;
+  Inject(factory(TemplatedUrlFromUrl), factory(ResourceBuilder), factory(PrimaryResourceBuilder), factory(PrimaryResourceTransformer))(ResourceMapper);
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/serializers/Serializer',[], function() {
+  
+  var Serializer = function Serializer(resource) {
+    this.resource = resource;
+  };
+  ($traceurRuntime.createClass)(Serializer, {serialize: function() {}}, {});
+  var $__default = Serializer;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/serializers/ResourceSerializer',["./Serializer", "../TemplatedUrl"], function($__0,$__2) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  var Serializer = $__0.default;
+  var TemplatedUrl = $__2.TemplatedUrl;
+  var ResourceSerializer = function ResourceSerializer() {
+    $traceurRuntime.superConstructor($ResourceSerializer).apply(this, arguments);
+    ;
+  };
+  var $ResourceSerializer = ResourceSerializer;
+  ($traceurRuntime.createClass)(ResourceSerializer, {serialize: function() {
+      var $__4 = this;
+      var relationship;
+      Object.keys(this.resource.relationships).forEach((function(relationshipName) {
+        var relationship = $__4.resource.relationships[relationshipName];
+        if (!(relationship instanceof TemplatedUrl)) {
+          var relationshipDefinition = $__4.resource.constructor.relationships[relationshipName];
+          var serializer = relationshipDefinition.serializerFactory(relationship);
+          $__4.resource.pathSet(relationshipDefinition.dataPath, serializer.serialize());
+        }
+      }));
+      return this.resource.response;
+    }}, {}, Serializer);
+  var $__default = ResourceSerializer;
   return {
     get default() {
       return $__default;
@@ -2114,7 +3811,101 @@ define('a1atscript',["./a1atscript/Injector", "./a1atscript/annotations", "./a1a
   };
 });
 
-define('relayer/ResourceDescription',["./APIError", "a1atscript", "./Constructable"], function($__0,$__2,$__4) {
+define('xing-inflector',["a1atscript"], function($__0) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  var $__1 = $__0,
+      AsModule = $__1.AsModule,
+      Service = $__1.Service;
+  var Inflector = function Inflector() {
+    ;
+  };
+  ($traceurRuntime.createClass)(Inflector, {
+    camelize: function(key) {
+      if (!angular.isString(key)) {
+        return key;
+      }
+      return key.replace(/_[\w\d]/g, function(match, index, string) {
+        return index === 0 ? match : string.charAt(index + 1).toUpperCase();
+      });
+    },
+    humanize: function(key) {
+      if (!angular.isString(key)) {
+        return key;
+      }
+      return key.replace(/_/g, ' ').replace(/(\w+)/g, function(match) {
+        return match.charAt(0).toUpperCase() + match.slice(1);
+      });
+    },
+    underscore: function(key) {
+      if (!angular.isString(key)) {
+        return key;
+      }
+      return key.replace(/[A-Z]/g, function(match, index) {
+        return index === 0 ? match : '_' + match.toLowerCase();
+      });
+    },
+    dasherize: function(key) {
+      if (!angular.isString(key)) {
+        return key;
+      }
+      return key.replace(/[A-Z]/g, function(match, index) {
+        return index === 0 ? match : '-' + match.toLowerCase();
+      });
+    },
+    pluralize: function(value) {
+      return value + 's';
+    }
+  }, {});
+  var $__default = Inflector;
+  Object.defineProperty(Inflector, "annotations", {get: function() {
+      return [new AsModule('inflector'), new Service('Inflector')];
+    }});
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/transformers/EmbeddedRelationshipTransformer',["./ResourceTransformer"], function($__0) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  var ResourceTransformer = $__0.default;
+  var EmbeddedRelationshipTransformer = function EmbeddedRelationshipTransformer(relationshipName) {
+    $traceurRuntime.superConstructor($EmbeddedRelationshipTransformer).call(this);
+    this.relationshipName = relationshipName;
+  };
+  var $EmbeddedRelationshipTransformer = EmbeddedRelationshipTransformer;
+  ($traceurRuntime.createClass)(EmbeddedRelationshipTransformer, {
+    transformRequest: function(endpoint, value) {
+      var resource = endpoint.resource;
+      resource.relationships[this.relationshipName] = value;
+      return resource;
+    },
+    transformResponse: function(endpoint, response) {
+      var $__2 = this;
+      return response.then((function(resource) {
+        endpoint.resource = resource;
+        return resource.relationships[$__2.relationshipName];
+      })).catch((function(error) {
+        throw error.relationships[$__2.relationshipName];
+      }));
+    }
+  }, {}, ResourceTransformer);
+  var $__default = EmbeddedRelationshipTransformer;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/relationshipDescriptions/SingleRelationshipDescription',["./RelationshipDescription", "../initializers/SingleRelationshipInitializer", "../mappers/ResourceMapper", "../serializers/ResourceSerializer", "xing-inflector", "../transformers/PrimaryResourceTransformer", "../transformers/EmbeddedRelationshipTransformer", "../endpoints/ResolvedEndpoint", "../endpoints/LoadedDataEndpoint", "../TemplatedUrl", "../injector"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12,$__14,$__16,$__18,$__20) {
   
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
@@ -2122,143 +3913,314 @@ define('relayer/ResourceDescription',["./APIError", "a1atscript", "./Constructab
     $__2 = {default: $__2};
   if (!$__4 || !$__4.__esModule)
     $__4 = {default: $__4};
-  var APIError = $__0.default;
-  var Service = $__2.Service;
-  var Constructable = $__4.default;
-  var resourcesToInitialize = [];
-  function describeResource(resourceClass, defineFn) {
-    resourcesToInitialize.push({
-      resourceClass: resourceClass,
-      defineFn: defineFn
-    });
-  }
-  var InitializedResourceClasses = function InitializedResourceClasses(resourceDescriptionFactory) {
-    $traceurRuntime.superConstructor($InitializedResourceClasses).call(this);
-    this.resourceDescriptionFactory = resourceDescriptionFactory;
-    this.initializeClasses();
+  if (!$__6 || !$__6.__esModule)
+    $__6 = {default: $__6};
+  if (!$__8 || !$__8.__esModule)
+    $__8 = {default: $__8};
+  if (!$__10 || !$__10.__esModule)
+    $__10 = {default: $__10};
+  if (!$__12 || !$__12.__esModule)
+    $__12 = {default: $__12};
+  if (!$__14 || !$__14.__esModule)
+    $__14 = {default: $__14};
+  if (!$__16 || !$__16.__esModule)
+    $__16 = {default: $__16};
+  if (!$__18 || !$__18.__esModule)
+    $__18 = {default: $__18};
+  if (!$__20 || !$__20.__esModule)
+    $__20 = {default: $__20};
+  var RelationshipDescription = $__0.default;
+  var SingleRelationshipInitializer = $__2.default;
+  var ResourceMapper = $__4.default;
+  var ResourceSerializer = $__6.default;
+  var Inflector = $__8.default;
+  var PrimaryResourceTransformer = $__10.default;
+  var EmbeddedRelationshipTransformer = $__12.default;
+  var ResolvedEndpoint = $__14.default;
+  var LoadedDataEndpoint = $__16.default;
+  var TemplatedUrl = $__18.TemplatedUrl;
+  var $__21 = $__20,
+      Inject = $__21.Inject,
+      factory = $__21.factory;
+  var SingleRelationshipDescription = function SingleRelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, primaryResourceTransformerFactory, embeddedRelationshipTransformerFactory, resolvedEndpointFactory, loadedDataEndpointFactory, templatedUrlFactory, name, ResourceClass, initialValues) {
+    $traceurRuntime.superConstructor($SingleRelationshipDescription).call(this, relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues);
+    this.primaryResourceTransformerFactory = primaryResourceTransformerFactory;
+    this.embeddedRelationshipTransformerFactory = embeddedRelationshipTransformerFactory;
+    this.resolvedEndpointFactory = resolvedEndpointFactory;
+    this.loadedDataEndpointFactory = loadedDataEndpointFactory;
+    this.templatedUrlFactory = templatedUrlFactory;
+    this._templated = false;
   };
-  var $InitializedResourceClasses = InitializedResourceClasses;
-  ($traceurRuntime.createClass)(InitializedResourceClasses, {
-    buildDescription: function(resourceToInitialize) {
-      var resourceClass = resourceToInitialize.resourceClass;
-      var defineFn = resourceToInitialize.defineFn;
-      var resourceDescription = resourceClass.description(this.resourceDescriptionFactory);
-      defineFn(resourceDescription);
+  var $SingleRelationshipDescription = SingleRelationshipDescription;
+  ($traceurRuntime.createClass)(SingleRelationshipDescription, {
+    set templated(templated) {
+      this._templated = templated;
     },
-    applyDescription: function(resourceToInitialize) {
-      var resourceClass = resourceToInitialize.resourceClass;
-      var resourceDescription = resourceClass.resourceDescription;
-      var errorClass = function(responseData) {
-        APIError.call(this, responseData);
-      };
-      errorClass.relationships = {};
-      errorClass.properties = {};
-      errorClass.prototype = Object.create(APIError.prototype);
-      errorClass.prototype.constructor = errorClass;
-      resourceDescription.applyToResource(resourceClass.prototype);
-      resourceDescription.applyToError(errorClass.prototype);
-      resourceClass.errorClass = errorClass;
-      return resourceClass;
+    get templated() {
+      return this._templated;
     },
-    initializeClasses: function() {
-      var $__6 = this;
-      resourcesToInitialize.forEach((function(resourceToInitialize) {
-        $__6.buildDescription(resourceToInitialize);
-      }));
-      return resourcesToInitialize.map((function(resourceToInitialize) {
-        $__6.applyDescription(resourceToInitialize);
-      }));
+    embeddedEndpoint: function(parent, uriParams) {
+      if (this._templated) {
+        throw "A templated hasOne relationship cannot be embedded";
+      }
+      var parentEndpoint = parent.self();
+      var embeddedRelationshipTransformer = this.embeddedRelationshipTransformerFactory(this.name);
+      return this.loadedDataEndpointFactory(parentEndpoint, parent, embeddedRelationshipTransformer);
+    },
+    linkedEndpoint: function(parent, uriParams) {
+      var transport = parent.self().transport;
+      var url = parent.pathGet(this.linksPath);
+      var params = this._templated ? uriParams : {};
+      var templatedUrl = this.templatedUrlFactory(url, params);
+      if (!this._templated) {
+        templatedUrl.addDataPathLink(parent, this.linksPath);
+      }
+      var primaryResourceTransformer = this.primaryResourceTransformerFactory(this);
+      return this.resolvedEndpointFactory(transport, templatedUrl, primaryResourceTransformer);
     }
-  }, {get factoryNames() {
-      return ['ResourceDescriptionFactory'];
-    }}, Constructable);
-  var ResourceDescription = function ResourceDescription(jsonPropertyDecoratorFactory, relatedResourceDecoratorFactory, singleRelationshipDescriptionFactory, manyRelationshipDescriptionFactory, listRelationshipDescriptionFactory, mapRelationshipDescriptionFactory, inflector) {
-    $traceurRuntime.superConstructor($ResourceDescription).call(this);
-    this.jsonPropertyDecoratorFactory = jsonPropertyDecoratorFactory;
-    this.relatedResourceDecoratorFactory = relatedResourceDecoratorFactory;
-    this.singleRelationshipDescriptionFactory = singleRelationshipDescriptionFactory;
-    this.manyRelationshipDescriptionFactory = manyRelationshipDescriptionFactory;
-    this.listRelationshipDescriptionFactory = listRelationshipDescriptionFactory;
-    this.mapRelationshipDescriptionFactory = mapRelationshipDescriptionFactory;
-    this.inflector = inflector;
-    this.decorators = {};
-    this.allDecorators = [];
-    this.parentDescription = null;
-  };
-  var $ResourceDescription = ResourceDescription;
-  ($traceurRuntime.createClass)(ResourceDescription, {
-    chainFrom: function(other) {
-      if (this.parentDescription && this.parentDescription !== other) {
-        throw new Error("Attempted to rechain description: existing parent if of " + (this.parentDescription.ResourceClass + ", new is of " + other.ResourceClass));
-      } else {
-        this.parentDescription = other;
-      }
-    },
-    recordDecorator: function(name, decoratorDescription) {
-      this.decorators[name] = this.decorators[name] || [];
-      this.decorators[name].push(decoratorDescription);
-      this.allDecorators.push(decoratorDescription);
-      return decoratorDescription;
-    },
-    applyToResource: function(resource) {
-      this.allDecorators.forEach((function(decorator) {
-        decorator.resourceApply(resource);
-      }));
-      if (this.parentDescription) {
-        this.parentDescription.applyToResource(resource);
-      }
-    },
-    applyToError: function(error) {
-      this.allDecorators.forEach((function(decorator) {
-        decorator.errorsApply(error);
-      }));
-      if (this.parentDescription) {
-        this.parentDescription.applyToError(error);
-      }
-    },
-    applyToEndpoint: function(endpoint) {
-      this.allDecorators.forEach((function(decorator) {
-        decorator.endpointApply(endpoint);
-      }));
-      if (this.parentDescription) {
-        this.parentDescription.applyToEndpoint(endpoint);
-      }
-    },
-    property: function(property, initial) {
-      this.jsonProperty(property, ("$.data." + this.inflector.underscore(property)), initial);
-    },
-    hasOne: function(property, rezClass, initialValues) {
-      return this.relatedResource(property, rezClass, initialValues, this.singleRelationshipDescriptionFactory);
-    },
-    hasMany: function(property, rezClass, initialValues) {
-      return this.relatedResource(property, rezClass, initialValues, this.manyRelationshipDescriptionFactory);
-    },
-    hasList: function(property, rezClass, initialValues) {
-      return this.relatedResource(property, rezClass, initialValues, this.listRelationshipDescriptionFactory);
-    },
-    hasMap: function(property, rezClass, initialValue) {
-      return this.relatedResource(property, rezClass, initialValue, this.mapRelationshipDescriptionFactory);
-    },
-    jsonProperty: function(name, path, value, options) {
-      return this.recordDecorator(name, this.jsonPropertyDecoratorFactory(name, path, value, options));
-    },
-    relatedResource: function(property, rezClass, initialValues, relationshipDescriptionFactory) {
-      var relationship = relationshipDescriptionFactory(property, rezClass, initialValues);
-      this.recordDecorator(name, this.relatedResourceDecoratorFactory(property, relationship));
-      return relationship;
-    }
-  }, {get factoryNames() {
-      return ['JsonPropertyDecoratorFactory', 'RelatedResourceDecoratorFactory', 'SingleRelationshipDescriptionFactory', 'ManyRelationshipDescriptionFactory', 'ListRelationshipDescriptionFactory', 'MapRelationshipDescriptionFactory', 'Inflector'];
-    }}, Constructable);
+  }, {}, RelationshipDescription);
+  var $__default = SingleRelationshipDescription;
+  Inject(factory(SingleRelationshipInitializer), factory(ResourceMapper), factory(ResourceSerializer), Inflector, factory(PrimaryResourceTransformer), factory(EmbeddedRelationshipTransformer), factory(ResolvedEndpoint), factory(LoadedDataEndpoint), factory(TemplatedUrl))(SingleRelationshipDescription);
   return {
-    get describeResource() {
-      return describeResource;
+    get default() {
+      return $__default;
     },
-    get InitializedResourceClasses() {
-      return InitializedResourceClasses;
+    __esModule: true
+  };
+});
+
+define('relayer/relationshipDescriptions/MultipleRelationshipDescription',["./RelationshipDescription"], function($__0) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  var RelationshipDescription = $__0.default;
+  var MultipleRelationshipDescription = function MultipleRelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, embeddedRelationshipTransformerFactory, singleFromManyTransformerFactory, loadedDataEndpointFactory, name, ResourceClass, initialValues) {
+    $traceurRuntime.superConstructor($MultipleRelationshipDescription).call(this, relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues);
+    this.embeddedRelationshipTransformerFactory = embeddedRelationshipTransformerFactory;
+    this.singleFromManyTransformerFactory = singleFromManyTransformerFactory;
+    this.loadedDataEndpointFactory = loadedDataEndpointFactory;
+  };
+  var $MultipleRelationshipDescription = MultipleRelationshipDescription;
+  ($traceurRuntime.createClass)(MultipleRelationshipDescription, {
+    embeddedEndpoint: function(parent, uriParams) {
+      var parentEndpoint = parent.self();
+      var transformer;
+      if (typeof uriParams == 'string') {
+        transformer = this.singleFromManyTransformerFactory(this.name, uriParams);
+      } else {
+        transformer = this.embeddedRelationshipTransformerFactory(this.name);
+      }
+      return this.loadedDataEndpointFactory(parentEndpoint, parent, transformer);
     },
-    get ResourceDescription() {
-      return ResourceDescription;
+    linkedEndpoint: function(parent, uriParams) {
+      throw "Error: a many relationships must be embedded";
+    }
+  }, {}, RelationshipDescription);
+  var $__default = MultipleRelationshipDescription;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/initializers/ManyRelationshipInitializer',["./RelationshipInitializer", "./SingleRelationshipInitializer", "../injector"], function($__0,$__2,$__4) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  var RelationshipInitializer = $__0.default;
+  var SingleRelationshipInitializer = $__2.default;
+  var $__5 = $__4,
+      Inject = $__5.Inject,
+      factory = $__5.factory;
+  var ManyRelationshipInitializer = function ManyRelationshipInitializer(singleRelationshipInitializerFactory, ResourceClass, initialValues) {
+    $traceurRuntime.superConstructor($ManyRelationshipInitializer).call(this, ResourceClass, initialValues);
+    this.singleRelationshipInitializerFactory = singleRelationshipInitializerFactory;
+  };
+  var $ManyRelationshipInitializer = ManyRelationshipInitializer;
+  ($traceurRuntime.createClass)(ManyRelationshipInitializer, {initialize: function() {
+      var $__6 = this;
+      var relationship = [];
+      var response = [];
+      if (this.initialValues) {
+        this.initialValues.forEach((function(initialValue) {
+          var singleInitializer = $__6.singleRelationshipInitializerFactory($__6.ResourceClass, initialValue);
+          var singleRelationship = singleInitializer.initialize();
+          relationship.push(singleRelationship);
+          response.push(singleRelationship.response);
+        }));
+      }
+      return relationship;
+    }}, {}, RelationshipInitializer);
+  var $__default = ManyRelationshipInitializer;
+  Inject(factory(SingleRelationshipInitializer))(ManyRelationshipInitializer);
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/mappers/ManyResourceMapper',["./Mapper", "../relationshipDescriptions/SingleRelationshipDescription", "../injector"], function($__0,$__2,$__4) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  var Mapper = $__0.default;
+  var SingleRelationshipDescription = $__2.default;
+  var $__5 = $__4,
+      Inject = $__5.Inject,
+      factory = $__5.factory;
+  var ManyResourceMapper = function ManyResourceMapper(singleRelationshipDescriptionFactory, transport, response, relationshipDescription) {
+    var useErrors = arguments[4] !== (void 0) ? arguments[4] : false;
+    $traceurRuntime.superConstructor($ManyResourceMapper).call(this, transport, response, relationshipDescription, useErrors);
+    this.singleRelationshipDescription = singleRelationshipDescriptionFactory("", this.ResourceClass);
+  };
+  var $ManyResourceMapper = ManyResourceMapper;
+  ($traceurRuntime.createClass)(ManyResourceMapper, {
+    initializeModel: function() {
+      this.mapped = [];
+    },
+    mapNestedRelationships: function() {
+      var $__6 = this;
+      this.response.forEach((function(response) {
+        var resourceMapper = $__6.singleRelationshipDescription.mapperFactory($__6.transport, response, $__6.singleRelationshipDescription);
+        resourceMapper.uriTemplate = $__6.uriTemplate;
+        $__6.mapped.push(resourceMapper.map());
+      }));
+    }
+  }, {}, Mapper);
+  var $__default = ManyResourceMapper;
+  Inject(factory(SingleRelationshipDescription))(ManyResourceMapper);
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/serializers/ManyResourceSerializer',["./Serializer", "./ResourceSerializer", "../injector"], function($__0,$__2,$__4) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  var Serializer = $__0.default;
+  var ResourceSerializer = $__2.default;
+  var $__5 = $__4,
+      Inject = $__5.Inject,
+      factory = $__5.factory;
+  var ManyResourceSerializer = function ManyResourceSerializer(resourceSerializerFactory, resource) {
+    $traceurRuntime.superConstructor($ManyResourceSerializer).call(this, resource);
+    this.resourceSerializerFactory = resourceSerializerFactory;
+  };
+  var $ManyResourceSerializer = ManyResourceSerializer;
+  ($traceurRuntime.createClass)(ManyResourceSerializer, {serialize: function() {
+      var $__6 = this;
+      return this.resource.map((function(resource) {
+        return $__6.resourceSerializerFactory(resource).serialize();
+      }));
+    }}, {}, Serializer);
+  var $__default = ManyResourceSerializer;
+  Inject(factory(ResourceSerializer))(ManyResourceSerializer);
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/transformers/SingleFromManyTransformer',["./ResourceTransformer"], function($__0) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  var ResourceTransformer = $__0.default;
+  var SingleFromManyTransformer = function SingleFromManyTransformer(relationshipName, property) {
+    $traceurRuntime.superConstructor($SingleFromManyTransformer).call(this);
+    this.property = property;
+    this.relationshipName = relationshipName;
+  };
+  var $SingleFromManyTransformer = SingleFromManyTransformer;
+  ($traceurRuntime.createClass)(SingleFromManyTransformer, {
+    transformRequest: function(endpoint, value) {
+      var resource = endpoint.resource;
+      resource.relationships[this.relationshipName][this.property] = value;
+      return resource;
+    },
+    transformResponse: function(endpoint, response) {
+      var $__2 = this;
+      return response.then((function(resource) {
+        endpoint.resource = resource;
+        return resource.relationships[$__2.relationshipName][$__2.property];
+      })).catch((function(error) {
+        throw error.relationships[$__2.relationshipName][$__2.property];
+      }));
+    }
+  }, {}, ResourceTransformer);
+  var $__default = SingleFromManyTransformer;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/relationshipDescriptions/ManyRelationshipDescription',["./MultipleRelationshipDescription", "../initializers/ManyRelationshipInitializer", "../mappers/ManyResourceMapper", "../serializers/ManyResourceSerializer", "xing-inflector", "../transformers/EmbeddedRelationshipTransformer", "../transformers/SingleFromManyTransformer", "../endpoints/LoadedDataEndpoint", "../injector"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12,$__14,$__16) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  if (!$__6 || !$__6.__esModule)
+    $__6 = {default: $__6};
+  if (!$__8 || !$__8.__esModule)
+    $__8 = {default: $__8};
+  if (!$__10 || !$__10.__esModule)
+    $__10 = {default: $__10};
+  if (!$__12 || !$__12.__esModule)
+    $__12 = {default: $__12};
+  if (!$__14 || !$__14.__esModule)
+    $__14 = {default: $__14};
+  if (!$__16 || !$__16.__esModule)
+    $__16 = {default: $__16};
+  var MultipleRelationshipDescription = $__0.default;
+  var ManyRelationshipInitializer = $__2.default;
+  var ManyResourceMapper = $__4.default;
+  var ManyResourceSerializer = $__6.default;
+  var Inflector = $__8.default;
+  var EmbeddedRelationshipTransformer = $__10.default;
+  var SingleFromManyTransformer = $__12.default;
+  var LoadedDataEndpoint = $__14.default;
+  var $__17 = $__16,
+      Inject = $__17.Inject,
+      factory = $__17.factory;
+  var ManyRelationshipDescription = function ManyRelationshipDescription() {
+    $traceurRuntime.superConstructor($ManyRelationshipDescription).apply(this, arguments);
+    ;
+  };
+  var $ManyRelationshipDescription = ManyRelationshipDescription;
+  ($traceurRuntime.createClass)(ManyRelationshipDescription, {}, {}, MultipleRelationshipDescription);
+  var $__default = ManyRelationshipDescription;
+  Inject(factory(ManyRelationshipInitializer), factory(ManyResourceMapper), factory(ManyResourceSerializer), Inflector, factory(EmbeddedRelationshipTransformer), factory(SingleFromManyTransformer), factory(LoadedDataEndpoint))(ManyRelationshipDescription);
+  return {
+    get default() {
+      return $__default;
     },
     __esModule: true
   };
@@ -2415,348 +4377,18 @@ define('relayer/Resource',["./DataWrapper"], function($__0) {
   };
 });
 
-define('relayer/endpoints/Endpoint',["../Constructable"], function($__0) {
+define('relayer/ListResource',["./Resource"], function($__0) {
   
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
-  var Constructable = $__0.default;
-  var Endpoint = function Endpoint() {
-    $traceurRuntime.superConstructor($Endpoint).call(this);
-  };
-  var $Endpoint = Endpoint;
-  ($traceurRuntime.createClass)(Endpoint, {
-    create: function(resource, res, rej) {
-      return this.endpointPromise().then((function(endpoint) {
-        if (endpoint._create) {
-          return endpoint._create(resource);
-        } else {
-          return endpoint.create(resource);
-        }
-      })).then(res, rej);
-    },
-    update: function(resource, res, rej) {
-      return this.endpointPromise().then((function(endpoint) {
-        if (endpoint._update) {
-          return endpoint._update(resource);
-        } else {
-          return endpoint.update(resource);
-        }
-      })).then(res, rej);
-    },
-    load: function(res, rej) {
-      return this.endpointPromise().then((function(endpoint) {
-        if (endpoint._load) {
-          return endpoint._load();
-        } else {
-          return endpoint.load();
-        }
-      })).then(res, rej);
-    },
-    get: function(prop) {
-      for (var args = [],
-          $__3 = 1; $__3 < arguments.length; $__3++)
-        args[$__3 - 1] = arguments[$__3];
-      return this.load().then((function(response) {
-        var $__4;
-        if (typeof response[prop] == 'function') {
-          return ($__4 = response)[prop].apply($__4, $traceurRuntime.spread(args));
-        } else {
-          return response[prop];
-        }
-      }));
-    },
-    remove: function(res, rej) {
-      return this.endpointPromise().then((function(endpoint) {
-        return endpoint._remove();
-      })).then(res, rej);
-    }
-  }, {}, Constructable);
-  var $__default = Endpoint;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/endpoints/PromiseEndpoint',["./Endpoint"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var Endpoint = $__0.default;
-  var PromiseEndpoint = function PromiseEndpoint(promiseFunction) {
-    $traceurRuntime.superConstructor($PromiseEndpoint).call(this);
-    this.endpointPromise = promiseFunction;
-  };
-  var $PromiseEndpoint = PromiseEndpoint;
-  ($traceurRuntime.createClass)(PromiseEndpoint, {}, {}, Endpoint);
-  var $__default = PromiseEndpoint;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/endpoints/ResolvedEndpoint',["./Endpoint"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var Endpoint = $__0.default;
-  var ResolvedEndpoint = function ResolvedEndpoint(Promise, transport, templatedUrl) {
-    var resourceTransformers = arguments[3] !== (void 0) ? arguments[3] : [];
-    var createResourceTransformers = arguments[4] !== (void 0) ? arguments[4] : [];
-    var $__2;
-    $traceurRuntime.superConstructor($ResolvedEndpoint).call(this);
-    this.transport = transport;
-    this.templatedUrl = templatedUrl;
-    if (Array.isArray(resourceTransformers)) {
-      this.resourceTransformers = resourceTransformers;
-    } else {
-      this.resourceTransformers = [resourceTransformers];
-    }
-    if (Array.isArray(createResourceTransformers)) {
-      this.createResourceTransformers = createResourceTransformers;
-    } else {
-      this.createResourceTransformers = [createResourceTransformers];
-    }
-    this.endpointPromise = ($__2 = this, function() {
-      return Promise.resolve($__2);
-    });
-  };
-  var $ResolvedEndpoint = ResolvedEndpoint;
-  ($traceurRuntime.createClass)(ResolvedEndpoint, {
-    _load: function() {
-      var response = this.transport.get(this.templatedUrl.url, this.templatedUrl.etag);
-      return this._transformResponse(this.resourceTransformers, response);
-    },
-    _update: function(resource) {
-      var request = this._transformRequest(this.resourceTransformers, resource);
-      var response = this.transport.put(this.templatedUrl.url, request, this.templatedUrl.etag);
-      return this._transformResponse(this.resourceTransformers, response);
-    },
-    _create: function(resource) {
-      var request = this._transformRequest(this.createResourceTransformers, resource);
-      var response = this.transport.post(this.templatedUrl.url, request);
-      return this._transformResponse(this.createResourceTransformers, response);
-    },
-    _transformResponse: function(transformers, response) {
-      var $__2 = this;
-      return transformers.reduce((function(interimResponse, transformer) {
-        return transformer.transformResponse($__2, interimResponse);
-      }), response);
-    },
-    _transformRequest: function(transformers, request) {
-      var $__2 = this;
-      return transformers.slice(0).reverse().reduce((function(interimRequest, transformer) {
-        return transformer.transformRequest($__2, interimRequest);
-      }), request);
-    },
-    _remove: function() {
-      return this.transport.delete(this.templatedUrl.url);
-    }
-  }, {new: function(classMap) {
-      for (var args = [],
-          $__4 = 1; $__4 < arguments.length; $__4++)
-        args[$__4 - 1] = arguments[$__4];
-      var instance = new (Function.prototype.bind.apply(this, $traceurRuntime.spread([null, classMap.XingPromise], args)))();
-      instance.classMap = classMap;
-      return instance;
-    }}, Endpoint);
-  var $__default = ResolvedEndpoint;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/endpoints/LoadedDataEndpoint',["./ResolvedEndpoint"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var ResolvedEndpoint = $__0.default;
-  var LoadedDataEndpoint = function LoadedDataEndpoint(Promise, resolvedEndpoint, resource) {
-    var resourceTransformers = arguments[3] !== (void 0) ? arguments[3] : [];
-    var createResourceTransformers = arguments[4] !== (void 0) ? arguments[4] : [];
-    $traceurRuntime.superConstructor($LoadedDataEndpoint).call(this, Promise, resolvedEndpoint.transport, resolvedEndpoint.templatedUrl, resolvedEndpoint.resourceTransformers.concat(resourceTransformers), resolvedEndpoint.createResourceTransformers.concat(createResourceTransformers));
-    this.resource = resource;
-    this.Promise = Promise;
-    this.data = resolvedEndpoint._transformRequest(resolvedEndpoint.resourceTransformers, resource);
-  };
-  var $LoadedDataEndpoint = LoadedDataEndpoint;
-  ($traceurRuntime.createClass)(LoadedDataEndpoint, {
-    _load: function() {
-      return this._transformResponse(this.resourceTransformers, this.Promise.resolve({
-        data: this.data,
-        etag: this.templatedUrl.etag
-      }));
-    },
-    _update: function(resource) {
-      var $__2 = this;
-      var request = this._transformRequest(this.resourceTransformers, resource);
-      var response = this.transport.put(this.templatedUrl.url, request);
-      response = response.then((function(data) {
-        $__2.data = data.data;
-        return data;
-      }));
-      return this._transformResponse(this.resourceTransformers, response);
-    }
-  }, {}, ResolvedEndpoint);
-  var $__default = LoadedDataEndpoint;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/endpoints',["./endpoints/PromiseEndpoint", "./endpoints/ResolvedEndpoint", "./endpoints/LoadedDataEndpoint"], function($__0,$__1,$__2) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  if (!$__1 || !$__1.__esModule)
-    $__1 = {default: $__1};
-  if (!$__2 || !$__2.__esModule)
-    $__2 = {default: $__2};
-  var $__endpoints_47_PromiseEndpoint_46_js__ = $__0;
-  var $__endpoints_47_ResolvedEndpoint_46_js__ = $__1;
-  var $__endpoints_47_LoadedDataEndpoint_46_js__ = $__2;
-  return {
-    get PromiseEndpoint() {
-      return $__endpoints_47_PromiseEndpoint_46_js__.default;
-    },
-    get ResolvedEndpoint() {
-      return $__endpoints_47_ResolvedEndpoint_46_js__.default;
-    },
-    get LoadedDataEndpoint() {
-      return $__endpoints_47_LoadedDataEndpoint_46_js__.default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/serializers/Serializer',["../Constructable"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var Constructable = $__0.default;
-  var Serializer = function Serializer(resource) {
-    $traceurRuntime.superConstructor($Serializer).call(this);
-    this.resource = resource;
-  };
-  var $Serializer = Serializer;
-  ($traceurRuntime.createClass)(Serializer, {serialize: function() {}}, {}, Constructable);
-  var $__default = Serializer;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/TemplatedUrl',["./Constructable"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var Constructable = $__0.default;
-  var TemplatedUrl = function TemplatedUrl(uriTemplate) {
-    var uriParams = arguments[1] !== (void 0) ? arguments[1] : {};
-    $traceurRuntime.superConstructor($TemplatedUrl).call(this);
-    this._uriTemplate = new UriTemplate(uriTemplate);
-    this._uriParams = uriParams;
-    this._paths = [];
-    this._url = this._uriTemplate.fillFromObject(this._uriParams);
-  };
-  var $TemplatedUrl = TemplatedUrl;
-  ($traceurRuntime.createClass)(TemplatedUrl, {
-    get uriTemplate() {
-      return this._uriTemplate.toString();
-    },
-    get uriParams() {
-      return this._uriParams;
-    },
-    get url() {
-      return this._url;
-    },
-    _setUrl: function(url) {
-      var uriParams = this._uriTemplate.fromUri(url);
-      this._uriParams = uriParams;
-      this._url = url;
-    },
-    addDataPathLink: function(resource, path) {
-      var overwrite = arguments[2] !== (void 0) ? arguments[2] : true;
-      if (overwrite) {
-        var newUrl = resource.pathGet(path);
-        if (newUrl) {
-          this._setUrl(newUrl);
-          this._paths.forEach((function(path) {
-            path.resource.pathSet(path.path, newUrl);
-          }));
-        }
-      } else {
-        resource.pathSet(path, this.url);
-      }
-      this._paths.push({
-        resource: resource,
-        path: path
-      });
-    },
-    removeDataPathLink: function(resource, path) {
-      this._paths = this._paths.filter((function(pathLink) {
-        return (pathLink.resource != resource) || (pathLink.path != path);
-      }));
-    }
-  }, {}, Constructable);
-  var TemplatedUrlFromUrl = function TemplatedUrlFromUrl(uriTemplate, url) {
-    $traceurRuntime.superConstructor($TemplatedUrlFromUrl).call(this, uriTemplate);
-    $traceurRuntime.superGet(this, $TemplatedUrlFromUrl.prototype, "_setUrl").call(this, url);
-  };
-  var $TemplatedUrlFromUrl = TemplatedUrlFromUrl;
-  ($traceurRuntime.createClass)(TemplatedUrlFromUrl, {}, {}, TemplatedUrl);
-  return {
-    get TemplatedUrl() {
-      return TemplatedUrl;
-    },
-    get TemplatedUrlFromUrl() {
-      return TemplatedUrlFromUrl;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/serializers/ResourceSerializer',["./Serializer", "../TemplatedUrl"], function($__0,$__2) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  if (!$__2 || !$__2.__esModule)
-    $__2 = {default: $__2};
-  var Serializer = $__0.default;
-  var TemplatedUrl = $__2.TemplatedUrl;
-  var ResourceSerializer = function ResourceSerializer() {
-    $traceurRuntime.superConstructor($ResourceSerializer).apply(this, arguments);
+  var Resource = $__0.default;
+  var ListResource = function ListResource() {
+    $traceurRuntime.superConstructor($ListResource).apply(this, arguments);
     ;
   };
-  var $ResourceSerializer = ResourceSerializer;
-  ($traceurRuntime.createClass)(ResourceSerializer, {serialize: function() {
-      var $__4 = this;
-      var relationship;
-      Object.keys(this.resource.relationships).forEach((function(relationshipName) {
-        var relationship = $__4.resource.relationships[relationshipName];
-        if (!(relationship instanceof TemplatedUrl)) {
-          var relationshipDefinition = $__4.resource.constructor.relationships[relationshipName];
-          var serializer = relationshipDefinition.serializerFactory(relationship);
-          $__4.resource.pathSet(relationshipDefinition.dataPath, serializer.serialize());
-        }
-      }));
-      return this.resource.response;
-    }}, {}, Serializer);
-  var $__default = ResourceSerializer;
+  var $ListResource = ListResource;
+  ($traceurRuntime.createClass)(ListResource, {}, {}, Resource);
+  var $__default = ListResource;
   return {
     get default() {
       return $__default;
@@ -2765,245 +4397,49 @@ define('relayer/serializers/ResourceSerializer',["./Serializer", "../TemplatedUr
   };
 });
 
-define('relayer/serializers/ManyResourceSerializer',["./Serializer"], function($__0) {
+define('relayer/initializers/ListRelationshipInitializer',["./RelationshipInitializer", "../ListResource", "./ManyRelationshipInitializer", "../injector"], function($__0,$__2,$__4,$__6) {
   
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
-  var Serializer = $__0.default;
-  var ManyResourceSerializer = function ManyResourceSerializer(resourceSerializerFactory, resource) {
-    $traceurRuntime.superConstructor($ManyResourceSerializer).call(this, resource);
-    this.resourceSerializerFactory = resourceSerializerFactory;
-  };
-  var $ManyResourceSerializer = ManyResourceSerializer;
-  ($traceurRuntime.createClass)(ManyResourceSerializer, {serialize: function() {
-      var $__2 = this;
-      return this.resource.map((function(resource) {
-        return $__2.resourceSerializerFactory(resource).serialize();
-      }));
-    }}, {get factoryNames() {
-      return ['ResourceSerializerFactory'];
-    }}, Serializer);
-  var $__default = ManyResourceSerializer;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/serializers/ListResourceSerializer',["./Serializer"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var Serializer = $__0.default;
-  var ListResourceSerializer = function ListResourceSerializer(manyResourceSerializerFactory, resource) {
-    $traceurRuntime.superConstructor($ListResourceSerializer).call(this, resource);
-    this.manyResourceSerializerFactory = manyResourceSerializerFactory;
-  };
-  var $ListResourceSerializer = ListResourceSerializer;
-  ($traceurRuntime.createClass)(ListResourceSerializer, {serialize: function() {
-      var data = this.manyResourceSerializerFactory(this.resource).serialize();
-      this.resource.resource.pathSet("$.data", data);
-      return this.resource.resource.response;
-    }}, {get factoryNames() {
-      return ['ManyResourceSerializerFactory'];
-    }}, Serializer);
-  var $__default = ListResourceSerializer;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/serializers/MapResourceSerializer',["./Serializer"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var Serializer = $__0.default;
-  var MapResourceSerializer = function MapResourceSerializer(resourceSerializerFactory, resource) {
-    $traceurRuntime.superConstructor($MapResourceSerializer).call(this, resource);
-    this.resourceSerializerFactory = resourceSerializerFactory;
-  };
-  var $MapResourceSerializer = MapResourceSerializer;
-  ($traceurRuntime.createClass)(MapResourceSerializer, {serialize: function() {
-      var $__2 = this;
-      return Object.keys(this.resource).reduce((function(data, key) {
-        data[key] = $__2.resourceSerializerFactory($__2.resource[key]).serialize();
-        return data;
-      }), {});
-    }}, {get factoryNames() {
-      return ['ResourceSerializerFactory'];
-    }}, Serializer);
-  var $__default = MapResourceSerializer;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/serializers',["./serializers/ResourceSerializer", "./serializers/ManyResourceSerializer", "./serializers/ListResourceSerializer", "./serializers/MapResourceSerializer"], function($__0,$__1,$__2,$__3) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  if (!$__1 || !$__1.__esModule)
-    $__1 = {default: $__1};
   if (!$__2 || !$__2.__esModule)
     $__2 = {default: $__2};
-  if (!$__3 || !$__3.__esModule)
-    $__3 = {default: $__3};
-  var $__serializers_47_ResourceSerializer_46_js__ = $__0;
-  var $__serializers_47_ManyResourceSerializer_46_js__ = $__1;
-  var $__serializers_47_ListResourceSerializer_46_js__ = $__2;
-  var $__serializers_47_MapResourceSerializer_46_js__ = $__3;
-  return {
-    get ResourceSerializer() {
-      return $__serializers_47_ResourceSerializer_46_js__.default;
-    },
-    get ManyResourceSerializer() {
-      return $__serializers_47_ManyResourceSerializer_46_js__.default;
-    },
-    get ListResourceSerializer() {
-      return $__serializers_47_ListResourceSerializer_46_js__.default;
-    },
-    get MapResourceSerializer() {
-      return $__serializers_47_MapResourceSerializer_46_js__.default;
-    },
-    __esModule: true
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  if (!$__6 || !$__6.__esModule)
+    $__6 = {default: $__6};
+  var RelationshipInitializer = $__0.default;
+  var ListResource = $__2.default;
+  var ManyRelationshipInitializer = $__4.default;
+  var $__7 = $__6,
+      Inject = $__7.Inject,
+      factory = $__7.factory,
+      value = $__7.value;
+  var ListRelationshipInitializer = function ListRelationshipInitializer(ListResource, manyRelationshipInitializerFactory, ResourceClass, initialValues) {
+    $traceurRuntime.superConstructor($ListRelationshipInitializer).call(this, ResourceClass, initialValues);
+    this.manyRelationshipInitializer = manyRelationshipInitializerFactory(ResourceClass, initialValues);
+    this.ListResource = ListResource;
   };
-});
-
-define('relayer/mappers/Mapper',["../Constructable"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var Constructable = $__0.default;
-  var Mapper = function Mapper(transport, response, relationshipDescription) {
-    var useErrors = arguments[3] !== (void 0) ? arguments[3] : false;
-    $traceurRuntime.superConstructor($Mapper).call(this);
-    this.transport = transport;
-    this.response = response;
-    this.relationshipDescription = relationshipDescription;
-    this.useErrors = useErrors;
-  };
-  var $Mapper = Mapper;
-  ($traceurRuntime.createClass)(Mapper, {
-    get ResourceClass() {
-      if (this.useErrors) {
-        return this.relationshipDescription.ResourceClass.errorClass;
-      } else {
-        return this.relationshipDescription.ResourceClass;
-      }
-    },
-    get mapperFactory() {
-      return this.relationshipDescription.mapperFactory;
-    },
-    get serializerFactory() {
-      return this.relationshipDescription.serializerFactory;
-    },
-    map: function() {
-      this.initializeModel();
-      this.mapNestedRelationships();
-      return this.mapped;
-    }
-  }, {}, Constructable);
-  var $__default = Mapper;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/mappers/ResourceMapper',["./Mapper"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var Mapper = $__0.default;
-  var ResourceMapper = function ResourceMapper(templatedUrlFromUrlFactory, resourceBuilderFactory, primaryResourceBuilderFactory, primaryResourceTransformerFactory, transport, response, relationshipDescription) {
-    var endpoint = arguments[7] !== (void 0) ? arguments[7] : null;
-    var useErrors = arguments[8] !== (void 0) ? arguments[8] : false;
-    $traceurRuntime.superConstructor($ResourceMapper).call(this, transport, response, relationshipDescription, useErrors);
-    this.primaryResourceTransformerFactory = primaryResourceTransformerFactory;
-    this.templatedUrlFromUrlFactory = templatedUrlFromUrlFactory;
-    this.resourceBuilderFactory = resourceBuilderFactory;
-    this.primaryResourceBuilderFactory = primaryResourceBuilderFactory;
-    this.endpoint = endpoint;
-  };
-  var $ResourceMapper = ResourceMapper;
-  ($traceurRuntime.createClass)(ResourceMapper, {
-    initializeModel: function() {
-      if (this.endpoint) {
-        this.mapped = this.primaryResourceBuilderFactory(this.response, this.ResourceClass).build(this.endpoint);
-      } else {
-        this.mapped = this.resourceBuilderFactory(this.transport, this.response, this.primaryResourceTransformer, this.ResourceClass, this.relationshipDescription).build(this.uriTemplate);
-      }
-    },
-    get primaryResourceTransformer() {
-      this._primaryResourceTransformer = this._primaryResourceTransformer || this.primaryResourceTransformerFactory(this.relationshipDescription);
-      return this._primaryResourceTransformer;
-    },
-    mapNestedRelationships: function() {
-      var relationship;
-      this.mapped.relationships = {};
-      for (var relationshipName in this.ResourceClass.relationships) {
-        if (typeof this.ResourceClass.relationships[relationshipName] == 'object') {
-          relationship = this.ResourceClass.relationships[relationshipName];
-          if (this.mapped.pathGet(relationship.dataPath)) {
-            var subMapper = relationship.mapperFactory(this.transport, this.mapped.pathGet(relationship.dataPath), relationship, this.useErrors);
-            this.mapped.relationships[relationshipName] = subMapper.map();
-          } else if (this.mapped.pathGet(relationship.linksPath)) {
-            var templatedUrl = this.templatedUrlFromUrlFactory(this.mapped.pathGet(relationship.linksPath), this.mapped.pathGet(relationship.linksPath));
-            templatedUrl.addDataPathLink(this.mapped, relationship.linksPath);
-            this.mapped.relationships[relationshipName] = templatedUrl;
-          }
-        }
-      }
-    }
-  }, {get factoryNames() {
-      return ["TemplatedUrlFromUrlFactory", "ResourceBuilderFactory", "PrimaryResourceBuilderFactory", "PrimaryResourceTransformerFactory"];
-    }}, Mapper);
-  var $__default = ResourceMapper;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/mappers/ManyResourceMapper',["./Mapper"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var Mapper = $__0.default;
-  var ManyResourceMapper = function ManyResourceMapper(singleRelationshipDescriptionFactory, transport, response, relationshipDescription) {
-    var useErrors = arguments[4] !== (void 0) ? arguments[4] : false;
-    $traceurRuntime.superConstructor($ManyResourceMapper).call(this, transport, response, relationshipDescription, useErrors);
-    this.singleRelationshipDescription = singleRelationshipDescriptionFactory("", this.ResourceClass);
-  };
-  var $ManyResourceMapper = ManyResourceMapper;
-  ($traceurRuntime.createClass)(ManyResourceMapper, {
-    initializeModel: function() {
-      this.mapped = [];
-    },
-    mapNestedRelationships: function() {
-      var $__2 = this;
-      this.response.forEach((function(response) {
-        var resourceMapper = $__2.singleRelationshipDescription.mapperFactory($__2.transport, response, $__2.singleRelationshipDescription);
-        resourceMapper.uriTemplate = $__2.uriTemplate;
-        $__2.mapped.push(resourceMapper.map());
+  var $ListRelationshipInitializer = ListRelationshipInitializer;
+  ($traceurRuntime.createClass)(ListRelationshipInitializer, {initialize: function() {
+      var manyRelationships = this.manyRelationshipInitializer.initialize();
+      var resource = new this.ListResource({
+        data: manyRelationships.response,
+        links: {}
+      });
+      manyRelationships.resource = resource;
+      ["url", "uriTemplate", "uriParams", "create", "remove", "update", "load"].forEach((function(func) {
+        manyRelationships[func] = function() {
+          var $__10;
+          for (var args = [],
+              $__9 = 0; $__9 < arguments.length; $__9++)
+            args[$__9] = arguments[$__9];
+          return ($__10 = resource)[func].apply($__10, $traceurRuntime.spread(args));
+        };
       }));
-    }
-  }, {get factoryNames() {
-      return ["SingleRelationshipDescriptionFactory"];
-    }}, Mapper);
-  var $__default = ManyResourceMapper;
+      return manyRelationships;
+    }}, {}, RelationshipInitializer);
+  var $__default = ListRelationshipInitializer;
+  Inject(value(ListResource), factory(ManyRelationshipInitializer))(ListRelationshipInitializer);
   return {
     get default() {
       return $__default;
@@ -3012,11 +4448,31 @@ define('relayer/mappers/ManyResourceMapper',["./Mapper"], function($__0) {
   };
 });
 
-define('relayer/mappers/ListResourceMapper',["./ResourceMapper"], function($__0) {
+define('relayer/mappers/ListResourceMapper',["./ResourceMapper", "../TemplatedUrl", "../ResourceBuilder", "../PrimaryResourceBuilder", "../transformers/PrimaryResourceTransformer", "./ManyResourceMapper", "../injector"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12) {
   
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  if (!$__6 || !$__6.__esModule)
+    $__6 = {default: $__6};
+  if (!$__8 || !$__8.__esModule)
+    $__8 = {default: $__8};
+  if (!$__10 || !$__10.__esModule)
+    $__10 = {default: $__10};
+  if (!$__12 || !$__12.__esModule)
+    $__12 = {default: $__12};
   var ResourceMapper = $__0.default;
+  var TemplatedUrlFromUrl = $__2.TemplatedUrlFromUrl;
+  var ResourceBuilder = $__4.default;
+  var PrimaryResourceBuilder = $__6.default;
+  var PrimaryResourceTransformer = $__8.default;
+  var ManyResourceMapper = $__10.default;
+  var $__13 = $__12,
+      Inject = $__13.Inject,
+      factory = $__13.factory;
   var ListResourceMapper = function ListResourceMapper(templatedUrlFromUrlFactory, resourceBuilderFactory, primaryResourceBuilderFactory, primaryResourceTransformerFactory, manyResourceMapperFactory, transport, response, relationshipDescription, endpoint) {
     var useErrors = arguments[9] !== (void 0) ? arguments[9] : false;
     $traceurRuntime.superConstructor($ListResourceMapper).call(this, templatedUrlFromUrlFactory, resourceBuilderFactory, primaryResourceBuilderFactory, primaryResourceTransformerFactory, transport, response, relationshipDescription, endpoint, useErrors);
@@ -3031,7 +4487,7 @@ define('relayer/mappers/ListResourceMapper',["./ResourceMapper"], function($__0)
       return this.relationshipDescription.ResourceClass;
     },
     mapNestedRelationships: function() {
-      var $__2 = this;
+      var $__14 = this;
       $traceurRuntime.superGet(this, $ListResourceMapper.prototype, "mapNestedRelationships").call(this);
       this.resource = this.mapped;
       var manyResourceMapper = this.manyResourceMapperFactory(this.transport, this.resource.pathGet("$.data"), this.relationshipDescription);
@@ -3039,41 +4495,41 @@ define('relayer/mappers/ListResourceMapper',["./ResourceMapper"], function($__0)
       this.mapped = manyResourceMapper.map();
       this.mapped.resource = this.resource;
       ["url", "uriTemplate", "uriParams"].forEach((function(func) {
-        $__2.mapped[func] = function() {
-          var $__6;
+        $__14.mapped[func] = function() {
+          var $__18;
           for (var args = [],
-              $__5 = 0; $__5 < arguments.length; $__5++)
-            args[$__5] = arguments[$__5];
-          return ($__6 = this.resource)[func].apply($__6, $traceurRuntime.spread(args));
+              $__17 = 0; $__17 < arguments.length; $__17++)
+            args[$__17] = arguments[$__17];
+          return ($__18 = this.resource)[func].apply($__18, $traceurRuntime.spread(args));
         };
       }));
       var mapped = this.mapped;
       ["remove", "update", "load"].forEach((function(func) {
-        $__2.mapped[func] = function() {
-          var $__6;
+        $__14.mapped[func] = function() {
+          var $__18;
           for (var args = [],
-              $__5 = 0; $__5 < arguments.length; $__5++)
-            args[$__5] = arguments[$__5];
-          return ($__6 = this.resource.self())[func].apply($__6, $traceurRuntime.spread([mapped], args));
+              $__17 = 0; $__17 < arguments.length; $__17++)
+            args[$__17] = arguments[$__17];
+          return ($__18 = this.resource.self())[func].apply($__18, $traceurRuntime.spread([mapped], args));
         };
       }));
       Object.keys(this.resource.relationships).forEach((function(key) {
-        $__2.mapped[key] = function() {
-          var $__6;
+        $__14.mapped[key] = function() {
+          var $__18;
           for (var args = [],
-              $__5 = 0; $__5 < arguments.length; $__5++)
-            args[$__5] = arguments[$__5];
-          return ($__6 = this.resource)[key].apply($__6, $traceurRuntime.spread(args));
+              $__17 = 0; $__17 < arguments.length; $__17++)
+            args[$__17] = arguments[$__17];
+          return ($__18 = this.resource)[key].apply($__18, $traceurRuntime.spread(args));
         };
       }));
       this.mapped.create = function() {
-        var $__6;
+        var $__18;
         for (var args = [],
-            $__5 = 0; $__5 < arguments.length; $__5++)
-          args[$__5] = arguments[$__5];
-        var $__3 = this;
-        return ($__6 = this.resource).create.apply($__6, $traceurRuntime.spread(args)).then((function(created) {
-          $__3.push(created);
+            $__17 = 0; $__17 < arguments.length; $__17++)
+          args[$__17] = arguments[$__17];
+        var $__15 = this;
+        return ($__18 = this.resource).create.apply($__18, $traceurRuntime.spread(args)).then((function(created) {
+          $__15.push(created);
           return created;
         }));
       };
@@ -3082,10 +4538,9 @@ define('relayer/mappers/ListResourceMapper',["./ResourceMapper"], function($__0)
         return new ItemResourceClass();
       };
     }
-  }, {get factoryNames() {
-      return ['TemplatedUrlFromUrlFactory', 'ResourceBuilderFactory', 'PrimaryResourceBuilderFactory', 'PrimaryResourceTransformerFactory', 'ManyResourceMapperFactory'];
-    }}, ResourceMapper);
+  }, {}, ResourceMapper);
   var $__default = ListResourceMapper;
+  Inject(factory(TemplatedUrlFromUrl), factory(ResourceBuilder), factory(PrimaryResourceBuilder), factory(PrimaryResourceTransformer), factory(ManyResourceMapper))(ListResourceMapper);
   return {
     get default() {
       return $__default;
@@ -3094,91 +4549,31 @@ define('relayer/mappers/ListResourceMapper',["./ResourceMapper"], function($__0)
   };
 });
 
-define('relayer/mappers/MapResourceMapper',["./Mapper"], function($__0) {
+define('relayer/serializers/ListResourceSerializer',["./Serializer", "./ManyResourceSerializer", "../injector"], function($__0,$__2,$__4) {
   
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
-  var Mapper = $__0.default;
-  var MapResourceMapper = function MapResourceMapper(singleRelationshipDescriptionFactory, transport, response, relationshipDescription) {
-    var useErrors = arguments[4] !== (void 0) ? arguments[4] : false;
-    $traceurRuntime.superConstructor($MapResourceMapper).call(this, transport, response, relationshipDescription, useErrors);
-    this.singleRelationshipDescription = singleRelationshipDescriptionFactory("", this.ResourceClass);
-  };
-  var $MapResourceMapper = MapResourceMapper;
-  ($traceurRuntime.createClass)(MapResourceMapper, {
-    initializeModel: function() {
-      this.mapped = {};
-    },
-    mapNestedRelationships: function() {
-      var $__2 = this;
-      Object.keys(this.response).forEach((function(responseKey) {
-        var response = $__2.response[responseKey];
-        var singleResourceMapper = $__2.singleRelationshipDescription.mapperFactory($__2.transport, response, $__2.singleRelationshipDescription);
-        $__2.mapped[responseKey] = singleResourceMapper.map();
-      }));
-    }
-  }, {get factoryNames() {
-      return ["SingleRelationshipDescriptionFactory"];
-    }}, Mapper);
-  var $__default = MapResourceMapper;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/mappers',["./mappers/ResourceMapper", "./mappers/ManyResourceMapper", "./mappers/ListResourceMapper", "./mappers/MapResourceMapper"], function($__0,$__1,$__2,$__3) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  if (!$__1 || !$__1.__esModule)
-    $__1 = {default: $__1};
   if (!$__2 || !$__2.__esModule)
     $__2 = {default: $__2};
-  if (!$__3 || !$__3.__esModule)
-    $__3 = {default: $__3};
-  var $__mappers_47_ResourceMapper_46_js__ = $__0;
-  var $__mappers_47_ManyResourceMapper_46_js__ = $__1;
-  var $__mappers_47_ListResourceMapper_46_js__ = $__2;
-  var $__mappers_47_MapResourceMapper_46_js__ = $__3;
-  return {
-    get ResourceMapper() {
-      return $__mappers_47_ResourceMapper_46_js__.default;
-    },
-    get ManyResourceMapper() {
-      return $__mappers_47_ManyResourceMapper_46_js__.default;
-    },
-    get ListResourceMapper() {
-      return $__mappers_47_ListResourceMapper_46_js__.default;
-    },
-    get MapResourceMapper() {
-      return $__mappers_47_MapResourceMapper_46_js__.default;
-    },
-    __esModule: true
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  var Serializer = $__0.default;
+  var ManyResourceSerializer = $__2.default;
+  var $__5 = $__4,
+      Inject = $__5.Inject,
+      factory = $__5.factory;
+  var ListResourceSerializer = function ListResourceSerializer(manyResourceSerializerFactory, resource) {
+    $traceurRuntime.superConstructor($ListResourceSerializer).call(this, resource);
+    this.manyResourceSerializerFactory = manyResourceSerializerFactory;
   };
-});
-
-define('relayer/transformers/ResourceTransformer',["../Constructable"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var Constructable = $__0.default;
-  var ResourceTransformer = function ResourceTransformer() {
-    $traceurRuntime.superConstructor($ResourceTransformer).apply(this, arguments);
-    ;
-  };
-  var $ResourceTransformer = ResourceTransformer;
-  ($traceurRuntime.createClass)(ResourceTransformer, {
-    raansformRequest: function(endpoint, resource) {
-      return resource;
-    },
-    transformResponse: function(endpoint, response) {
-      return response;
-    }
-  }, {}, Constructable);
-  var $__default = ResourceTransformer;
+  var $ListResourceSerializer = ListResourceSerializer;
+  ($traceurRuntime.createClass)(ListResourceSerializer, {serialize: function() {
+      var data = this.manyResourceSerializerFactory(this.resource).serialize();
+      this.resource.resource.pathSet("$.data", data);
+      return this.resource.resource.response;
+    }}, {}, Serializer);
+  var $__default = ListResourceSerializer;
+  Inject(factory(ManyResourceSerializer))(ListResourceSerializer);
   return {
     get default() {
       return $__default;
@@ -3187,187 +4582,19 @@ define('relayer/transformers/ResourceTransformer',["../Constructable"], function
   };
 });
 
-define('relayer/transformers/PrimaryResourceTransformer',["./ResourceTransformer"], function($__0) {
+define('relayer/transformers/IndividualFromListTransformer',["./ResourceTransformer", "../TemplatedUrl", "../injector"], function($__0,$__2,$__4) {
   
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
   var ResourceTransformer = $__0.default;
-  var PrimaryResourceTransformer = function PrimaryResourceTransformer(relationshipDescription) {
-    $traceurRuntime.superConstructor($PrimaryResourceTransformer).call(this);
-    this.relationshipDescription = relationshipDescription;
-  };
-  var $PrimaryResourceTransformer = PrimaryResourceTransformer;
-  ($traceurRuntime.createClass)(PrimaryResourceTransformer, {
-    get primaryResourceSerializerFactory() {
-      return this.relationshipDescription.serializerFactory;
-    },
-    get primaryResourceMapperFactory() {
-      return this.relationshipDescription.mapperFactory;
-    },
-    transformRequest: function(endpoint, resource) {
-      return this.primaryResourceSerializerFactory(resource).serialize();
-    },
-    transformResponse: function(endpoint, response) {
-      var $__2 = this;
-      return response.then((function(resolvedResponse) {
-        endpoint.templatedUrl.etag = resolvedResponse.etag;
-        return $__2.primaryResourceMapperFactory(endpoint.transport, resolvedResponse.data, $__2.relationshipDescription, endpoint).map();
-      })).catch((function(resolvedError) {
-        throw $__2.primaryResourceMapperFactory(endpoint.transport, resolvedError.data, $__2.relationshipDescription, endpoint, true).map();
-      }));
-    }
-  }, {}, ResourceTransformer);
-  var $__default = PrimaryResourceTransformer;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/transformers/CreateResourceTransformer',["./PrimaryResourceTransformer"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var PrimaryResourceTransformer = $__0.default;
-  var CreateResourceTransformer = function CreateResourceTransformer(relationshipDescription, uriTemplate) {
-    $traceurRuntime.superConstructor($CreateResourceTransformer).call(this, relationshipDescription);
-    this.uriTemplate = uriTemplate;
-  };
-  var $CreateResourceTransformer = CreateResourceTransformer;
-  ($traceurRuntime.createClass)(CreateResourceTransformer, {transformResponse: function(endpoint, response) {
-      var $__2 = this;
-      return response.then((function(resolvedResponse) {
-        var resourceMapper = $__2.primaryResourceMapperFactory(endpoint.transport, resolvedResponse.data, $__2.relationshipDescription);
-        resourceMapper.uriTemplate = $__2.uriTemplate;
-        var resource = resourceMapper.map();
-        resource.templatedUrl.etag = resolvedResponse.etag;
-        return resource;
-      })).catch((function(resolvedError) {
-        throw $__2.primaryResourceMapperFactory(endpoint.transport, resolvedError.data, $__2.relationshipDescription, null, true).map();
-      }));
-    }}, {}, PrimaryResourceTransformer);
-  var $__default = CreateResourceTransformer;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/transformers/EmbeddedPropertyTransformer',["./ResourceTransformer"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var ResourceTransformer = $__0.default;
-  var EmbeddedPropertyTransformer = function EmbeddedPropertyTransformer(path) {
-    $traceurRuntime.superConstructor($EmbeddedPropertyTransformer).call(this);
-    this.path = path;
-  };
-  var $EmbeddedPropertyTransformer = EmbeddedPropertyTransformer;
-  ($traceurRuntime.createClass)(EmbeddedPropertyTransformer, {
-    transformRequest: function(endpoint, value) {
-      var resource = endpoint.resource;
-      resource.pathSet(this.path, value);
-      return resource;
-    },
-    transformResponse: function(endpoint, response) {
-      var $__2 = this;
-      return response.then((function(resource) {
-        endpoint.resource = resource;
-        return resource.pathGet($__2.path);
-      })).catch((function(error) {
-        throw error.pathGet($__2.path);
-      }));
-    }
-  }, {}, ResourceTransformer);
-  var $__default = EmbeddedPropertyTransformer;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/transformers/EmbeddedRelationshipTransformer',["./ResourceTransformer"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var ResourceTransformer = $__0.default;
-  var EmbeddedRelationshipTransformer = function EmbeddedRelationshipTransformer(relationshipName) {
-    $traceurRuntime.superConstructor($EmbeddedRelationshipTransformer).call(this);
-    this.relationshipName = relationshipName;
-  };
-  var $EmbeddedRelationshipTransformer = EmbeddedRelationshipTransformer;
-  ($traceurRuntime.createClass)(EmbeddedRelationshipTransformer, {
-    transformRequest: function(endpoint, value) {
-      var resource = endpoint.resource;
-      resource.relationships[this.relationshipName] = value;
-      return resource;
-    },
-    transformResponse: function(endpoint, response) {
-      var $__2 = this;
-      return response.then((function(resource) {
-        endpoint.resource = resource;
-        return resource.relationships[$__2.relationshipName];
-      })).catch((function(error) {
-        throw error.relationships[$__2.relationshipName];
-      }));
-    }
-  }, {}, ResourceTransformer);
-  var $__default = EmbeddedRelationshipTransformer;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/transformers/SingleFromManyTransformer',["./ResourceTransformer"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var ResourceTransformer = $__0.default;
-  var SingleFromManyTransformer = function SingleFromManyTransformer(relationshipName, property) {
-    $traceurRuntime.superConstructor($SingleFromManyTransformer).call(this);
-    this.property = property;
-    this.relationshipName = relationshipName;
-  };
-  var $SingleFromManyTransformer = SingleFromManyTransformer;
-  ($traceurRuntime.createClass)(SingleFromManyTransformer, {
-    transformRequest: function(endpoint, value) {
-      var resource = endpoint.resource;
-      resource.relationships[this.relationshipName][this.property] = value;
-      return resource;
-    },
-    transformResponse: function(endpoint, response) {
-      var $__2 = this;
-      return response.then((function(resource) {
-        endpoint.resource = resource;
-        return resource.relationships[$__2.relationshipName][$__2.property];
-      })).catch((function(error) {
-        throw error.relationships[$__2.relationshipName][$__2.property];
-      }));
-    }
-  }, {}, ResourceTransformer);
-  var $__default = SingleFromManyTransformer;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/transformers/IndividualFromListTransformer',["./ResourceTransformer"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var ResourceTransformer = $__0.default;
+  var TemplatedUrl = $__2.TemplatedUrl;
+  var $__5 = $__4,
+      Inject = $__5.Inject,
+      factory = $__5.factory;
   var IndividualFromListTransformer = function IndividualFromListTransformer(templatedUrlFactory, relationshipName, uriParams) {
     $traceurRuntime.superConstructor($IndividualFromListTransformer).call(this);
     this.templatedUrlFactory = templatedUrlFactory;
@@ -3394,50 +4621,22 @@ define('relayer/transformers/IndividualFromListTransformer',["./ResourceTransfor
       return resource;
     },
     transformResponse: function(endpoint, response) {
-      var $__2 = this;
+      var $__6 = this;
       return response.then((function(resource) {
         endpoint.resource = resource;
-        var elementIndex = $__2.findInRelationship(resource.relationships[$__2.relationshipName]);
+        var elementIndex = $__6.findInRelationship(resource.relationships[$__6.relationshipName]);
         if (elementIndex == -1) {
           throw "Element Not Found In List";
         } else {
-          return resource.relationships[$__2.relationshipName][elementIndex];
+          return resource.relationships[$__6.relationshipName][elementIndex];
         }
       })).catch((function(error) {
-        throw resource.relationshipName[$__2.relationshipName];
+        throw resource.relationshipName[$__6.relationshipName];
       }));
-    }
-  }, {get factoryNames() {
-      return ['TemplatedUrlFactory'];
-    }}, ResourceTransformer);
-  var $__default = IndividualFromListTransformer;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/transformers/ThrowErrorTransformer',["./ResourceTransformer"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var ResourceTransformer = $__0.default;
-  var ThrowErrorTransformer = function ThrowErrorTransformer() {
-    $traceurRuntime.superConstructor($ThrowErrorTransformer).apply(this, arguments);
-    ;
-  };
-  var $ThrowErrorTransformer = ThrowErrorTransformer;
-  ($traceurRuntime.createClass)(ThrowErrorTransformer, {
-    transformRequest: function(endpoint, resource) {
-      throw "This Resource Cannot Be Updated Or Created";
-    },
-    transformResponse: function(endpoint, response) {
-      throw "There is no Resource To Create From This Response";
     }
   }, {}, ResourceTransformer);
-  var $__default = ThrowErrorTransformer;
+  var $__default = IndividualFromListTransformer;
+  Inject(factory(TemplatedUrl))(IndividualFromListTransformer);
   return {
     get default() {
       return $__default;
@@ -3446,676 +4645,58 @@ define('relayer/transformers/ThrowErrorTransformer',["./ResourceTransformer"], f
   };
 });
 
-define('relayer/transformers',["./transformers/PrimaryResourceTransformer", "./transformers/CreateResourceTransformer", "./transformers/EmbeddedPropertyTransformer", "./transformers/EmbeddedRelationshipTransformer", "./transformers/SingleFromManyTransformer", "./transformers/IndividualFromListTransformer", "./transformers/ThrowErrorTransformer"], function($__0,$__1,$__2,$__3,$__4,$__5,$__6) {
+define('relayer/relationshipDescriptions/ListRelationshipDescription',["./RelationshipDescription", "../initializers/ListRelationshipInitializer", "../mappers/ListResourceMapper", "../serializers/ListResourceSerializer", "xing-inflector", "./SingleRelationshipDescription", "../ListResource", "../transformers/PrimaryResourceTransformer", "../transformers/EmbeddedRelationshipTransformer", "../transformers/IndividualFromListTransformer", "../transformers/CreateResourceTransformer", "../endpoints/ResolvedEndpoint", "../endpoints/LoadedDataEndpoint", "../TemplatedUrl", "../injector"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12,$__14,$__16,$__18,$__20,$__22,$__24,$__26,$__28) {
   
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
-  if (!$__1 || !$__1.__esModule)
-    $__1 = {default: $__1};
   if (!$__2 || !$__2.__esModule)
     $__2 = {default: $__2};
-  if (!$__3 || !$__3.__esModule)
-    $__3 = {default: $__3};
   if (!$__4 || !$__4.__esModule)
     $__4 = {default: $__4};
-  if (!$__5 || !$__5.__esModule)
-    $__5 = {default: $__5};
   if (!$__6 || !$__6.__esModule)
     $__6 = {default: $__6};
-  var $__transformers_47_PrimaryResourceTransformer_46_js__ = $__0;
-  var $__transformers_47_CreateResourceTransformer_46_js__ = $__1;
-  var $__transformers_47_EmbeddedPropertyTransformer_46_js__ = $__2;
-  var $__transformers_47_EmbeddedRelationshipTransformer_46_js__ = $__3;
-  var $__transformers_47_SingleFromManyTransformer_46_js__ = $__4;
-  var $__transformers_47_IndividualFromListTransformer_46_js__ = $__5;
-  var $__transformers_47_ThrowErrorTransformer_46_js__ = $__6;
-  return {
-    get PrimaryResourceTransformer() {
-      return $__transformers_47_PrimaryResourceTransformer_46_js__.default;
-    },
-    get CreateResourceTransformer() {
-      return $__transformers_47_CreateResourceTransformer_46_js__.default;
-    },
-    get EmbeddedPropertyTransformer() {
-      return $__transformers_47_EmbeddedPropertyTransformer_46_js__.default;
-    },
-    get EmbeddedRelationshipTransformer() {
-      return $__transformers_47_EmbeddedRelationshipTransformer_46_js__.default;
-    },
-    get SingleFromManyTransformer() {
-      return $__transformers_47_SingleFromManyTransformer_46_js__.default;
-    },
-    get IndividualFromListTransformer() {
-      return $__transformers_47_IndividualFromListTransformer_46_js__.default;
-    },
-    get ThrowErrorTransformer() {
-      return $__transformers_47_ThrowErrorTransformer_46_js__.default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/initializers/RelationshipInitializer',["../Constructable"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var Constructable = $__0.default;
-  var RelationshipInitializer = function RelationshipInitializer(ResourceClass, initialValues) {
-    $traceurRuntime.superConstructor($RelationshipInitializer).call(this);
-    this.ResourceClass = ResourceClass;
-    this.initialValues = initialValues;
-  };
-  var $RelationshipInitializer = RelationshipInitializer;
-  ($traceurRuntime.createClass)(RelationshipInitializer, {initialize: function() {}}, {}, Constructable);
-  var $__default = RelationshipInitializer;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/initializers/SingleRelationshipInitializer',["./RelationshipInitializer"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var RelationshipInitializer = $__0.default;
-  var SingleRelationshipInitializer = function SingleRelationshipInitializer() {
-    $traceurRuntime.superConstructor($SingleRelationshipInitializer).apply(this, arguments);
-    ;
-  };
-  var $SingleRelationshipInitializer = SingleRelationshipInitializer;
-  ($traceurRuntime.createClass)(SingleRelationshipInitializer, {initialize: function() {
-      var $__2 = this;
-      var relationship = new this.ResourceClass();
-      if (this.initialValues) {
-        Object.keys(this.initialValues).forEach((function(property) {
-          relationship[property] = $__2.initialValues[property];
-        }));
-      }
-      return relationship;
-    }}, {}, RelationshipInitializer);
-  var $__default = SingleRelationshipInitializer;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/initializers/ManyRelationshipInitializer',["./RelationshipInitializer"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var RelationshipInitializer = $__0.default;
-  var ManyRelationshipInitializer = function ManyRelationshipInitializer(singleRelationshipInitializerFactory, ResourceClass, initialValues) {
-    $traceurRuntime.superConstructor($ManyRelationshipInitializer).call(this, ResourceClass, initialValues);
-    this.singleRelationshipInitializerFactory = singleRelationshipInitializerFactory;
-  };
-  var $ManyRelationshipInitializer = ManyRelationshipInitializer;
-  ($traceurRuntime.createClass)(ManyRelationshipInitializer, {initialize: function() {
-      var $__2 = this;
-      var relationship = [];
-      var response = [];
-      if (this.initialValues) {
-        this.initialValues.forEach((function(initialValue) {
-          var singleInitializer = $__2.singleRelationshipInitializerFactory($__2.ResourceClass, initialValue);
-          var singleRelationship = singleInitializer.initialize();
-          relationship.push(singleRelationship);
-          response.push(singleRelationship.response);
-        }));
-      }
-      return relationship;
-    }}, {get factoryNames() {
-      return ['SingleRelationshipInitializerFactory'];
-    }}, RelationshipInitializer);
-  var $__default = ManyRelationshipInitializer;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/initializers/ListRelationshipInitializer',["./RelationshipInitializer"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var RelationshipInitializer = $__0.default;
-  var ListRelationshipInitializer = function ListRelationshipInitializer(ListResource, manyRelationshipInitializerFactory, ResourceClass, initialValues) {
-    $traceurRuntime.superConstructor($ListRelationshipInitializer).call(this, ResourceClass, initialValues);
-    this.manyRelationshipInitializer = manyRelationshipInitializerFactory(ResourceClass, initialValues);
-    this.ListResource = ListResource;
-  };
-  var $ListRelationshipInitializer = ListRelationshipInitializer;
-  ($traceurRuntime.createClass)(ListRelationshipInitializer, {initialize: function() {
-      var manyRelationships = this.manyRelationshipInitializer.initialize();
-      var resource = new this.ListResource({
-        data: manyRelationships.response,
-        links: {}
-      });
-      manyRelationships.resource = resource;
-      ["url", "uriTemplate", "uriParams", "create", "remove", "update", "load"].forEach((function(func) {
-        manyRelationships[func] = function() {
-          var $__4;
-          for (var args = [],
-              $__3 = 0; $__3 < arguments.length; $__3++)
-            args[$__3] = arguments[$__3];
-          return ($__4 = resource)[func].apply($__4, $traceurRuntime.spread(args));
-        };
-      }));
-      return manyRelationships;
-    }}, {new: function(classMap) {
-      for (var args = [],
-          $__3 = 1; $__3 < arguments.length; $__3++)
-        args[$__3 - 1] = arguments[$__3];
-      var instance = new (Function.prototype.bind.apply(this, $traceurRuntime.spread([null, classMap.ListResource, this.buildFactory(classMap, "ManyRelationshipInitializer")], args)))();
-      instance.classMap = classMap;
-      return instance;
-    }}, RelationshipInitializer);
-  var $__default = ListRelationshipInitializer;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/initializers/MapRelationshipInitializer',["./RelationshipInitializer"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var RelationshipInitializer = $__0.default;
-  var MapRelationshipInitializer = function MapRelationshipInitializer(singleRelationshipInitializerFactory, ResourceClass, initialValues) {
-    $traceurRuntime.superConstructor($MapRelationshipInitializer).call(this, ResourceClass, initialValues);
-    this.singleRelationshipInitializerFactory = singleRelationshipInitializerFactory;
-  };
-  var $MapRelationshipInitializer = MapRelationshipInitializer;
-  ($traceurRuntime.createClass)(MapRelationshipInitializer, {initialize: function() {
-      var $__2 = this;
-      var relationship = {};
-      var response = {};
-      if (this.initialValues) {
-        Object.keys(this.initialValues).forEach((function(key) {
-          var singleInitializer = $__2.singleRelationshipInitializerFactory($__2.ResourceClass, $__2.initialValues[key]);
-          var singleRelationship = singleInitializer.initialize();
-          relationship[key] = singleRelationship;
-          response[key] = singleRelationship.response;
-        }));
-      }
-      return relationship;
-    }}, {get factoryNames() {
-      return ['SingleRelationshipInitializerFactory'];
-    }}, RelationshipInitializer);
-  var $__default = MapRelationshipInitializer;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/initializers',["./initializers/SingleRelationshipInitializer", "./initializers/ManyRelationshipInitializer", "./initializers/ListRelationshipInitializer", "./initializers/MapRelationshipInitializer"], function($__0,$__1,$__2,$__3) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  if (!$__1 || !$__1.__esModule)
-    $__1 = {default: $__1};
-  if (!$__2 || !$__2.__esModule)
-    $__2 = {default: $__2};
-  if (!$__3 || !$__3.__esModule)
-    $__3 = {default: $__3};
-  var $__initializers_47_SingleRelationshipInitializer_46_js__ = $__0;
-  var $__initializers_47_ManyRelationshipInitializer_46_js__ = $__1;
-  var $__initializers_47_ListRelationshipInitializer_46_js__ = $__2;
-  var $__initializers_47_MapRelationshipInitializer_46_js__ = $__3;
-  return {
-    get SingleRelationshipInitializer() {
-      return $__initializers_47_SingleRelationshipInitializer_46_js__.default;
-    },
-    get ManyRelationshipInitializer() {
-      return $__initializers_47_ManyRelationshipInitializer_46_js__.default;
-    },
-    get ListRelationshipInitializer() {
-      return $__initializers_47_ListRelationshipInitializer_46_js__.default;
-    },
-    get MapRelationshipInitializer() {
-      return $__initializers_47_MapRelationshipInitializer_46_js__.default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/decorators/ResourceDecorator',["../Constructable"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var Constructable = $__0.default;
-  var ResourceDecorator = function ResourceDecorator(name) {
-    $traceurRuntime.superConstructor($ResourceDecorator).call(this);
-    this.name = name;
-  };
-  var $ResourceDecorator = ResourceDecorator;
-  ($traceurRuntime.createClass)(ResourceDecorator, {
-    addFunction: function(target, func) {
-      if (!(target.hasOwnProperty(this.name))) {
-        target[this.name] = func;
-      }
-    },
-    resourceApply: function(resource) {},
-    errorsApply: function(errors) {},
-    endpointApply: function(endpoint) {}
-  }, {}, Constructable);
-  var $__default = ResourceDecorator;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/decorators/JsonPropertyDecorator',["./ResourceDecorator"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var ResourceDecorator = $__0.default;
-  var JsonPropertyDecorator = function JsonPropertyDecorator(loadedDataEndpointFactory, embeddedPropertyTransformerFactory, promiseEndpointFactory, name, path, value, options) {
-    $traceurRuntime.superConstructor($JsonPropertyDecorator).call(this, name);
-    this.path = path;
-    this.options = options || {};
-    this.loadedDataEndpointFactory = loadedDataEndpointFactory;
-    this.embeddedPropertyTransformerFactory = embeddedPropertyTransformerFactory;
-    this.promiseEndpointFactory = promiseEndpointFactory;
-    this.value = value;
-  };
-  var $JsonPropertyDecorator = JsonPropertyDecorator;
-  ($traceurRuntime.createClass)(JsonPropertyDecorator, {
-    recordApply: function(target) {
-      target.constructor.properties[this.name] = this.path;
-      if (!(target.hasOwnProperty(this.name))) {
-        var afterSet = this.options.afterSet;
-        var path = this.path;
-        Object.defineProperty(target, this.name, {
-          enumerable: true,
-          configurable: true,
-          get: function() {
-            return this.pathGet(path);
-          },
-          set: function(value) {
-            var result = this.pathSet(path, value);
-            if (afterSet) {
-              afterSet.call(this);
-            }
-            return result;
-          }
-        });
-      }
-    },
-    resourceApply: function(resource) {
-      if (this.value !== undefined) {
-        resource.setInitialValue(this.path, this.value);
-      }
-      this.recordApply(resource);
-    },
-    errorsApply: function(errors) {
-      this.recordApply(errors);
-    },
-    get endpointFn() {
-      if (!this._endpointFn) {
-        var path = this.path;
-        var promiseEndpointFactory = this.promiseEndpointFactory;
-        var loadedDataEndpointFactory = this.loadedDataEndpointFactory;
-        var embeddedPropertyTransformerFactory = this.embeddedPropertyTransformerFactory;
-        this._endpointFn = function() {
-          var uriParams = arguments[0] !== (void 0) ? arguments[0] : {};
-          var $__2 = this;
-          var newPromise = (function() {
-            return $__2.load().then((function(resource) {
-              return loadedDataEndpointFactory(resource.self(), resource, [embeddedPropertyTransformerFactory(path)]);
-            }));
-          });
-          var newEndpoint = promiseEndpointFactory(newPromise);
-          return newEndpoint;
-        };
-      }
-      return this._endpointFn;
-    },
-    endpointApply: function(target) {
-      this.addFunction(target, this.endpointFn);
-    }
-  }, {get factoryNames() {
-      return ['LoadedDataEndpointFactory', 'EmbeddedPropertyTransformerFactory', 'PromiseEndpointFactory'];
-    }}, ResourceDecorator);
-  var $__default = JsonPropertyDecorator;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/decorators/RelatedResourceDecorator',["./ResourceDecorator", "../TemplatedUrl"], function($__0,$__2) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  if (!$__2 || !$__2.__esModule)
-    $__2 = {default: $__2};
-  var ResourceDecorator = $__0.default;
-  var TemplatedUrl = $__2.TemplatedUrl;
-  var RelatedResourceDecorator = function RelatedResourceDecorator(promiseEndpointFactory, relationshipUtilities, name, relationship) {
-    $traceurRuntime.superConstructor($RelatedResourceDecorator).call(this, name);
-    this.promiseEndpointFactory = promiseEndpointFactory;
-    this.relationshipUtilities = relationshipUtilities;
-    this.relationship = relationship;
-  };
-  var $RelatedResourceDecorator = RelatedResourceDecorator;
-  ($traceurRuntime.createClass)(RelatedResourceDecorator, {
-    get resourceFn() {
-      if (!this._resourceFn) {
-        var name = this.name;
-        var relationship = this.relationship;
-        var promiseEndpointFactory = this.promiseEndpointFactory;
-        var relationshipUtilities = this.relationshipUtilities;
-        this._resourceFn = function(uriParams) {
-          var recursiveCall = arguments[1] !== (void 0) ? arguments[1] : false;
-          var $__4 = this;
-          if (relationship.async && this.isPersisted) {
-            var endpoint;
-            if (!this.relationships[name]) {
-              if (recursiveCall === false) {
-                endpoint = promiseEndpointFactory((function() {
-                  return $__4.self().load().then((function(resource) {
-                    return resource[name](uriParams, true);
-                  }));
-                }));
-              } else {
-                throw "Error: Unable to find relationship, even on canonical resource";
-              }
-            } else if (this.relationships[name] instanceof TemplatedUrl) {
-              endpoint = relationship.linkedEndpoint(this, uriParams);
-            } else {
-              endpoint = relationship.embeddedEndpoint(this, uriParams);
-            }
-            relationship.ResourceClass.resourceDescription.applyToEndpoint(endpoint);
-            relationshipUtilities.addMethods(endpoint, this, name);
-            return endpoint;
-          } else {
-            if (this.relationships[name] instanceof TemplatedUrl) {
-              throw "Error: non-async relationships must be embedded";
-            } else {
-              if (uriParams) {
-                return this.relationships[name][uriParams];
-              } else {
-                return this.relationships[name];
-              }
-            }
-          }
-        };
-      }
-      return this._resourceFn;
-    },
-    get errorFn() {
-      if (!this._errorFn) {
-        var name = this.name;
-        var path = this.path;
-        var relationship = this.relationship;
-        this._errorFn = function(uriParams) {
-          if (this.relationships[name] instanceof TemplatedUrl) {
-            throw "Error: non-async relationships must be embedded";
-          } else {
-            if (uriParams) {
-              return this.relationships[name][uriParams];
-            } else {
-              return this.relationships[name];
-            }
-          }
-        };
-      }
-      return this._errorFn;
-    },
-    get endpointFn() {
-      if (!this._endpointFn) {
-        var name = this.name;
-        var description = this.relationship.ResourceClass.resourceDescription;
-        var relationship = this.relationship;
-        var promiseEndpointFactory = this.promiseEndpointFactory;
-        this._endpointFn = function() {
-          var uriParams = arguments[0] !== (void 0) ? arguments[0] : {};
-          var $__4 = this;
-          var newPromise = (function() {
-            return $__4.load().then((function(resource) {
-              if (relationship.async) {
-                return resource[name](uriParams);
-              } else {
-                var endpoint = relationship.embeddedEndpoint(resource, uriParams);
-                description.applyToEndpoint(endpoint);
-                return endpoint;
-              }
-            }));
-          });
-          var newEndpoint = promiseEndpointFactory(newPromise);
-          relationship.decorateEndpoint(newEndpoint, uriParams);
-          description.applyToEndpoint(newEndpoint);
-          return newEndpoint;
-        };
-      }
-      return this._endpointFn;
-    },
-    resourceApply: function(target) {
-      target.constructor.relationships[this.name] = this.relationship;
-      this.addFunction(target, this.resourceFn);
-    },
-    errorsApply: function(target) {
-      target.constructor.relationships[this.name] = this.relationship;
-      this.addFunction(target, this.errorFn);
-    },
-    endpointApply: function(target) {
-      this.addFunction(target, this.endpointFn);
-    }
-  }, {get factoryNames() {
-      return ['PromiseEndpointFactory', 'RelationshipUtilities'];
-    }}, ResourceDecorator);
-  var $__default = RelatedResourceDecorator;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/decorators',["./decorators/JsonPropertyDecorator", "./decorators/RelatedResourceDecorator"], function($__0,$__1) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  if (!$__1 || !$__1.__esModule)
-    $__1 = {default: $__1};
-  var $__decorators_47_JsonPropertyDecorator_46_js__ = $__0;
-  var $__decorators_47_RelatedResourceDecorator_46_js__ = $__1;
-  return {
-    get JsonPropertyDecorator() {
-      return $__decorators_47_JsonPropertyDecorator_46_js__.default;
-    },
-    get RelatedResourceDecorator() {
-      return $__decorators_47_RelatedResourceDecorator_46_js__.default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/relationshipDescriptions/RelationshipDescription',["../Constructable"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var Constructable = $__0.default;
-  var RelationshipDescription = function RelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues) {
-    $traceurRuntime.superConstructor($RelationshipDescription).call(this);
-    this.initializer = relationshipInitializerFactory(ResourceClass, initialValues);
-    this.mapperFactory = resourceMapperFactory;
-    this.serializerFactory = resourceSerializerFactory;
-    this.inflector = inflector;
-    this.name = name;
-    this.ResourceClass = ResourceClass;
-    this.initialValues = initialValues;
-    this.async = true;
-    if (initialValues === undefined) {
-      this.initializeOnCreate = false;
-    } else {
-      this.initializeOnCreate = true;
-    }
-  };
-  var $RelationshipDescription = RelationshipDescription;
-  ($traceurRuntime.createClass)(RelationshipDescription, {
-    get linksPath() {
-      this._linksPath = this._linksPath || ("$.links." + this.inflector.underscore(this.name));
-      return this._linksPath;
-    },
-    set linksPath(linksPath) {
-      this._linksPath = linksPath;
-      return this._linksPath;
-    },
-    get dataPath() {
-      this._dataPath = this._dataPath || ("$.data." + this.inflector.underscore(this.name));
-      return this._dataPath;
-    },
-    set dataPath(dataPath) {
-      this._dataPath = dataPath;
-      return this._dataPath;
-    },
-    decorateEndpoint: function(endpoint, uriParams) {}
-  }, {}, Constructable);
-  var $__default = RelationshipDescription;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/relationshipDescriptions/SingleRelationshipDescription',["./RelationshipDescription"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
+  if (!$__8 || !$__8.__esModule)
+    $__8 = {default: $__8};
+  if (!$__10 || !$__10.__esModule)
+    $__10 = {default: $__10};
+  if (!$__12 || !$__12.__esModule)
+    $__12 = {default: $__12};
+  if (!$__14 || !$__14.__esModule)
+    $__14 = {default: $__14};
+  if (!$__16 || !$__16.__esModule)
+    $__16 = {default: $__16};
+  if (!$__18 || !$__18.__esModule)
+    $__18 = {default: $__18};
+  if (!$__20 || !$__20.__esModule)
+    $__20 = {default: $__20};
+  if (!$__22 || !$__22.__esModule)
+    $__22 = {default: $__22};
+  if (!$__24 || !$__24.__esModule)
+    $__24 = {default: $__24};
+  if (!$__26 || !$__26.__esModule)
+    $__26 = {default: $__26};
+  if (!$__28 || !$__28.__esModule)
+    $__28 = {default: $__28};
   var RelationshipDescription = $__0.default;
-  var SingleRelationshipDescription = function SingleRelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, primaryResourceTransformerFactory, embeddedRelationshipTransformerFactory, resolvedEndpointFactory, loadedDataEndpointFactory, templatedUrlFactory, name, ResourceClass, initialValues) {
-    $traceurRuntime.superConstructor($SingleRelationshipDescription).call(this, relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues);
-    this.primaryResourceTransformerFactory = primaryResourceTransformerFactory;
-    this.embeddedRelationshipTransformerFactory = embeddedRelationshipTransformerFactory;
-    this.resolvedEndpointFactory = resolvedEndpointFactory;
-    this.loadedDataEndpointFactory = loadedDataEndpointFactory;
-    this.templatedUrlFactory = templatedUrlFactory;
-    this._templated = false;
-  };
-  var $SingleRelationshipDescription = SingleRelationshipDescription;
-  ($traceurRuntime.createClass)(SingleRelationshipDescription, {
-    set templated(templated) {
-      this._templated = templated;
-    },
-    get templated() {
-      return this._templated;
-    },
-    embeddedEndpoint: function(parent, uriParams) {
-      if (this._templated) {
-        throw "A templated hasOne relationship cannot be embedded";
-      }
-      var parentEndpoint = parent.self();
-      var embeddedRelationshipTransformer = this.embeddedRelationshipTransformerFactory(this.name);
-      return this.loadedDataEndpointFactory(parentEndpoint, parent, embeddedRelationshipTransformer);
-    },
-    linkedEndpoint: function(parent, uriParams) {
-      var transport = parent.self().transport;
-      var url = parent.pathGet(this.linksPath);
-      var params = this._templated ? uriParams : {};
-      var templatedUrl = this.templatedUrlFactory(url, params);
-      if (!this._templated) {
-        templatedUrl.addDataPathLink(parent, this.linksPath);
-      }
-      var primaryResourceTransformer = this.primaryResourceTransformerFactory(this);
-      return this.resolvedEndpointFactory(transport, templatedUrl, primaryResourceTransformer);
-    }
-  }, {get factoryNames() {
-      return ['SingleRelationshipInitializerFactory', 'ResourceMapperFactory', 'ResourceSerializerFactory', 'Inflector', 'PrimaryResourceTransformerFactory', 'EmbeddedRelationshipTransformerFactory', 'ResolvedEndpointFactory', 'LoadedDataEndpointFactory', 'TemplatedUrlFactory'];
-    }}, RelationshipDescription);
-  var $__default = SingleRelationshipDescription;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/relationshipDescriptions/MultipleRelationshipDescription',["./RelationshipDescription"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var RelationshipDescription = $__0.default;
-  var MultipleRelationshipDescription = function MultipleRelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, embeddedRelationshipTransformerFactory, singleFromManyTransformerFactory, loadedDataEndpointFactory, name, ResourceClass, initialValues) {
-    $traceurRuntime.superConstructor($MultipleRelationshipDescription).call(this, relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues);
-    this.embeddedRelationshipTransformerFactory = embeddedRelationshipTransformerFactory;
-    this.singleFromManyTransformerFactory = singleFromManyTransformerFactory;
-    this.loadedDataEndpointFactory = loadedDataEndpointFactory;
-  };
-  var $MultipleRelationshipDescription = MultipleRelationshipDescription;
-  ($traceurRuntime.createClass)(MultipleRelationshipDescription, {
-    embeddedEndpoint: function(parent, uriParams) {
-      var parentEndpoint = parent.self();
-      var transformer;
-      if (typeof uriParams == 'string') {
-        transformer = this.singleFromManyTransformerFactory(this.name, uriParams);
-      } else {
-        transformer = this.embeddedRelationshipTransformerFactory(this.name);
-      }
-      return this.loadedDataEndpointFactory(parentEndpoint, parent, transformer);
-    },
-    linkedEndpoint: function(parent, uriParams) {
-      throw "Error: a many relationships must be embedded";
-    }
-  }, {}, RelationshipDescription);
-  var $__default = MultipleRelationshipDescription;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/relationshipDescriptions/ManyRelationshipDescription',["./MultipleRelationshipDescription"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var MultipleRelationshipDescription = $__0.default;
-  var ManyRelationshipDescription = function ManyRelationshipDescription() {
-    $traceurRuntime.superConstructor($ManyRelationshipDescription).apply(this, arguments);
-    ;
-  };
-  var $ManyRelationshipDescription = ManyRelationshipDescription;
-  ($traceurRuntime.createClass)(ManyRelationshipDescription, {}, {get factoryNames() {
-      return ['ManyRelationshipInitializerFactory', 'ManyResourceMapperFactory', 'ManyResourceSerializerFactory', 'Inflector', 'EmbeddedRelationshipTransformerFactory', 'SingleFromManyTransformerFactory', 'LoadedDataEndpointFactory'];
-    }}, MultipleRelationshipDescription);
-  var $__default = ManyRelationshipDescription;
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/relationshipDescriptions/ListRelationshipDescription',["./RelationshipDescription"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var RelationshipDescription = $__0.default;
+  var ListRelationshipInitializer = $__2.default;
+  var ListResourceMapper = $__4.default;
+  var ListResourceSerializer = $__6.default;
+  var Inflector = $__8.default;
+  var SingleRelationshipDescription = $__10.default;
+  var ListResource = $__12.default;
+  var PrimaryResourceTransformer = $__14.default;
+  var EmbeddedRelationshipTransformer = $__16.default;
+  var IndividualFromListTransformer = $__18.default;
+  var CreateResourceTransformer = $__20.default;
+  var ResolvedEndpoint = $__22.default;
+  var LoadedDataEndpoint = $__24.default;
+  var $__27 = $__26,
+      TemplatedUrl = $__27.TemplatedUrl,
+      TemplatedUrlFromUrl = $__27.TemplatedUrlFromUrl;
+  var $__29 = $__28,
+      Inject = $__29.Inject,
+      factory = $__29.factory,
+      value = $__29.value;
   var ListRelationshipDescription = function ListRelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, singleRelationshipDescriptionFactory, ListResource, primaryResourceTransformerFactory, embeddedRelationshipTransformerFactory, individualFromListTransformerFactory, createResourceTransformerFactory, resolvedEndpointFactory, loadedDataEndpointFactory, templatedUrlFromUrlFactory, templatedUrlFactory, name, ResourceClass, initialValues) {
     $traceurRuntime.superConstructor($ListRelationshipDescription).call(this, relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues);
     this.singleRelationshipDescriptionFactory = singleRelationshipDescriptionFactory;
@@ -4217,15 +4798,9 @@ define('relayer/relationshipDescriptions/ListRelationshipDescription',["./Relati
         };
       }
     }
-  }, {new: function(classMap) {
-      for (var args = [],
-          $__3 = 1; $__3 < arguments.length; $__3++)
-        args[$__3 - 1] = arguments[$__3];
-      var instance = new (Function.prototype.bind.apply(this, $traceurRuntime.spread([null, this.buildFactory(classMap, 'ListRelationshipInitializer'), this.buildFactory(classMap, 'ListResourceMapper'), this.buildFactory(classMap, 'ListResourceSerializer'), this.buildSingleton(classMap, 'Inflector'), this.buildFactory(classMap, "SingleRelationshipDescription"), classMap.ListResource, this.buildFactory(classMap, 'PrimaryResourceTransformer'), this.buildFactory(classMap, 'EmbeddedRelationshipTransformer'), this.buildFactory(classMap, 'IndividualFromListTransformer'), this.buildFactory(classMap, 'CreateResourceTransformer'), this.buildFactory(classMap, 'ResolvedEndpoint'), this.buildFactory(classMap, 'LoadedDataEndpoint'), this.buildFactory(classMap, 'TemplatedUrlFromUrl'), this.buildFactory(classMap, 'TemplatedUrl')], args)))();
-      instance.classMap = classMap;
-      return instance;
-    }}, RelationshipDescription);
+  }, {}, RelationshipDescription);
   var $__default = ListRelationshipDescription;
+  Inject(factory(ListRelationshipInitializer), factory(ListResourceMapper), factory(ListResourceSerializer), Inflector, factory(SingleRelationshipDescription), value(ListResource), factory(PrimaryResourceTransformer), factory(EmbeddedRelationshipTransformer), factory(IndividualFromListTransformer), factory(CreateResourceTransformer), factory(ResolvedEndpoint), factory(LoadedDataEndpoint), factory(TemplatedUrlFromUrl), factory(TemplatedUrl))(ListRelationshipDescription);
   return {
     get default() {
       return $__default;
@@ -4234,20 +4809,164 @@ define('relayer/relationshipDescriptions/ListRelationshipDescription',["./Relati
   };
 });
 
-define('relayer/relationshipDescriptions/MapRelationshipDescription',["./MultipleRelationshipDescription"], function($__0) {
+define('relayer/initializers/MapRelationshipInitializer',["./RelationshipInitializer", "./SingleRelationshipInitializer", "../injector"], function($__0,$__2,$__4) {
   
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  var RelationshipInitializer = $__0.default;
+  var SingleRelationshipInitializer = $__2.default;
+  var $__5 = $__4,
+      Inject = $__5.Inject,
+      factory = $__5.factory;
+  var MapRelationshipInitializer = function MapRelationshipInitializer(singleRelationshipInitializerFactory, ResourceClass, initialValues) {
+    $traceurRuntime.superConstructor($MapRelationshipInitializer).call(this, ResourceClass, initialValues);
+    this.singleRelationshipInitializerFactory = singleRelationshipInitializerFactory;
+  };
+  var $MapRelationshipInitializer = MapRelationshipInitializer;
+  ($traceurRuntime.createClass)(MapRelationshipInitializer, {initialize: function() {
+      var $__6 = this;
+      var relationship = {};
+      var response = {};
+      if (this.initialValues) {
+        Object.keys(this.initialValues).forEach((function(key) {
+          var singleInitializer = $__6.singleRelationshipInitializerFactory($__6.ResourceClass, $__6.initialValues[key]);
+          var singleRelationship = singleInitializer.initialize();
+          relationship[key] = singleRelationship;
+          response[key] = singleRelationship.response;
+        }));
+      }
+      return relationship;
+    }}, {}, RelationshipInitializer);
+  var $__default = MapRelationshipInitializer;
+  Inject(factory(SingleRelationshipInitializer))(MapRelationshipInitializer);
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/mappers/MapResourceMapper',["./Mapper", "../relationshipDescriptions/SingleRelationshipDescription", "../injector"], function($__0,$__2,$__4) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  var Mapper = $__0.default;
+  var SingleRelationshipDescription = $__2.default;
+  var $__5 = $__4,
+      Inject = $__5.Inject,
+      factory = $__5.factory;
+  var MapResourceMapper = function MapResourceMapper(singleRelationshipDescriptionFactory, transport, response, relationshipDescription) {
+    var useErrors = arguments[4] !== (void 0) ? arguments[4] : false;
+    $traceurRuntime.superConstructor($MapResourceMapper).call(this, transport, response, relationshipDescription, useErrors);
+    this.singleRelationshipDescription = singleRelationshipDescriptionFactory("", this.ResourceClass);
+  };
+  var $MapResourceMapper = MapResourceMapper;
+  ($traceurRuntime.createClass)(MapResourceMapper, {
+    initializeModel: function() {
+      this.mapped = {};
+    },
+    mapNestedRelationships: function() {
+      var $__6 = this;
+      Object.keys(this.response).forEach((function(responseKey) {
+        var response = $__6.response[responseKey];
+        var singleResourceMapper = $__6.singleRelationshipDescription.mapperFactory($__6.transport, response, $__6.singleRelationshipDescription);
+        $__6.mapped[responseKey] = singleResourceMapper.map();
+      }));
+    }
+  }, {}, Mapper);
+  var $__default = MapResourceMapper;
+  Inject(factory(SingleRelationshipDescription))(MapResourceMapper);
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/serializers/MapResourceSerializer',["./Serializer", "./ResourceSerializer", "../injector"], function($__0,$__2,$__4) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  var Serializer = $__0.default;
+  var ResourceSerializer = $__2.default;
+  var $__5 = $__4,
+      Inject = $__5.Inject,
+      factory = $__5.factory;
+  var MapResourceSerializer = function MapResourceSerializer(resourceSerializerFactory, resource) {
+    $traceurRuntime.superConstructor($MapResourceSerializer).call(this, resource);
+    this.resourceSerializerFactory = resourceSerializerFactory;
+  };
+  var $MapResourceSerializer = MapResourceSerializer;
+  ($traceurRuntime.createClass)(MapResourceSerializer, {serialize: function() {
+      var $__6 = this;
+      return Object.keys(this.resource).reduce((function(data, key) {
+        data[key] = $__6.resourceSerializerFactory($__6.resource[key]).serialize();
+        return data;
+      }), {});
+    }}, {}, Serializer);
+  var $__default = MapResourceSerializer;
+  Inject(factory(ResourceSerializer))(MapResourceSerializer);
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
+});
+
+define('relayer/relationshipDescriptions/MapRelationshipDescription',["./MultipleRelationshipDescription", "../initializers/MapRelationshipInitializer", "../mappers/MapResourceMapper", "../serializers/MapResourceSerializer", "xing-inflector", "../transformers/EmbeddedRelationshipTransformer", "../transformers/SingleFromManyTransformer", "../endpoints/LoadedDataEndpoint", "../injector"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12,$__14,$__16) {
+  
+  if (!$__0 || !$__0.__esModule)
+    $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  if (!$__6 || !$__6.__esModule)
+    $__6 = {default: $__6};
+  if (!$__8 || !$__8.__esModule)
+    $__8 = {default: $__8};
+  if (!$__10 || !$__10.__esModule)
+    $__10 = {default: $__10};
+  if (!$__12 || !$__12.__esModule)
+    $__12 = {default: $__12};
+  if (!$__14 || !$__14.__esModule)
+    $__14 = {default: $__14};
+  if (!$__16 || !$__16.__esModule)
+    $__16 = {default: $__16};
   var MultipleRelationshipDescription = $__0.default;
+  var MapRelationshipInitializer = $__2.default;
+  var MapResourceMapper = $__4.default;
+  var MapResourceSerializer = $__6.default;
+  var Inflector = $__8.default;
+  var EmbeddedRelationshipTransformer = $__10.default;
+  var SingleFromManyTransformer = $__12.default;
+  var LoadedDataEndpoint = $__14.default;
+  var $__17 = $__16,
+      Inject = $__17.Inject,
+      factory = $__17.factory;
   var MapRelationshipDescription = function MapRelationshipDescription() {
     $traceurRuntime.superConstructor($MapRelationshipDescription).apply(this, arguments);
     ;
   };
   var $MapRelationshipDescription = MapRelationshipDescription;
-  ($traceurRuntime.createClass)(MapRelationshipDescription, {}, {get factoryNames() {
-      return ['MapRelationshipInitializerFactory', 'MapResourceMapperFactory', 'MapResourceSerializerFactory', 'Inflector', 'EmbeddedRelationshipTransformerFactory', 'SingleFromManyTransformerFactory', 'LoadedDataEndpointFactory'];
-    }}, MultipleRelationshipDescription);
+  ($traceurRuntime.createClass)(MapRelationshipDescription, {}, {}, MultipleRelationshipDescription);
   var $__default = MapRelationshipDescription;
+  Inject(factory(MapRelationshipInitializer), factory(MapResourceMapper), factory(MapResourceSerializer), Inflector, factory(EmbeddedRelationshipTransformer), factory(SingleFromManyTransformer), factory(LoadedDataEndpoint))(MapRelationshipDescription);
   return {
     get default() {
       return $__default;
@@ -4256,155 +4975,176 @@ define('relayer/relationshipDescriptions/MapRelationshipDescription',["./Multipl
   };
 });
 
-define('relayer/relationshipDescriptions',["./relationshipDescriptions/SingleRelationshipDescription", "./relationshipDescriptions/ManyRelationshipDescription", "./relationshipDescriptions/ListRelationshipDescription", "./relationshipDescriptions/MapRelationshipDescription"], function($__0,$__1,$__2,$__3) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  if (!$__1 || !$__1.__esModule)
-    $__1 = {default: $__1};
-  if (!$__2 || !$__2.__esModule)
-    $__2 = {default: $__2};
-  if (!$__3 || !$__3.__esModule)
-    $__3 = {default: $__3};
-  var $__relationshipDescriptions_47_SingleRelationshipDescription_46_js__ = $__0;
-  var $__relationshipDescriptions_47_ManyRelationshipDescription_46_js__ = $__1;
-  var $__relationshipDescriptions_47_ListRelationshipDescription_46_js__ = $__2;
-  var $__relationshipDescriptions_47_MapRelationshipDescription_46_js__ = $__3;
-  return {
-    get SingleRelationshipDescription() {
-      return $__relationshipDescriptions_47_SingleRelationshipDescription_46_js__.default;
-    },
-    get ManyRelationshipDescription() {
-      return $__relationshipDescriptions_47_ManyRelationshipDescription_46_js__.default;
-    },
-    get ListRelationshipDescription() {
-      return $__relationshipDescriptions_47_ListRelationshipDescription_46_js__.default;
-    },
-    get MapRelationshipDescription() {
-      return $__relationshipDescriptions_47_MapRelationshipDescription_46_js__.default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/ListResource',["./Resource", "a1atscript"], function($__0,$__2) {
+define('relayer/ResourceDescription',["./APIError", "./decorators/JsonPropertyDecorator", "./decorators/RelatedResourceDecorator", "./relationshipDescriptions/SingleRelationshipDescription", "./relationshipDescriptions/ManyRelationshipDescription", "./relationshipDescriptions/ListRelationshipDescription", "./relationshipDescriptions/MapRelationshipDescription", "xing-inflector", "./injector"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12,$__14,$__16) {
   
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
     $__2 = {default: $__2};
-  var Resource = $__0.default;
-  var Value = $__2.Value;
-  var ListResource = function ListResource() {
-    $traceurRuntime.superConstructor($ListResource).apply(this, arguments);
-    ;
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  if (!$__6 || !$__6.__esModule)
+    $__6 = {default: $__6};
+  if (!$__8 || !$__8.__esModule)
+    $__8 = {default: $__8};
+  if (!$__10 || !$__10.__esModule)
+    $__10 = {default: $__10};
+  if (!$__12 || !$__12.__esModule)
+    $__12 = {default: $__12};
+  if (!$__14 || !$__14.__esModule)
+    $__14 = {default: $__14};
+  if (!$__16 || !$__16.__esModule)
+    $__16 = {default: $__16};
+  var APIError = $__0.default;
+  var JsonPropertyDecorator = $__2.default;
+  var RelatedResourceDecorator = $__4.default;
+  var SingleRelationshipDescription = $__6.default;
+  var ManyRelationshipDescription = $__8.default;
+  var ListRelationshipDescription = $__10.default;
+  var MapRelationshipDescription = $__12.default;
+  var Inflector = $__14.default;
+  var $__17 = $__16,
+      Inject = $__17.Inject,
+      factory = $__17.factory;
+  var resourcesToInitialize = [];
+  function describeResource(resourceClass, defineFn) {
+    resourcesToInitialize.push({
+      resourceClass: resourceClass,
+      defineFn: defineFn
+    });
+  }
+  var InitializedResourceClasses = function InitializedResourceClasses(resourceDescriptionFactory) {
+    this.resourceDescriptionFactory = resourceDescriptionFactory;
+    this.initializeClasses();
   };
-  var $ListResource = ListResource;
-  ($traceurRuntime.createClass)(ListResource, {}, {}, Resource);
-  var $__default = ListResource;
-  Object.defineProperty(ListResource, "annotations", {get: function() {
-      return [new Value('ListResource')];
-    }});
-  return {
-    get default() {
-      return $__default;
+  ($traceurRuntime.createClass)(InitializedResourceClasses, {
+    buildDescription: function(resourceToInitialize) {
+      var resourceClass = resourceToInitialize.resourceClass;
+      var defineFn = resourceToInitialize.defineFn;
+      var resourceDescription = resourceClass.description(this.resourceDescriptionFactory);
+      defineFn(resourceDescription);
     },
-    __esModule: true
-  };
-});
-
-define('relayer/PrimaryResourceBuilder',["./Constructable"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var Constructable = $__0.default;
-  var PrimaryResourceBuilder = function PrimaryResourceBuilder(response, ResourceClass) {
-    $traceurRuntime.superConstructor($PrimaryResourceBuilder).call(this);
-    this.response = response;
-    this.ResourceClass = ResourceClass;
-  };
-  var $PrimaryResourceBuilder = PrimaryResourceBuilder;
-  ($traceurRuntime.createClass)(PrimaryResourceBuilder, {build: function(endpoint) {
-      var resource = new this.ResourceClass(this.response);
-      resource.templatedUrl = endpoint.templatedUrl;
-      resource.templatedUrl.addDataPathLink(resource, "$.links.self");
-      resource.self = function() {
-        return endpoint;
+    applyDescription: function(resourceToInitialize) {
+      var resourceClass = resourceToInitialize.resourceClass;
+      var resourceDescription = resourceClass.resourceDescription;
+      var errorClass = function(responseData) {
+        APIError.call(this, responseData);
       };
-      return resource;
-    }}, {}, Constructable);
-  var $__default = PrimaryResourceBuilder;
-  return {
-    get default() {
-      return $__default;
+      errorClass.relationships = {};
+      errorClass.properties = {};
+      errorClass.prototype = Object.create(APIError.prototype);
+      errorClass.prototype.constructor = errorClass;
+      resourceDescription.applyToResource(resourceClass.prototype);
+      resourceDescription.applyToError(errorClass.prototype);
+      resourceClass.errorClass = errorClass;
+      return resourceClass;
     },
-    __esModule: true
+    initializeClasses: function() {
+      var $__18 = this;
+      resourcesToInitialize.forEach((function(resourceToInitialize) {
+        $__18.buildDescription(resourceToInitialize);
+      }));
+      return resourcesToInitialize.map((function(resourceToInitialize) {
+        $__18.applyDescription(resourceToInitialize);
+      }));
+    }
+  }, {});
+  var ResourceDescription = function ResourceDescription(jsonPropertyDecoratorFactory, relatedResourceDecoratorFactory, singleRelationshipDescriptionFactory, manyRelationshipDescriptionFactory, listRelationshipDescriptionFactory, mapRelationshipDescriptionFactory, inflector) {
+    this.jsonPropertyDecoratorFactory = jsonPropertyDecoratorFactory;
+    this.relatedResourceDecoratorFactory = relatedResourceDecoratorFactory;
+    this.singleRelationshipDescriptionFactory = singleRelationshipDescriptionFactory;
+    this.manyRelationshipDescriptionFactory = manyRelationshipDescriptionFactory;
+    this.listRelationshipDescriptionFactory = listRelationshipDescriptionFactory;
+    this.mapRelationshipDescriptionFactory = mapRelationshipDescriptionFactory;
+    this.inflector = inflector;
+    this.decorators = {};
+    this.allDecorators = [];
+    this.parentDescription = null;
   };
-});
-
-define('relayer/ResourceBuilder',["./Constructable"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var Constructable = $__0.default;
-  var ResourceBuilder = function ResourceBuilder(templatedUrlFromUrlFactory, resolvedEndpointFactory, throwErrorTransformerFactory, createResourceTransformerFactory, transport, response, primaryResourceTransformer, ResourceClass, relationshipDescription) {
-    $traceurRuntime.superConstructor($ResourceBuilder).call(this);
-    this.transport = transport;
-    this.ResourceClass = ResourceClass;
-    this.relationshipDescription = relationshipDescription;
-    this.templatedUrlFromUrlFactory = templatedUrlFromUrlFactory;
-    this.resolvedEndpointFactory = resolvedEndpointFactory;
-    this.throwErrorTransformerFactory = throwErrorTransformerFactory;
-    this.createResourceTransformerFactory = createResourceTransformerFactory;
-    this.response = response;
-    this.primaryResourceTransformer = primaryResourceTransformer;
-  };
-  var $ResourceBuilder = ResourceBuilder;
-  ($traceurRuntime.createClass)(ResourceBuilder, {build: function() {
-      var uriTemplate = arguments[0] !== (void 0) ? arguments[0] : null;
-      var resource = new this.ResourceClass(this.response);
-      if (resource.pathGet("$.links.self")) {
-        if (uriTemplate) {
-          resource.templatedUrl = this.templatedUrlFromUrlFactory(uriTemplate, resource.pathGet("$.links.self"));
-        } else {
-          resource.templatedUrl = this.templatedUrlFromUrlFactory(resource.pathGet("$.links.self"), resource.pathGet("$.links.self"));
-        }
-        resource.templatedUrl.addDataPathLink(resource, "$.links.self");
-        if (this.relationshipDescription.canCreate) {
-          var createUriTemplate = uriTemplate || resource.pathGet("$.links.template");
-          var createResourceTransformer = this.createResourceTransformerFactory(this.relationshipDescription.createRelationshipDescription, createUriTemplate);
-        } else {
-          var createResourceTransformer = this.throwErrorTransformerFactory();
-        }
-        var endpoint = this.resolvedEndpointFactory(this.transport, resource.templatedUrl, this.primaryResourceTransformer, createResourceTransformer);
-        resource.self = function() {
-          return endpoint;
-        };
+  ($traceurRuntime.createClass)(ResourceDescription, {
+    chainFrom: function(other) {
+      if (this.parentDescription && this.parentDescription !== other) {
+        throw new Error("Attempted to rechain description: existing parent if of " + (this.parentDescription.ResourceClass + ", new is of " + other.ResourceClass));
+      } else {
+        this.parentDescription = other;
       }
-      return resource;
-    }}, {get factoryNames() {
-      return ["TemplatedUrlFromUrlFactory", "ResolvedEndpointFactory", "ThrowErrorTransformerFactory", "CreateResourceTransformerFactory"];
-    }}, Constructable);
-  var $__default = ResourceBuilder;
+    },
+    recordDecorator: function(name, decoratorDescription) {
+      this.decorators[name] = this.decorators[name] || [];
+      this.decorators[name].push(decoratorDescription);
+      this.allDecorators.push(decoratorDescription);
+      return decoratorDescription;
+    },
+    applyToResource: function(resource) {
+      this.allDecorators.forEach((function(decorator) {
+        decorator.resourceApply(resource);
+      }));
+      if (this.parentDescription) {
+        this.parentDescription.applyToResource(resource);
+      }
+    },
+    applyToError: function(error) {
+      this.allDecorators.forEach((function(decorator) {
+        decorator.errorsApply(error);
+      }));
+      if (this.parentDescription) {
+        this.parentDescription.applyToError(error);
+      }
+    },
+    applyToEndpoint: function(endpoint) {
+      this.allDecorators.forEach((function(decorator) {
+        decorator.endpointApply(endpoint);
+      }));
+      if (this.parentDescription) {
+        this.parentDescription.applyToEndpoint(endpoint);
+      }
+    },
+    property: function(property, initial) {
+      this.jsonProperty(property, ("$.data." + this.inflector.underscore(property)), initial);
+    },
+    hasOne: function(property, rezClass, initialValues) {
+      return this.relatedResource(property, rezClass, initialValues, this.singleRelationshipDescriptionFactory);
+    },
+    hasMany: function(property, rezClass, initialValues) {
+      return this.relatedResource(property, rezClass, initialValues, this.manyRelationshipDescriptionFactory);
+    },
+    hasList: function(property, rezClass, initialValues) {
+      return this.relatedResource(property, rezClass, initialValues, this.listRelationshipDescriptionFactory);
+    },
+    hasMap: function(property, rezClass, initialValue) {
+      return this.relatedResource(property, rezClass, initialValue, this.mapRelationshipDescriptionFactory);
+    },
+    jsonProperty: function(name, path, value, options) {
+      return this.recordDecorator(name, this.jsonPropertyDecoratorFactory(name, path, value, options));
+    },
+    relatedResource: function(property, rezClass, initialValues, relationshipDescriptionFactory) {
+      var relationship = relationshipDescriptionFactory(property, rezClass, initialValues);
+      this.recordDecorator(name, this.relatedResourceDecoratorFactory(property, relationship));
+      return relationship;
+    }
+  }, {});
+  Inject(factory(ResourceDescription))(InitializedResourceClasses);
+  Inject(factory(JsonPropertyDecorator), factory(RelatedResourceDecorator), factory(SingleRelationshipDescription), factory(ManyRelationshipDescription), factory(ListRelationshipDescription), factory(MapRelationshipDescription), Inflector)(ResourceDescription);
   return {
-    get default() {
-      return $__default;
+    get describeResource() {
+      return describeResource;
+    },
+    get InitializedResourceClasses() {
+      return InitializedResourceClasses;
+    },
+    get ResourceDescription() {
+      return ResourceDescription;
     },
     __esModule: true
   };
 });
 
-define('relayer/Transport',["./Constructable"], function($__0) {
+define('relayer/Transport',[], function() {
   
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var Constructable = $__0.default;
   var Transport = function Transport(urlHelper, $http) {
-    $traceurRuntime.superConstructor($Transport).call(this);
     this.http = $http;
     this.urlHelper = urlHelper;
   };
-  var $Transport = Transport;
   ($traceurRuntime.createClass)(Transport, {
     get: function(url) {
       var etag = arguments[1] !== (void 0) ? arguments[1] : null;
@@ -4445,11 +5185,11 @@ define('relayer/Transport',["./Constructable"], function($__0) {
       }));
     },
     resolve: function(backendResponds) {
-      var $__2 = this;
+      var $__0 = this;
       return backendResponds.then((function(fullResponse) {
         if (fullResponse.status === 201 && fullResponse.headers().location) {
-          var locationUrl = $__2.absolutizeResponseLocation(fullResponse);
-          return $__2.get(locationUrl);
+          var locationUrl = $__0.absolutizeResponseLocation(fullResponse);
+          return $__0.get(locationUrl);
         } else {
           var response = {};
           response.data = fullResponse.data;
@@ -4463,7 +5203,7 @@ define('relayer/Transport',["./Constructable"], function($__0) {
     absolutizeResponseLocation: function(fullResponse) {
       return this.urlHelper.checkLocationUrl(fullResponse.headers().location, fullResponse.config.url);
     }
-  }, {}, Constructable);
+  }, {});
   var $__default = Transport;
   return {
     get default() {
@@ -4473,19 +5213,14 @@ define('relayer/Transport',["./Constructable"], function($__0) {
   };
 });
 
-define('relayer/UrlHelper',["./Constructable"], function($__0) {
+define('relayer/UrlHelper',[], function() {
   
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var Constructable = $__0.default;
   var UrlHelper = function UrlHelper(baseUrl) {
-    $traceurRuntime.superConstructor($UrlHelper).call(this);
     if (this.isFullUrl(baseUrl)) {
       baseUrl = this.fullUrlRegEx.exec(baseUrl)[1];
     }
     this.baseUrl = this.withoutTrailingSlash(baseUrl);
   };
-  var $UrlHelper = UrlHelper;
   ($traceurRuntime.createClass)(UrlHelper, {
     mangleUrl: function(url) {
       if (url) {
@@ -4517,7 +5252,7 @@ define('relayer/UrlHelper',["./Constructable"], function($__0) {
         return this.fullUrlRegEx.exec(reqUrl)[1] + respUrl;
       }
     }
-  }, {}, Constructable);
+  }, {});
   var $__default = UrlHelper;
   return {
     get default() {
@@ -4580,293 +5315,58 @@ define('xing-promise',["a1atscript"], function($__0) {
   };
 });
 
-define('relayer/RelationshipUtilities',["a1atscript", "./TemplatedUrl"], function($__0,$__2) {
+define('relayer',["./relayer/ResourceDescription", "./relayer/Resource", "./relayer/ListResource", "./relayer/Transport", "./relayer/UrlHelper", "./relayer/transformers/PrimaryResourceTransformer", "./relayer/relationshipDescriptions/SingleRelationshipDescription", "./relayer/endpoints/ResolvedEndpoint", "./relayer/TemplatedUrl", "a1atscript", "xing-promise", "./relayer/injector"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12,$__14,$__16,$__18,$__20,$__22) {
   
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
     $__2 = {default: $__2};
-  var Service = $__0.Service;
-  var TemplatedUrl = $__2.TemplatedUrl;
-  var RelationshipUtilities = function RelationshipUtilities() {
-    ;
-  };
-  ($traceurRuntime.createClass)(RelationshipUtilities, {addMethods: function(target, resource, name) {
-      target.get = function() {
-        return resource.relationships[name];
-      };
-      target.present = function() {
-        return resource.relationships[name] ? true : false;
-      };
-      target.set = function(newRelationship) {
-        var linksPath = resource.constructor.relationships[name].linksPath;
-        if (resource.relationships[name] instanceof TemplatedUrl) {
-          resource.relationships[name].removeDataPathLink(resource, linksPath);
-          if (!newRelationship) {
-            resource.pathSet(linksPath, "");
-          }
-        }
-        if (newRelationship instanceof TemplatedUrl) {
-          newRelationship.addDataPathLink(resource, linksPath, false);
-        }
-        resource.relationships[name] = newRelationship;
-        if (!resource.relationships[name]) {
-          delete resource.relationships[name];
-        }
-      };
-    }}, {});
-  var $__default = RelationshipUtilities;
-  Object.defineProperty(RelationshipUtilities, "annotations", {get: function() {
-      return [new Service('RelationshipUtilities')];
-    }});
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('xing-inflector',["a1atscript"], function($__0) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  var $__1 = $__0,
-      AsModule = $__1.AsModule,
-      Service = $__1.Service;
-  var Inflector = function Inflector() {
-    ;
-  };
-  ($traceurRuntime.createClass)(Inflector, {
-    camelize: function(key) {
-      if (!angular.isString(key)) {
-        return key;
-      }
-      return key.replace(/_[\w\d]/g, function(match, index, string) {
-        return index === 0 ? match : string.charAt(index + 1).toUpperCase();
-      });
-    },
-    humanize: function(key) {
-      if (!angular.isString(key)) {
-        return key;
-      }
-      return key.replace(/_/g, ' ').replace(/(\w+)/g, function(match) {
-        return match.charAt(0).toUpperCase() + match.slice(1);
-      });
-    },
-    underscore: function(key) {
-      if (!angular.isString(key)) {
-        return key;
-      }
-      return key.replace(/[A-Z]/g, function(match, index) {
-        return index === 0 ? match : '_' + match.toLowerCase();
-      });
-    },
-    dasherize: function(key) {
-      if (!angular.isString(key)) {
-        return key;
-      }
-      return key.replace(/[A-Z]/g, function(match, index) {
-        return index === 0 ? match : '-' + match.toLowerCase();
-      });
-    },
-    pluralize: function(value) {
-      return value + 's';
-    }
-  }, {});
-  var $__default = Inflector;
-  Object.defineProperty(Inflector, "annotations", {get: function() {
-      return [new AsModule('inflector'), new Service('Inflector')];
-    }});
-  return {
-    get default() {
-      return $__default;
-    },
-    __esModule: true
-  };
-});
-
-define('relayer/everything',["./Resource", "./endpoints", "./serializers", "./mappers", "./transformers", "./initializers", "./decorators", "./relationshipDescriptions", "./ListResource", "./PrimaryResourceBuilder", "./ResourceBuilder", "./ResourceDescription", "./Transport", "./UrlHelper", "./TemplatedUrl", "xing-promise", "./RelationshipUtilities", "xing-inflector"], function($__0,$__1,$__2,$__3,$__4,$__5,$__6,$__7,$__8,$__9,$__10,$__11,$__12,$__13,$__14,$__15,$__16,$__17) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  if (!$__1 || !$__1.__esModule)
-    $__1 = {default: $__1};
-  if (!$__2 || !$__2.__esModule)
-    $__2 = {default: $__2};
-  if (!$__3 || !$__3.__esModule)
-    $__3 = {default: $__3};
   if (!$__4 || !$__4.__esModule)
     $__4 = {default: $__4};
-  if (!$__5 || !$__5.__esModule)
-    $__5 = {default: $__5};
   if (!$__6 || !$__6.__esModule)
     $__6 = {default: $__6};
-  if (!$__7 || !$__7.__esModule)
-    $__7 = {default: $__7};
   if (!$__8 || !$__8.__esModule)
     $__8 = {default: $__8};
-  if (!$__9 || !$__9.__esModule)
-    $__9 = {default: $__9};
   if (!$__10 || !$__10.__esModule)
     $__10 = {default: $__10};
-  if (!$__11 || !$__11.__esModule)
-    $__11 = {default: $__11};
   if (!$__12 || !$__12.__esModule)
     $__12 = {default: $__12};
-  if (!$__13 || !$__13.__esModule)
-    $__13 = {default: $__13};
   if (!$__14 || !$__14.__esModule)
     $__14 = {default: $__14};
-  if (!$__15 || !$__15.__esModule)
-    $__15 = {default: $__15};
   if (!$__16 || !$__16.__esModule)
     $__16 = {default: $__16};
-  if (!$__17 || !$__17.__esModule)
-    $__17 = {default: $__17};
-  var $__Resource_46_js__ = $__0;
-  var $__endpoints_46_js__ = $__1;
-  var $__serializers_46_js__ = $__2;
-  var $__mappers_46_js__ = $__3;
-  var $__transformers_46_js__ = $__4;
-  var $__initializers_46_js__ = $__5;
-  var $__decorators_46_js__ = $__6;
-  var $__relationshipDescriptions_46_js__ = $__7;
-  var $__ListResource_46_js__ = $__8;
-  var $__PrimaryResourceBuilder_46_js__ = $__9;
-  var $__ResourceBuilder_46_js__ = $__10;
-  var $__ResourceDescription_46_js__ = $__11;
-  var $__Transport_46_js__ = $__12;
-  var $__UrlHelper_46_js__ = $__13;
-  var $__TemplatedUrl_46_js__ = $__14;
-  var $___46__46__47_node_95_modules_47_xing_45_promise_47_dist_47_xing_45_promise_46_js__ = $__15;
-  var $__RelationshipUtilities_46_js__ = $__16;
-  var $___46__46__47_node_95_modules_47_xing_45_inflector_47_dist_47_xing_45_inflector_46_js__ = $__17;
-  var singletons = {};
-  var XingPromise;
-  function setXingPromise(xp) {
-    XingPromise = xp;
-  }
-  return $traceurRuntime.exportStar({
-    get Resource() {
-      return $__Resource_46_js__.default;
-    },
-    get ListResource() {
-      return $__ListResource_46_js__.default;
-    },
-    get PrimaryResourceBuilder() {
-      return $__PrimaryResourceBuilder_46_js__.default;
-    },
-    get ResourceBuilder() {
-      return $__ResourceBuilder_46_js__.default;
-    },
-    get ResourceDescription() {
-      return $__ResourceDescription_46_js__.ResourceDescription;
-    },
-    get Transport() {
-      return $__Transport_46_js__.default;
-    },
-    get UrlHelper() {
-      return $__UrlHelper_46_js__.default;
-    },
-    get XingPromiseFactory() {
-      return $___46__46__47_node_95_modules_47_xing_45_promise_47_dist_47_xing_45_promise_46_js__.default;
-    },
-    get RelationshipUtilities() {
-      return $__RelationshipUtilities_46_js__.default;
-    },
-    get Inflector() {
-      return $___46__46__47_node_95_modules_47_xing_45_inflector_47_dist_47_xing_45_inflector_46_js__.default;
-    },
-    get singletons() {
-      return singletons;
-    },
-    get XingPromise() {
-      return XingPromise;
-    },
-    get setXingPromise() {
-      return setXingPromise;
-    },
-    __esModule: true
-  }, $__endpoints_46_js__, $__serializers_46_js__, $__mappers_46_js__, $__transformers_46_js__, $__initializers_46_js__, $__decorators_46_js__, $__relationshipDescriptions_46_js__, $__TemplatedUrl_46_js__);
-});
-
-define('relayer',["./relayer/ResourceDescription", "./relayer/Resource", "./relayer/endpoints", "./relayer/serializers", "./relayer/mappers", "./relayer/transformers", "./relayer/initializers", "./relayer/decorators", "./relayer/relationshipDescriptions", "./relayer/ListResource", "./relayer/PrimaryResourceBuilder", "./relayer/ResourceBuilder", "./relayer/Transport", "./relayer/UrlHelper", "./relayer/TemplatedUrl", "xing-promise", "./relayer/RelationshipUtilities", "a1atscript", "xing-inflector", "./relayer/everything", "./relayer/Constructable"], function($__0,$__2,$__4,$__5,$__6,$__7,$__8,$__9,$__10,$__11,$__13,$__15,$__17,$__19,$__21,$__22,$__24,$__26,$__28,$__30,$__31) {
-  
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {default: $__0};
-  if (!$__2 || !$__2.__esModule)
-    $__2 = {default: $__2};
-  if (!$__4 || !$__4.__esModule)
-    $__4 = {default: $__4};
-  if (!$__5 || !$__5.__esModule)
-    $__5 = {default: $__5};
-  if (!$__6 || !$__6.__esModule)
-    $__6 = {default: $__6};
-  if (!$__7 || !$__7.__esModule)
-    $__7 = {default: $__7};
-  if (!$__8 || !$__8.__esModule)
-    $__8 = {default: $__8};
-  if (!$__9 || !$__9.__esModule)
-    $__9 = {default: $__9};
-  if (!$__10 || !$__10.__esModule)
-    $__10 = {default: $__10};
-  if (!$__11 || !$__11.__esModule)
-    $__11 = {default: $__11};
-  if (!$__13 || !$__13.__esModule)
-    $__13 = {default: $__13};
-  if (!$__15 || !$__15.__esModule)
-    $__15 = {default: $__15};
-  if (!$__17 || !$__17.__esModule)
-    $__17 = {default: $__17};
-  if (!$__19 || !$__19.__esModule)
-    $__19 = {default: $__19};
-  if (!$__21 || !$__21.__esModule)
-    $__21 = {default: $__21};
+  if (!$__18 || !$__18.__esModule)
+    $__18 = {default: $__18};
+  if (!$__20 || !$__20.__esModule)
+    $__20 = {default: $__20};
   if (!$__22 || !$__22.__esModule)
     $__22 = {default: $__22};
-  if (!$__24 || !$__24.__esModule)
-    $__24 = {default: $__24};
-  if (!$__26 || !$__26.__esModule)
-    $__26 = {default: $__26};
-  if (!$__28 || !$__28.__esModule)
-    $__28 = {default: $__28};
-  if (!$__30 || !$__30.__esModule)
-    $__30 = {default: $__30};
-  if (!$__31 || !$__31.__esModule)
-    $__31 = {default: $__31};
   var $__1 = $__0,
       describeResource = $__1.describeResource,
-      InitializedResourceClasses = $__1.InitializedResourceClasses,
-      ResourceDescription = $__1.ResourceDescription;
+      InitializedResourceClasses = $__1.InitializedResourceClasses;
   var Resource = $__2.default;
-  var Endpoints = $__4;
-  var Serializers = $__5;
-  var Mappers = $__6;
-  var Transformers = $__7;
-  var Initializers = $__8;
-  var Decorators = $__9;
-  var RelationshipDescriptions = $__10;
-  var ListResource = $__11.default;
-  var PrimaryResourceBuilder = $__13.default;
-  var ResourceBuilder = $__15.default;
-  var Transport = $__17.default;
-  var UrlHelper = $__19.default;
-  var TemplatedUrls = $__21;
-  var XingPromise = $__22.default;
-  var RelationshipUtilities = $__24.default;
-  var $__27 = $__26,
-      AsModule = $__27.AsModule,
-      Provider = $__27.Provider;
-  var Inflector = $__28.default;
-  var classMap = $__30;
+  var ListResource = $__4.default;
+  var Transport = $__6.default;
+  var UrlHelper = $__8.default;
+  var PrimaryResourceTransformer = $__10.default;
+  var SingleRelationshipDescription = $__12.default;
+  var ResolvedEndpoint = $__14.default;
+  var TemplatedUrlFromUrl = $__16.TemplatedUrlFromUrl;
+  var $__19 = $__18,
+      AsModule = $__19.AsModule,
+      Provider = $__19.Provider;
+  var XingPromiseFactory = $__20.default;
+  var $__23 = $__22,
+      injector = $__23.default,
+      instance = $__23.instance;
   var ResourceLayer = function ResourceLayer($provide) {
-    var $__33 = this;
+    var $__24 = this;
+    injector.reset();
     this.apis = {};
     this.$provide = $provide;
     this.$get = ['$injector', (function($injector) {
       var builtApis = {};
-      Object.keys($__33.apis).forEach((function(apiName) {
+      Object.keys($__24.apis).forEach((function(apiName) {
         buildApis[apiName] = $injector.get(apiName);
       }));
       return buildApis;
@@ -4878,17 +5378,11 @@ define('relayer',["./relayer/ResourceDescription", "./relayer/Resource", "./rela
         baseUrl: baseUrl
       };
       this.$provide.factory(apiName, ['$http', '$q', function($http, $q) {
-        var $__35 = classMap,
-            UrlHelper = $__35.UrlHelper,
-            Transport = $__35.Transport,
-            TemplatedUrlFromUrl = $__35.TemplatedUrlFromUrl,
-            PrimaryResourceTransformer = $__35.PrimaryResourceTransformer,
-            SingleRelationshipDescription = $__35.SingleRelationshipDescription,
-            ResolvedEndpoint = $__35.ResolvedEndpoint;
-        classMap.setXingPromise(classMap.XingPromiseFactory.factory($q));
-        InitializedResourceClasses.new(classMap);
-        var orchestrator = TopLevelOrchestrator.new(classMap, $http, topLevelResource, baseUrl);
-        return orchestrator.arrange();
+        var XingPromise = XingPromiseFactory.factory($q);
+        injector.XingPromise.value = XingPromise;
+        injector.instantiate(InitializedResourceClasses);
+        var apiBuilder = new APIBuilder($http, topLevelResource, baseUrl);
+        return apiBuilder.build();
       }]);
     }}, {
     get Resource() {
@@ -4905,28 +5399,26 @@ define('relayer',["./relayer/ResourceDescription", "./relayer/Resource", "./rela
   Object.defineProperty(ResourceLayer, "annotations", {get: function() {
       return [new AsModule('relayer', []), new Provider('relayer', ['$provide'])];
     }});
-  var Constructable = $__31.default;
-  var TopLevelOrchestrator = function TopLevelOrchestrator($http, topLevelResource, baseUrl) {
-    $traceurRuntime.superConstructor($TopLevelOrchestrator).call(this);
+  var APIBuilder = function APIBuilder($http, topLevelResource, baseUrl) {
     this.$http = $http;
     this.topLevelResource = topLevelResource;
     this.baseUrl = baseUrl;
   };
-  var $TopLevelOrchestrator = TopLevelOrchestrator;
-  ($traceurRuntime.createClass)(TopLevelOrchestrator, {arrange: function() {
-      var $__35 = this,
-          $http = $__35.$http,
-          topLevelResource = $__35.topLevelResource,
-          baseUrl = $__35.baseUrl;
-      var urlHelper = this.construct("UrlHelper", baseUrl);
+  ($traceurRuntime.createClass)(APIBuilder, {build: function() {
+      var $__26 = this,
+          $http = $__26.$http,
+          topLevelResource = $__26.topLevelResource,
+          baseUrl = $__26.baseUrl;
+      var urlHelper = injector.instantiate(instance(UrlHelper), baseUrl);
       var wellKnownUrl = urlHelper.fullUrlRegEx.exec(baseUrl)[3];
-      var transport = this.construct("Transport", urlHelper, $http);
-      var templatedUrl = this.construct("TemplatedUrlFromUrl", wellKnownUrl, wellKnownUrl);
-      var transformer = this.construct("PrimaryResourceTransformer", this.construct("SingleRelationshipDescription", "", topLevelResource));
-      var endpoint = this.construct("ResolvedEndpoint", transport, templatedUrl, transformer);
+      var transport = injector.instantiate(instance(Transport), urlHelper, $http);
+      var templatedUrl = injector.instantiate(instance(TemplatedUrlFromUrl), wellKnownUrl, wellKnownUrl);
+      var relationshipDescription = injector.instantiate(instance(SingleRelationshipDescription), "", topLevelResource);
+      var transformer = injector.instantiate(instance(PrimaryResourceTransformer), relationshipDescription);
+      var endpoint = injector.instantiate(instance(ResolvedEndpoint), transport, templatedUrl, transformer);
       topLevelResource.resourceDescription.applyToEndpoint(endpoint);
       return endpoint;
-    }}, {}, Constructable);
+    }}, {});
   return {
     get default() {
       return $__default;

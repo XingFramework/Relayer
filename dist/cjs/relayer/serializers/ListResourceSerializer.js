@@ -18,6 +18,12 @@ var _SerializerJs = require("./Serializer.js");
 
 var _SerializerJs2 = _interopRequireDefault(_SerializerJs);
 
+var _ManyResourceSerializerJs = require("./ManyResourceSerializer.js");
+
+var _ManyResourceSerializerJs2 = _interopRequireDefault(_ManyResourceSerializerJs);
+
+var _injectorJs = require("../injector.js");
+
 var ListResourceSerializer = (function (_Serializer) {
   function ListResourceSerializer(manyResourceSerializerFactory, resource) {
     _classCallCheck(this, ListResourceSerializer);
@@ -35,15 +41,12 @@ var ListResourceSerializer = (function (_Serializer) {
       this.resource.resource.pathSet("$.data", data);
       return this.resource.resource.response;
     }
-  }], [{
-    key: "factoryNames",
-    get: function () {
-      return ["ManyResourceSerializerFactory"];
-    }
   }]);
 
   return ListResourceSerializer;
 })(_SerializerJs2["default"]);
 
 exports["default"] = ListResourceSerializer;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_ManyResourceSerializerJs2["default"]))(ListResourceSerializer);
 module.exports = exports["default"];

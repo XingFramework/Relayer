@@ -14,11 +14,9 @@ var _ResourceJs = require("./Resource.js");
 
 var _ResourceJs2 = _interopRequireDefault(_ResourceJs);
 
-var _a1atscript = require("a1atscript");
-
 var ListResource = (function (_Resource) {
   function ListResource() {
-    _classCallCheck(this, _ListResource);
+    _classCallCheck(this, ListResource);
 
     if (_Resource != null) {
       _Resource.apply(this, arguments);
@@ -27,8 +25,6 @@ var ListResource = (function (_Resource) {
 
   _inherits(ListResource, _Resource);
 
-  var _ListResource = ListResource;
-  ListResource = (0, _a1atscript.Value)("ListResource")(ListResource) || ListResource;
   return ListResource;
 })(_ResourceJs2["default"]);
 

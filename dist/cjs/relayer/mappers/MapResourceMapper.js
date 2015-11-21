@@ -18,6 +18,12 @@ var _MapperJs = require("./Mapper.js");
 
 var _MapperJs2 = _interopRequireDefault(_MapperJs);
 
+var _relationshipDescriptionsSingleRelationshipDescriptionJs = require("../relationshipDescriptions/SingleRelationshipDescription.js");
+
+var _relationshipDescriptionsSingleRelationshipDescriptionJs2 = _interopRequireDefault(_relationshipDescriptionsSingleRelationshipDescriptionJs);
+
+var _injectorJs = require("../injector.js");
+
 var MapResourceMapper = (function (_Mapper) {
   function MapResourceMapper(singleRelationshipDescriptionFactory, transport, response, relationshipDescription) {
     var useErrors = arguments[4] === undefined ? false : arguments[4];
@@ -46,15 +52,12 @@ var MapResourceMapper = (function (_Mapper) {
         _this.mapped[responseKey] = singleResourceMapper.map();
       });
     }
-  }], [{
-    key: "factoryNames",
-    get: function () {
-      return ["SingleRelationshipDescriptionFactory"];
-    }
   }]);
 
   return MapResourceMapper;
 })(_MapperJs2["default"]);
 
 exports["default"] = MapResourceMapper;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_relationshipDescriptionsSingleRelationshipDescriptionJs2["default"]))(MapResourceMapper);
 module.exports = exports["default"];

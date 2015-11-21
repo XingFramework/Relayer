@@ -1,6 +1,12 @@
 import APIError from "./APIError.js";
-import {Service} from 'a1atscript';
-import Constructable from './Constructable.js';
+import JsonPropertyDecorator from "./decorators/JsonPropertyDecorator.js";
+import RelatedResourceDecorator from "./decorators/RelatedResourceDecorator.js";
+import SingleRelationshipDescription from "./relationshipDescriptions/SingleRelationshipDescription.js";
+import ManyRelationshipDescription from "./relationshipDescriptions/ManyRelationshipDescription.js";
+import ListRelationshipDescription from "./relationshipDescriptions/ListRelationshipDescription.js";
+import MapRelationshipDescription from "./relationshipDescriptions/MapRelationshipDescription.js";
+import Inflector from "xing-inflector";
+import {Inject, factory} from "./injector.js";
 
 var resourcesToInitialize = [];
 
@@ -8,13 +14,9 @@ export function describeResource(resourceClass, defineFn){
   resourcesToInitialize.push({resourceClass, defineFn});
 }
 
-export class InitializedResourceClasses extends Constructable {
-  static get factoryNames(){
-    return ['ResourceDescriptionFactory'];
-  }
+export class InitializedResourceClasses {
 
   constructor(resourceDescriptionFactory) {
-    super();
     this.resourceDescriptionFactory = resourceDescriptionFactory;
     this.initializeClasses();
   }
@@ -54,18 +56,7 @@ export class InitializedResourceClasses extends Constructable {
   }
 }
 
-export class ResourceDescription extends Constructable {
-  static get factoryNames(){
-    return [
-      'JsonPropertyDecoratorFactory',
-      'RelatedResourceDecoratorFactory',
-      'SingleRelationshipDescriptionFactory',
-      'ManyRelationshipDescriptionFactory',
-      'ListRelationshipDescriptionFactory',
-      'MapRelationshipDescriptionFactory',
-      'Inflector'
-    ];
-  }
+export class ResourceDescription {
 
   constructor(jsonPropertyDecoratorFactory,
     relatedResourceDecoratorFactory,
@@ -74,8 +65,6 @@ export class ResourceDescription extends Constructable {
     listRelationshipDescriptionFactory,
     mapRelationshipDescriptionFactory,
     inflector) {
-
-      super();
 
       this.jsonPropertyDecoratorFactory = jsonPropertyDecoratorFactory;
       this.relatedResourceDecoratorFactory = relatedResourceDecoratorFactory;
@@ -164,3 +153,15 @@ export class ResourceDescription extends Constructable {
   }
 
 }
+
+Inject(factory(ResourceDescription))(InitializedResourceClasses);
+
+Inject(
+  factory(JsonPropertyDecorator),
+  factory(RelatedResourceDecorator),
+  factory(SingleRelationshipDescription),
+  factory(ManyRelationshipDescription),
+  factory(ListRelationshipDescription),
+  factory(MapRelationshipDescription),
+  Inflector
+)(ResourceDescription);

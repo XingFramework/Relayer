@@ -20,6 +20,16 @@ var _ResourceDecoratorJs2 = _interopRequireDefault(_ResourceDecoratorJs);
 
 var _TemplatedUrlJs = require("../TemplatedUrl.js");
 
+var _injectorJs = require("../injector.js");
+
+var _endpointsPromiseEndpointJs = require("../endpoints/PromiseEndpoint.js");
+
+var _endpointsPromiseEndpointJs2 = _interopRequireDefault(_endpointsPromiseEndpointJs);
+
+var _RelationshipUtilitiesJs = require("../RelationshipUtilities.js");
+
+var _RelationshipUtilitiesJs2 = _interopRequireDefault(_RelationshipUtilitiesJs);
+
 var RelatedResourceDecorator = (function (_ResourceDecorator) {
   function RelatedResourceDecorator(promiseEndpointFactory, relationshipUtilities, name, relationship) {
     _classCallCheck(this, RelatedResourceDecorator);
@@ -164,15 +174,12 @@ var RelatedResourceDecorator = (function (_ResourceDecorator) {
     value: function endpointApply(target) {
       this.addFunction(target, this.endpointFn);
     }
-  }], [{
-    key: "factoryNames",
-    get: function () {
-      return ["PromiseEndpointFactory", "RelationshipUtilities"];
-    }
   }]);
 
   return RelatedResourceDecorator;
 })(_ResourceDecoratorJs2["default"]);
 
 exports["default"] = RelatedResourceDecorator;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_endpointsPromiseEndpointJs2["default"]), _RelationshipUtilitiesJs2["default"])(RelatedResourceDecorator);
 module.exports = exports["default"];

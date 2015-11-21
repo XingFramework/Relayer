@@ -6,23 +6,29 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+var _TemplatedUrlJs = require("./TemplatedUrl.js");
 
-var _ConstructableJs = require("./Constructable.js");
+var _endpointsResolvedEndpointJs = require("./endpoints/ResolvedEndpoint.js");
 
-var _ConstructableJs2 = _interopRequireDefault(_ConstructableJs);
+var _endpointsResolvedEndpointJs2 = _interopRequireDefault(_endpointsResolvedEndpointJs);
 
-var ResourceBuilder = (function (_Constructable) {
+var _transformersThrowErrorTransformerJs = require("./transformers/ThrowErrorTransformer.js");
+
+var _transformersThrowErrorTransformerJs2 = _interopRequireDefault(_transformersThrowErrorTransformerJs);
+
+var _transformersCreateResourceTransformerJs = require("./transformers/CreateResourceTransformer.js");
+
+var _transformersCreateResourceTransformerJs2 = _interopRequireDefault(_transformersCreateResourceTransformerJs);
+
+var _injectorJs = require("./injector.js");
+
+var ResourceBuilder = (function () {
   function ResourceBuilder(templatedUrlFromUrlFactory, resolvedEndpointFactory, throwErrorTransformerFactory, createResourceTransformerFactory, transport, response, primaryResourceTransformer, ResourceClass, relationshipDescription) {
     _classCallCheck(this, ResourceBuilder);
-
-    _get(Object.getPrototypeOf(ResourceBuilder.prototype), "constructor", this).call(this);
 
     this.transport = transport;
     this.ResourceClass = ResourceClass;
@@ -35,8 +41,6 @@ var ResourceBuilder = (function (_Constructable) {
     this.response = response;
     this.primaryResourceTransformer = primaryResourceTransformer;
   }
-
-  _inherits(ResourceBuilder, _Constructable);
 
   _createClass(ResourceBuilder, [{
     key: "build",
@@ -64,15 +68,12 @@ var ResourceBuilder = (function (_Constructable) {
       }
       return resource;
     }
-  }], [{
-    key: "factoryNames",
-    get: function () {
-      return ["TemplatedUrlFromUrlFactory", "ResolvedEndpointFactory", "ThrowErrorTransformerFactory", "CreateResourceTransformerFactory"];
-    }
   }]);
 
   return ResourceBuilder;
-})(_ConstructableJs2["default"]);
+})();
 
 exports["default"] = ResourceBuilder;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_TemplatedUrlJs.TemplatedUrlFromUrl), (0, _injectorJs.factory)(_endpointsResolvedEndpointJs2["default"]), (0, _injectorJs.factory)(_transformersThrowErrorTransformerJs2["default"]), (0, _injectorJs.factory)(_transformersCreateResourceTransformerJs2["default"]))(ResourceBuilder);
 module.exports = exports["default"];

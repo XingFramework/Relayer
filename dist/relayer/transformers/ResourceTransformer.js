@@ -4,10 +4,13 @@
 // but then that got me thinking this is a better spot in general to add
 // customization like lists, admin role endpoints, paginated endpoints, etc
 // I even had the idea that these could potentially be chained
-import Constructable from '../Constructable.js';
 
-export default class ResourceTransformer extends Constructable {
-  raansformRequest(endpoint, resource) {
+export default class ResourceTransformer {
+  constructor() {
+
+  }
+
+  transformRequest(endpoint, resource) {
     return resource;
   }
 

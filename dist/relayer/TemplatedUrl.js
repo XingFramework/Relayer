@@ -1,9 +1,6 @@
-import Constructable from './Constructable.js';
-
-export class TemplatedUrl extends Constructable {
+export class TemplatedUrl {
 
   constructor(uriTemplate, uriParams = {}) {
-    super();
     this._uriTemplate = new UriTemplate(uriTemplate);
     this._uriParams = uriParams;
     this._paths = [];

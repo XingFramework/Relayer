@@ -1,8 +1,5 @@
-import Constructable from './Constructable.js';
-
-export default class UrlHelper extends Constructable {
+export default class UrlHelper {
   constructor(baseUrl) {
-    super();
     if (this.isFullUrl(baseUrl)) {
       baseUrl = this.fullUrlRegEx.exec(baseUrl)[1];
     }
