@@ -107,26 +107,37 @@ describe("Embedded List Create test", function() {
   });
 
   describe("book", function() {
-    var promise;
+    var books;
 
     beforeEach(function(done) {
-      promise = resources.books().load().then((books) => {
-        book = books.new();
-        return books.create(book)
-      });
-      promise.then((_book_) => {
-        book = _book_;
+      resources.books().load().then((booksLoaded) => {
+        books = booksLoaded;
         done();
       });
       $rootScope.$apply();
     });
 
-    it("should resolve the book", function() {
-      expect(book.title).toEqual("Hamlet");
-    });
-
-    it("should resolve short link", function() {
-      expect(book.shortLink).toEqual("1");
+    it("new with url", function() {
+      expect(books.new(true).url).toMatch(/\/books\/.+/);
     })
+
+    describe("creating", function() {
+      beforeEach(function(done) {
+        book = books.new();
+        books.create(book).then((_book_) => {
+          book = _book_;
+          done();
+        });
+        $rootScope.$evalAsync();
+      });
+
+      it("should resolve the book", function() {
+        expect(book.title).toEqual("Hamlet");
+      });
+
+      it("should resolve short link", function() {
+        expect(book.shortLink).toEqual("1");
+      });
+    });
   });
 });
