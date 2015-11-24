@@ -57,7 +57,7 @@ var LoadedDataEndpoint = (function (_ResolvedEndpoint) {
     }
   }]);
 
-  LoadedDataEndpoint = (0, _SimpleFactoryInjectorJs.SimpleFactory)("LoadedDataEndpointFactory", ["RelayerPromise"])(LoadedDataEndpoint) || LoadedDataEndpoint;
+  LoadedDataEndpoint = (0, _SimpleFactoryInjectorJs.SimpleFactory)("LoadedDataEndpointFactory", ["XingPromise"])(LoadedDataEndpoint) || LoadedDataEndpoint;
   return LoadedDataEndpoint;
 })(_ResolvedEndpointJs2["default"]);
 

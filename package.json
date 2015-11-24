@@ -1,26 +1,26 @@
 {
   "name": "relayer",
   "private": false,
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "Smart client library for talking to hypermedia APIs",
-  "homepage": "https://github.com/LRDesign/relayer",
+  "homepage": "https://github.com/XingFramework/Relayer",
   "repository": {
     "type": "git",
-    "url": "git://github.com/LRDesign/relayer.git"
+    "url": "git://github.com/XingFramework/Relayer.git"
   },
   "bugs": {
-    "url": "https://github.com/LRDesign/relayer/issues"
+    "url": "https://github.com/XingFramework/Relayer/issues"
   },
   "main": "dist/relayer.js",
   "dependencies": {
-    "angular": ">= 1.3.12 < 2.0",
+    "angular": ">=1.3.12 <2.0",
     "a1atscript": "^0.4.3",
     "uri-templates": "^0.1.7",
     "xing-inflector": "^0.0.2",
     "xing-promise": "^0.0.1"
   },
   "devDependencies": {
-    "angular-mocks": ">= 1.3.15",
+    "angular-mocks": ">=1.3.15",
     "babel": "^5.4.4",
     "babelify": "^6.0.2",
     "gulp": "^3.8.9",
@@ -43,7 +43,7 @@
   },
   "scripts": {
     "test": "./node_modules/.bin/gulp test:firefox; ./node_modules/.bin/karma start karma.conf.babel.js --browsers Firefox --single-run",
-    "xing-traceur-amd": "./node_modules/.bin/xing-traceur --annotations --types --modules='amd' --dir src build/amd --maps moduleMaps.json; ./node_modules/.bin/xing-traceur --annotations --types --modules='amd' --dir ./node_modules/a1atscript/src build/amd --maps moduleMaps.json; ./node_modules/.bin/xing-traceur --annotations --types --modules='amd' --dir ./node_modules/xing-inflector/src build/amd --maps moduleMaps.json;",
+    "xing-traceur-amd": "./node_modules/.bin/xing-traceur --annotations --types --modules='amd' --dir src build/amd --maps moduleMaps.json; ./node_modules/.bin/xing-traceur --annotations --types --modules='amd' --dir ./node_modules/a1atscript/src build/amd --maps moduleMaps.json; ./node_modules/.bin/xing-traceur --annotations --types --modules='amd' --dir ./node_modules/xing-inflector/src build/amd --maps moduleMaps.json; ./node_modules/.bin/xing-traceur --annotations --types --modules='amd' --dir ./node_modules/xing-promise/src build/amd --maps moduleMaps.json;",
     "babel-cjs": "./node_modules/.bin/babel src/relayer.js src --stage 0 --out-dir dist/cjs",
     "rjs": "./node_modules/.bin/r.js -o out=./dist/relayer.es5.js baseUrl=./build/amd name=relayer optimize=none",
     "amd": "npm run-script xing-traceur-amd; npm run-script rjs",

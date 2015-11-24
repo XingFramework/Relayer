@@ -92,9 +92,9 @@ describe("Embedded List Create test", function() {
         }
       });
     angular.mock.module(function($provide) {
-      $provide.factory("$http", function(RelayerPromise) {
+      $provide.factory("$http", function(XingPromise) {
         return function(params) {
-          return mockHttp(RelayerPromise, params);
+          return mockHttp(XingPromise, params);
         };
       });
     });
@@ -122,5 +122,9 @@ describe("Embedded List Create test", function() {
     it("should resolve the book", function() {
       expect(book.title).toEqual("Hamlet");
     });
+
+    it("should resolve short link", function() {
+      expect(book.shortLink).toEqual("1");
+    })
   });
 });

@@ -38,7 +38,8 @@ export default class ResourceBuilder {
       }
       resource.templatedUrl.addDataPathLink(resource, "$.links.self");
       if (this.relationshipDescription.canCreate) {
-        var createResourceTransformer = this.createResourceTransformerFactory(this.relationshipDescription.createRelationshipDescription);
+        var createUriTemplate = uriTemplate || resource.pathGet("$.links.template");
+        var createResourceTransformer = this.createResourceTransformerFactory(this.relationshipDescription.createRelationshipDescription, createUriTemplate);
       } else {
         var createResourceTransformer = this.throwErrorTransformerFactory();
       }

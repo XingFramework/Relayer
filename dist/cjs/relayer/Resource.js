@@ -146,6 +146,7 @@ var Resource = (function (_DataWrapper) {
         if (relationshipDescription.initializeOnCreate) {
           var relationship = relationshipDescription.initializer.initialize();
           _this.relationships[relationshipName] = relationship;
+          _this.pathBuild(relationshipDescription.dataPath, relationship.response);
         }
       });
     }

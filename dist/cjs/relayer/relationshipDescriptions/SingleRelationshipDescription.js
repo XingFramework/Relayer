@@ -21,7 +21,7 @@ var _RelationshipDescriptionJs2 = _interopRequireDefault(_RelationshipDescriptio
 var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
 
 var SingleRelationshipDescription = (function (_RelationshipDescription) {
-  function SingleRelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, primaryResourceTransformerFactory, embeddedRelationshipTransformerFactory, resolvedEndpointFactory, loadedDataEndpointFactory, templatedUrlFromUrlFactory, name, ResourceClass, initialValues) {
+  function SingleRelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, primaryResourceTransformerFactory, embeddedRelationshipTransformerFactory, resolvedEndpointFactory, loadedDataEndpointFactory, templatedUrlFactory, name, ResourceClass, initialValues) {
     _classCallCheck(this, _SingleRelationshipDescription);
 
     _get(Object.getPrototypeOf(_SingleRelationshipDescription.prototype), "constructor", this).call(this, relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues);
@@ -30,7 +30,8 @@ var SingleRelationshipDescription = (function (_RelationshipDescription) {
     this.embeddedRelationshipTransformerFactory = embeddedRelationshipTransformerFactory;
     this.resolvedEndpointFactory = resolvedEndpointFactory;
     this.loadedDataEndpointFactory = loadedDataEndpointFactory;
-    this.templatedUrlFromUrlFactory = templatedUrlFromUrlFactory;
+    this.templatedUrlFactory = templatedUrlFactory;
+    this._templated = false;
   }
 
   _inherits(SingleRelationshipDescription, _RelationshipDescription);
@@ -38,8 +39,19 @@ var SingleRelationshipDescription = (function (_RelationshipDescription) {
   var _SingleRelationshipDescription = SingleRelationshipDescription;
 
   _createClass(_SingleRelationshipDescription, [{
+    key: "templated",
+    set: function (templated) {
+      this._templated = templated;
+    },
+    get: function () {
+      return this._templated;
+    }
+  }, {
     key: "embeddedEndpoint",
     value: function embeddedEndpoint(parent, uriParams) {
+      if (this._templated) {
+        throw "A templated hasOne relationship cannot be embedded";
+      }
       var parentEndpoint = parent.self();
       var embeddedRelationshipTransformer = this.embeddedRelationshipTransformerFactory(this.name);
       return this.loadedDataEndpointFactory(parentEndpoint, parent, embeddedRelationshipTransformer);
@@ -49,14 +61,17 @@ var SingleRelationshipDescription = (function (_RelationshipDescription) {
     value: function linkedEndpoint(parent, uriParams) {
       var transport = parent.self().transport;
       var url = parent.pathGet(this.linksPath);
-      var templatedUrl = this.templatedUrlFromUrlFactory(url, url);
-      templatedUrl.addDataPathLink(parent, this.linksPath);
+      var params = this._templated ? uriParams : {};
+      var templatedUrl = this.templatedUrlFactory(url, params);
+      if (!this._templated) {
+        templatedUrl.addDataPathLink(parent, this.linksPath);
+      }
       var primaryResourceTransformer = this.primaryResourceTransformerFactory(this);
       return this.resolvedEndpointFactory(transport, templatedUrl, primaryResourceTransformer);
     }
   }]);
 
-  SingleRelationshipDescription = (0, _SimpleFactoryInjectorJs.SimpleFactory)("SingleRelationshipDescriptionFactory", ["SingleRelationshipInitializerFactory", "ResourceMapperFactory", "ResourceSerializerFactory", "Inflector", "PrimaryResourceTransformerFactory", "EmbeddedRelationshipTransformerFactory", "ResolvedEndpointFactory", "LoadedDataEndpointFactory", "TemplatedUrlFromUrlFactory"])(SingleRelationshipDescription) || SingleRelationshipDescription;
+  SingleRelationshipDescription = (0, _SimpleFactoryInjectorJs.SimpleFactory)("SingleRelationshipDescriptionFactory", ["SingleRelationshipInitializerFactory", "ResourceMapperFactory", "ResourceSerializerFactory", "Inflector", "PrimaryResourceTransformerFactory", "EmbeddedRelationshipTransformerFactory", "ResolvedEndpointFactory", "LoadedDataEndpointFactory", "TemplatedUrlFactory"])(SingleRelationshipDescription) || SingleRelationshipDescription;
   return SingleRelationshipDescription;
 })(_RelationshipDescriptionJs2["default"]);
 

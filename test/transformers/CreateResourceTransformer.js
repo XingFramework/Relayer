@@ -3,7 +3,8 @@ import CreateResourceTransformer from "../../src/relayer/transformers/CreateReso
 
 describe("CreateResourceTransformer", function() {
   var createResourceTransformer, mockEndpoint, mockTransport, mockResponse, resource,
-  primaryResourceMapperFactory, primaryResourceSerializerFactory, ResourceClass, response;
+  primaryResourceMapperFactory, primaryResourceSerializerFactory, ResourceClass, response,
+  primaryResourceMapper;
   var mockTemplatedUrlSpy, templatedUrl;
   var relationship;
 
@@ -39,18 +40,25 @@ describe("CreateResourceTransformer", function() {
       this.error = thisResponse;
     };
 
-    primaryResourceMapperFactory = jasmine.createSpy("primaryResourceMapperFactory").and.callFake(
-      function(thisTransport, thisResponse, thisRelationshipDescription, thisEndpoint, useErrors) {
-      return {
-        map() {
-          if (useErrors) {
-            var ErrorClass = thisRelationshipDescription.ResourceClass.errorClass;
-            return new ErrorClass(thisResponse);
-          } else {
-            return new thisRelationshipDescription.ResourceClass(thisResponse);
-          }
+    primaryResourceMapper = {
+      map() {
+        if (this.useErrors) {
+          var ErrorClass = this.relationshipDescription.ResourceClass.errorClass;
+          return new ErrorClass(this.response);
+        } else {
+          return new this.relationshipDescription.ResourceClass(this.response);
         }
       }
+    };
+
+    primaryResourceMapperFactory = jasmine.createSpy("primaryResourceMapperFactory").and.callFake(
+      function(thisTransport, thisResponse, thisRelationshipDescription, thisEndpoint, useErrors) {
+      primaryResourceMapper.relationshipDescription = thisRelationshipDescription;
+      primaryResourceMapper.transport = thisTransport;
+      primaryResourceMapper.response = thisResponse;
+      primaryResourceMapper.endpoint = thisEndpoint;
+      primaryResourceMapper.useErrors = useErrors;
+      return primaryResourceMapper;
     });
 
     primaryResourceSerializerFactory = jasmine.createSpy("primaryResourceSerializerFactory").and.callFake(
@@ -70,7 +78,7 @@ describe("CreateResourceTransformer", function() {
       serializerFactory: primaryResourceSerializerFactory
     }
 
-    createResourceTransformer = new CreateResourceTransformer(relationship);
+    createResourceTransformer = new CreateResourceTransformer(relationship, "/cheese/{variety}");
 
   });
 
@@ -98,6 +106,10 @@ describe("CreateResourceTransformer", function() {
           mockTransport,
           mockResponse.data,
           relationship);
+      });
+
+      it("should set the uri template on the priamry resource mapper", function() {
+        expect(primaryResourceMapper.uriTemplate).toEqual("/cheese/{variety}")
       });
 
       it("should set the etag", function() {
