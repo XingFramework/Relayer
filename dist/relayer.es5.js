@@ -467,568 +467,63 @@ define('relayer/endpoints/Endpoint',[], function() {
   };
 });
 
-define('reflect-metadata',[], function() {
+define('relayer/MetaMap',[], function() {
   
-  
-  var Reflect;
-  (function(Reflect) {
-    var functionPrototype = Object.getPrototypeOf(Function);
-    var _Map = typeof Map === "function" ? Map : CreateMapPolyfill();
-    var _Set = typeof Set === "function" ? Set : CreateSetPolyfill();
-    var _WeakMap = typeof WeakMap === "function" ? WeakMap : CreateWeakMapPolyfill();
-    var __Metadata__ = new _WeakMap();
-    function decorate(decorators, target, targetKey, targetDescriptor) {
-      if (!IsUndefined(targetDescriptor)) {
-        if (!IsArray(decorators)) {
-          throw new TypeError();
-        } else if (!IsObject(target)) {
-          throw new TypeError();
-        } else if (IsUndefined(targetKey)) {
-          throw new TypeError();
-        } else if (!IsObject(targetDescriptor)) {
-          throw new TypeError();
-        }
-        targetKey = ToPropertyKey(targetKey);
-        return DecoratePropertyWithDescriptor(decorators, target, targetKey, targetDescriptor);
-      } else if (!IsUndefined(targetKey)) {
-        if (!IsArray(decorators)) {
-          throw new TypeError();
-        } else if (!IsObject(target)) {
-          throw new TypeError();
-        }
-        targetKey = ToPropertyKey(targetKey);
-        return DecoratePropertyWithoutDescriptor(decorators, target, targetKey);
-      } else {
-        if (!IsArray(decorators)) {
-          throw new TypeError();
-        } else if (!IsConstructor(target)) {
-          throw new TypeError();
-        }
-        return DecorateConstructor(decorators, target);
+  var MetaMap = function MetaMap() {
+    this._metadataMap = new Map();
+  };
+  ($traceurRuntime.createClass)(MetaMap, {
+    _getOrCreateMetadata: function(target) {
+      var metadata = this._metadataMap.get(target);
+      if (!metadata) {
+        metadata = new Map();
+        this._metadataMap.set(target, metadata);
       }
+      return metadata;
+    },
+    defineMetadata: function(key, value, target) {
+      this._getOrCreateMetadata(target).set(key, value);
+    },
+    hasMetadata: function(key, target) {
+      return this._getOrCreateMetadata(target).has(key);
+    },
+    getMetadata: function(key, target) {
+      return this._getOrCreateMetadata(target).get(key);
+    },
+    deleteMetadata: function(key, target) {
+      this._getOrCreateMetadata(target).delete(key);
     }
-    Reflect.decorate = decorate;
-    function metadata(metadataKey, metadataValue) {
-      function decorator(target, targetKey) {
-        if (!IsUndefined(targetKey)) {
-          if (!IsObject(target)) {
-            throw new TypeError();
-          }
-          targetKey = ToPropertyKey(targetKey);
-          OrdinaryDefineOwnMetadata(metadataKey, metadataValue, target, targetKey);
-        } else {
-          if (!IsConstructor(target)) {
-            throw new TypeError();
-          }
-          OrdinaryDefineOwnMetadata(metadataKey, metadataValue, target, undefined);
-        }
-      }
-      return decorator;
-    }
-    Reflect.metadata = metadata;
-    function defineMetadata(metadataKey, metadataValue, target, targetKey) {
-      if (!IsObject(target)) {
-        throw new TypeError();
-      } else if (!IsUndefined(targetKey)) {
-        targetKey = ToPropertyKey(targetKey);
-      }
-      return OrdinaryDefineOwnMetadata(metadataKey, metadataValue, target, targetKey);
-    }
-    Reflect.defineMetadata = defineMetadata;
-    function hasMetadata(metadataKey, target, targetKey) {
-      if (!IsObject(target)) {
-        throw new TypeError();
-      } else if (!IsUndefined(targetKey)) {
-        targetKey = ToPropertyKey(targetKey);
-      }
-      return OrdinaryHasMetadata(metadataKey, target, targetKey);
-    }
-    Reflect.hasMetadata = hasMetadata;
-    function hasOwnMetadata(metadataKey, target, targetKey) {
-      if (!IsObject(target)) {
-        throw new TypeError();
-      } else if (!IsUndefined(targetKey)) {
-        targetKey = ToPropertyKey(targetKey);
-      }
-      return OrdinaryHasOwnMetadata(metadataKey, target, targetKey);
-    }
-    Reflect.hasOwnMetadata = hasOwnMetadata;
-    function getMetadata(metadataKey, target, targetKey) {
-      if (!IsObject(target)) {
-        throw new TypeError();
-      } else if (!IsUndefined(targetKey)) {
-        targetKey = ToPropertyKey(targetKey);
-      }
-      return OrdinaryGetMetadata(metadataKey, target, targetKey);
-    }
-    Reflect.getMetadata = getMetadata;
-    function getOwnMetadata(metadataKey, target, targetKey) {
-      if (!IsObject(target)) {
-        throw new TypeError();
-      } else if (!IsUndefined(targetKey)) {
-        targetKey = ToPropertyKey(targetKey);
-      }
-      return OrdinaryGetOwnMetadata(metadataKey, target, targetKey);
-    }
-    Reflect.getOwnMetadata = getOwnMetadata;
-    function getMetadataKeys(target, targetKey) {
-      if (!IsObject(target)) {
-        throw new TypeError();
-      } else if (!IsUndefined(targetKey)) {
-        targetKey = ToPropertyKey(targetKey);
-      }
-      return OrdinaryMetadataKeys(target, targetKey);
-    }
-    Reflect.getMetadataKeys = getMetadataKeys;
-    function getOwnMetadataKeys(target, targetKey) {
-      if (!IsObject(target)) {
-        throw new TypeError();
-      } else if (!IsUndefined(targetKey)) {
-        targetKey = ToPropertyKey(targetKey);
-      }
-      return OrdinaryOwnMetadataKeys(target, targetKey);
-    }
-    Reflect.getOwnMetadataKeys = getOwnMetadataKeys;
-    function deleteMetadata(metadataKey, target, targetKey) {
-      if (!IsObject(target)) {
-        throw new TypeError();
-      } else if (!IsUndefined(targetKey)) {
-        targetKey = ToPropertyKey(targetKey);
-      }
-      var metadataMap = GetOrCreateMetadataMap(target, targetKey, false);
-      if (IsUndefined(metadataMap)) {
-        return false;
-      }
-      if (!metadataMap.delete(metadataKey)) {
-        return false;
-      }
-      if (metadataMap.size > 0) {
-        return true;
-      }
-      var targetMetadata = __Metadata__.get(target);
-      targetMetadata.delete(targetKey);
-      if (targetMetadata.size > 0) {
-        return true;
-      }
-      __Metadata__.delete(target);
-      return true;
-    }
-    Reflect.deleteMetadata = deleteMetadata;
-    function DecorateConstructor(decorators, target) {
-      for (var i = decorators.length - 1; i >= 0; --i) {
-        var decorator = decorators[i];
-        var decorated = decorator(target);
-        if (!IsUndefined(decorated)) {
-          if (!IsConstructor(decorated)) {
-            throw new TypeError();
-          }
-          target = decorated;
-        }
-      }
-      return target;
-    }
-    function DecoratePropertyWithDescriptor(decorators, target, propertyKey, descriptor) {
-      for (var i = decorators.length - 1; i >= 0; --i) {
-        var decorator = decorators[i];
-        var decorated = decorator(target, propertyKey, descriptor);
-        if (!IsUndefined(decorated)) {
-          if (!IsObject(decorated)) {
-            throw new TypeError();
-          }
-          descriptor = decorated;
-        }
-      }
-      return descriptor;
-    }
-    function DecoratePropertyWithoutDescriptor(decorators, target, propertyKey) {
-      for (var i = decorators.length - 1; i >= 0; --i) {
-        var decorator = decorators[i];
-        decorator(target, propertyKey);
-      }
-    }
-    function GetOrCreateMetadataMap(target, targetKey, create) {
-      var targetMetadata = __Metadata__.get(target);
-      if (!targetMetadata) {
-        if (!create) {
-          return undefined;
-        }
-        targetMetadata = new _Map();
-        __Metadata__.set(target, targetMetadata);
-      }
-      var keyMetadata = targetMetadata.get(targetKey);
-      if (!keyMetadata) {
-        if (!create) {
-          return undefined;
-        }
-        keyMetadata = new _Map();
-        targetMetadata.set(targetKey, keyMetadata);
-      }
-      return keyMetadata;
-    }
-    function OrdinaryHasMetadata(MetadataKey, O, P) {
-      var hasOwn = OrdinaryHasOwnMetadata(MetadataKey, O, P);
-      if (hasOwn) {
-        return true;
-      }
-      var parent = GetPrototypeOf(O);
-      if (parent !== null) {
-        return OrdinaryHasMetadata(MetadataKey, parent, P);
-      }
-      return false;
-    }
-    function OrdinaryHasOwnMetadata(MetadataKey, O, P) {
-      var metadataMap = GetOrCreateMetadataMap(O, P, false);
-      if (metadataMap === undefined) {
-        return false;
-      }
-      return Boolean(metadataMap.has(MetadataKey));
-    }
-    function OrdinaryGetMetadata(MetadataKey, O, P) {
-      var hasOwn = OrdinaryHasOwnMetadata(MetadataKey, O, P);
-      if (hasOwn) {
-        return OrdinaryGetOwnMetadata(MetadataKey, O, P);
-      }
-      var parent = GetPrototypeOf(O);
-      if (parent !== null) {
-        return OrdinaryGetMetadata(MetadataKey, parent, P);
-      }
-      return undefined;
-    }
-    function OrdinaryGetOwnMetadata(MetadataKey, O, P) {
-      var metadataMap = GetOrCreateMetadataMap(O, P, false);
-      if (metadataMap === undefined) {
-        return undefined;
-      }
-      return metadataMap.get(MetadataKey);
-    }
-    function OrdinaryDefineOwnMetadata(MetadataKey, MetadataValue, O, P) {
-      var metadataMap = GetOrCreateMetadataMap(O, P, true);
-      metadataMap.set(MetadataKey, MetadataValue);
-    }
-    function OrdinaryMetadataKeys(O, P) {
-      var ownKeys = OrdinaryOwnMetadataKeys(O, P);
-      var parent = GetPrototypeOf(O);
-      if (parent === null) {
-        return ownKeys;
-      }
-      var parentKeys = OrdinaryMetadataKeys(parent, P);
-      if (parentKeys.length <= 0) {
-        return ownKeys;
-      }
-      if (ownKeys.length <= 0) {
-        return parentKeys;
-      }
-      var set = new _Set();
-      var keys = [];
-      for (var _i = 0; _i < ownKeys.length; _i++) {
-        var key = ownKeys[_i];
-        var hasKey = set.has(key);
-        if (!hasKey) {
-          set.add(key);
-          keys.push(key);
-        }
-      }
-      for (var _a = 0; _a < parentKeys.length; _a++) {
-        var key = parentKeys[_a];
-        var hasKey = set.has(key);
-        if (!hasKey) {
-          set.add(key);
-          keys.push(key);
-        }
-      }
-      return keys;
-    }
-    function OrdinaryOwnMetadataKeys(target, targetKey) {
-      var metadataMap = GetOrCreateMetadataMap(target, targetKey, false);
-      var keys = [];
-      if (metadataMap) {
-        metadataMap.forEach(function(_, key) {
-          return keys.push(key);
-        });
-      }
-      return keys;
-    }
-    function IsUndefined(x) {
-      return x === undefined;
-    }
-    function IsArray(x) {
-      return Array.isArray(x);
-    }
-    function IsObject(x) {
-      return typeof x === "object" ? x !== null : typeof x === "function";
-    }
-    function IsConstructor(x) {
-      return typeof x === "function";
-    }
-    function IsSymbol(x) {
-      return typeof x === "symbol";
-    }
-    function ToPropertyKey(value) {
-      if (IsSymbol(value)) {
-        return value;
-      }
-      return String(value);
-    }
-    function GetPrototypeOf(O) {
-      var proto = Object.getPrototypeOf(O);
-      if (typeof O !== "function" || O === functionPrototype) {
-        return proto;
-      }
-      if (proto !== functionPrototype) {
-        return proto;
-      }
-      var prototype = O.prototype;
-      var prototypeProto = Object.getPrototypeOf(prototype);
-      if (prototypeProto == null || prototypeProto === Object.prototype) {
-        return proto;
-      }
-      var constructor = prototypeProto.constructor;
-      if (typeof constructor !== "function") {
-        return proto;
-      }
-      if (constructor === O) {
-        return proto;
-      }
-      return constructor;
-    }
-    function CreateMapPolyfill() {
-      var cacheSentinel = {};
-      function Map() {
-        this._keys = [];
-        this._values = [];
-        this._cache = cacheSentinel;
-      }
-      Map.prototype = {
-        get size() {
-          return this._keys.length;
-        },
-        has: function(key) {
-          if (key === this._cache) {
-            return true;
-          }
-          if (this._find(key) >= 0) {
-            this._cache = key;
-            return true;
-          }
-          return false;
-        },
-        get: function(key) {
-          var index = this._find(key);
-          if (index >= 0) {
-            this._cache = key;
-            return this._values[index];
-          }
-          return undefined;
-        },
-        set: function(key, value) {
-          this.delete(key);
-          this._keys.push(key);
-          this._values.push(value);
-          this._cache = key;
-          return this;
-        },
-        delete: function(key) {
-          var index = this._find(key);
-          if (index >= 0) {
-            this._keys.splice(index, 1);
-            this._values.splice(index, 1);
-            this._cache = cacheSentinel;
-            return true;
-          }
-          return false;
-        },
-        clear: function() {
-          this._keys.length = 0;
-          this._values.length = 0;
-          this._cache = cacheSentinel;
-        },
-        forEach: function(callback, thisArg) {
-          var size = this.size;
-          for (var i = 0; i < size; ++i) {
-            var key = this._keys[i];
-            var value = this._values[i];
-            this._cache = key;
-            callback.call(this, value, key, this);
-          }
-        },
-        _find: function(key) {
-          var keys = this._keys;
-          var size = keys.length;
-          for (var i = 0; i < size; ++i) {
-            if (keys[i] === key) {
-              return i;
-            }
-          }
-          return -1;
-        }
-      };
-      return Map;
-    }
-    function CreateSetPolyfill() {
-      var cacheSentinel = {};
-      function Set() {
-        this._map = new _Map();
-      }
-      Set.prototype = {
-        get size() {
-          return this._map.length;
-        },
-        has: function(value) {
-          return this._map.has(value);
-        },
-        add: function(value) {
-          this._map.set(value, value);
-          return this;
-        },
-        delete: function(value) {
-          return this._map.delete(value);
-        },
-        clear: function() {
-          this._map.clear();
-        },
-        forEach: function(callback, thisArg) {
-          this._map.forEach(callback, thisArg);
-        }
-      };
-      return Set;
-    }
-    function CreateWeakMapPolyfill() {
-      var UUID_SIZE = 16;
-      var isNode = typeof global !== "undefined" && Object.prototype.toString.call(global.process) === '[object process]';
-      var nodeCrypto = isNode && require("crypto");
-      var hasOwn = Object.prototype.hasOwnProperty;
-      var keys = {};
-      var rootKey = CreateUniqueKey();
-      function WeakMap() {
-        this._key = CreateUniqueKey();
-      }
-      WeakMap.prototype = {
-        has: function(target) {
-          var table = GetOrCreateWeakMapTable(target, false);
-          if (table) {
-            return this._key in table;
-          }
-          return false;
-        },
-        get: function(target) {
-          var table = GetOrCreateWeakMapTable(target, false);
-          if (table) {
-            return table[this._key];
-          }
-          return undefined;
-        },
-        set: function(target, value) {
-          var table = GetOrCreateWeakMapTable(target, true);
-          table[this._key] = value;
-          return this;
-        },
-        delete: function(target) {
-          var table = GetOrCreateWeakMapTable(target, false);
-          if (table && this._key in table) {
-            return delete table[this._key];
-          }
-          return false;
-        },
-        clear: function() {
-          this._key = CreateUniqueKey();
-        }
-      };
-      function FillRandomBytes(buffer, size) {
-        for (var i = 0; i < size; ++i) {
-          buffer[i] = Math.random() * 255 | 0;
-        }
-      }
-      function GenRandomBytes(size) {
-        if (nodeCrypto) {
-          var data = nodeCrypto.randomBytes(size);
-          return data;
-        } else if (typeof Uint8Array === "function") {
-          var data = new Uint8Array(size);
-          if (typeof crypto !== "undefined") {
-            crypto.getRandomValues(data);
-          } else if (typeof msCrypto !== "undefined") {
-            msCrypto.getRandomValues(data);
-          } else {
-            FillRandomBytes(data, size);
-          }
-          return data;
-        } else {
-          var data = new Array(size);
-          FillRandomBytes(data, size);
-          return data;
-        }
-      }
-      function CreateUUID() {
-        var data = GenRandomBytes(UUID_SIZE);
-        data[6] = data[6] & 0x4f | 0x40;
-        data[8] = data[8] & 0xbf | 0x80;
-        var result = "";
-        for (var offset = 0; offset < UUID_SIZE; ++offset) {
-          var byte = data[offset];
-          if (offset === 4 || offset === 6 || offset === 8) {
-            result += "-";
-          }
-          if (byte < 16) {
-            result += "0";
-          }
-          result += byte.toString(16).toLowerCase();
-        }
-        return result;
-      }
-      function CreateUniqueKey() {
-        var key;
-        do {
-          key = "@@WeakMap@@" + CreateUUID();
-        } while (hasOwn.call(keys, key));
-        keys[key] = true;
-        return key;
-      }
-      function GetOrCreateWeakMapTable(target, create) {
-        if (!hasOwn.call(target, rootKey)) {
-          if (!create) {
-            return undefined;
-          }
-          Object.defineProperty(target, rootKey, {value: Object.create(null)});
-        }
-        return target[rootKey];
-      }
-      return WeakMap;
-    }
-    (function(__global) {
-      if (typeof __global.Reflect !== "undefined") {
-        if (__global.Reflect !== Reflect) {
-          for (var p in Reflect) {
-            __global.Reflect[p] = Reflect[p];
-          }
-        }
-      } else {
-        __global.Reflect = Reflect;
-      }
-    })(typeof window !== "undefined" ? window : typeof WorkerGlobalScope !== "undefined" ? self : typeof global !== "undefined" ? global : Function("return this;")());
-  })(Reflect || (Reflect = {}));
-  return {};
+  }, {});
+  var $__default = MetaMap;
+  return {
+    get default() {
+      return $__default;
+    },
+    __esModule: true
+  };
 });
 
-define('relayer/injector',["reflect-metadata"], function($__0) {
+define('relayer/injector',["./MetaMap"], function($__0) {
   
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
-  $__0;
+  var MetaMap = $__0.default;
+  var metaMap = new MetaMap();
   function metadataValueOrCall(key, target, cb) {
-    if (Reflect.hasOwnMetadata(key, target)) {
-      return Reflect.getMetadata(key, target);
+    if (metaMap.hasMetadata(key, target)) {
+      return metaMap.getMetadata(key, target);
     } else {
       var value = cb();
-      Reflect.defineMetadata(key, value, target);
+      metaMap.defineMetadata(key, value, target);
       return value;
     }
   }
   function Inject() {
     for (var dependencies = [],
-        $__3 = 0; $__3 < arguments.length; $__3++)
-      dependencies[$__3] = arguments[$__3];
+        $__4 = 0; $__4 < arguments.length; $__4++)
+      dependencies[$__4] = arguments[$__4];
     return function(target) {
-      Reflect.defineMetadata('injectables', dependencies, target);
+      metaMap.defineMetadata('injectables', dependencies, target);
     };
   }
   function factory(Target) {
@@ -1054,12 +549,12 @@ define('relayer/injector',["reflect-metadata"], function($__0) {
   var Injectable = function Injectable() {};
   ($traceurRuntime.createClass)(Injectable, {instantiate: function() {
       for (var args = [],
-          $__4 = 0; $__4 < arguments.length; $__4++)
-        args[$__4] = arguments[$__4];
-      var $__1 = this;
+          $__5 = 0; $__5 < arguments.length; $__5++)
+        args[$__5] = arguments[$__5];
+      var $__2 = this;
       return metadataValueOrCall('instantiated', this, (function() {
-        var $__8;
-        var instantiated = ($__8 = $__1)._instantiate.apply($__8, $traceurRuntime.spread(args));
+        var $__9;
+        var instantiated = ($__9 = $__2)._instantiate.apply($__9, $traceurRuntime.spread(args));
         injector.recordInstantiation(instantiated);
         return instantiated;
       }));
@@ -1078,13 +573,13 @@ define('relayer/injector',["reflect-metadata"], function($__0) {
   };
   var $FactoryInjectable = FactoryInjectable;
   ($traceurRuntime.createClass)(FactoryInjectable, {_instantiate: function() {
-      var $__1 = this;
+      var $__2 = this;
       return (function() {
-        var $__8;
+        var $__9;
         for (var args = [],
-            $__5 = 0; $__5 < arguments.length; $__5++)
-          args[$__5] = arguments[$__5];
-        return ($__8 = injector).instantiate.apply($__8, $traceurRuntime.spread([instance($__1.Target)], args));
+            $__6 = 0; $__6 < arguments.length; $__6++)
+          args[$__6] = arguments[$__6];
+        return ($__9 = injector).instantiate.apply($__9, $traceurRuntime.spread([instance($__2.Target)], args));
       });
     }}, {}, Injectable);
   var ConstructableInjectable = function ConstructableInjectable(Target) {
@@ -1094,11 +589,11 @@ define('relayer/injector',["reflect-metadata"], function($__0) {
   var $ConstructableInjectable = ConstructableInjectable;
   ($traceurRuntime.createClass)(ConstructableInjectable, {_instantiate: function() {
       for (var args = [],
-          $__5 = 0; $__5 < arguments.length; $__5++)
-        args[$__5] = arguments[$__5];
+          $__6 = 0; $__6 < arguments.length; $__6++)
+        args[$__6] = arguments[$__6];
       var finalArgs;
-      if (Reflect.hasOwnMetadata('injectables', this.Target)) {
-        var instantiatedInjectables = injector.instantiateInjectables(Reflect.getMetadata('injectables', this.Target));
+      if (metaMap.hasMetadata('injectables', this.Target)) {
+        var instantiatedInjectables = injector.instantiateInjectables(metaMap.getMetadata('injectables', this.Target));
         finalArgs = instantiatedInjectables.concat(args);
       } else {
         finalArgs = args;
@@ -1117,11 +612,11 @@ define('relayer/injector',["reflect-metadata"], function($__0) {
   };
   var $InstanceInjectable = InstanceInjectable;
   ($traceurRuntime.createClass)(InstanceInjectable, {instantiate: function() {
-      var $__8;
+      var $__9;
       for (var args = [],
-          $__6 = 0; $__6 < arguments.length; $__6++)
-        args[$__6] = arguments[$__6];
-      return ($__8 = this)._instantiate.apply($__8, $traceurRuntime.spread(args));
+          $__7 = 0; $__7 < arguments.length; $__7++)
+        args[$__7] = arguments[$__7];
+      return ($__9 = this)._instantiate.apply($__9, $traceurRuntime.spread(args));
     }}, {}, ConstructableInjectable);
   var Injector = function Injector() {
     this._instantiations = [];
@@ -1132,27 +627,27 @@ define('relayer/injector',["reflect-metadata"], function($__0) {
     },
     reset: function() {
       this._instantiations.forEach((function(instantiated) {
-        return Reflect.deleteMetadata("instantiated", instantiated);
+        return metaMap.deleteMetadata("instantiated", instantiated);
       }));
     },
     instantiateInjectables: function(injectables) {
-      var $__1 = this;
+      var $__2 = this;
       return injectables.map((function(injectable) {
-        return $__1.instantiate(injectable);
+        return $__2.instantiate(injectable);
       }));
     },
     instantiate: function(Target) {
-      var $__8;
+      var $__9;
       for (var args = [],
-          $__7 = 1; $__7 < arguments.length; $__7++)
-        args[$__7 - 1] = arguments[$__7];
+          $__8 = 1; $__8 < arguments.length; $__8++)
+        args[$__8 - 1] = arguments[$__8];
       var injectable;
       if (!(Target instanceof Injectable)) {
         injectable = singleton(Target);
       } else {
         injectable = Target;
       }
-      return ($__8 = injectable).instantiate.apply($__8, $traceurRuntime.spread(args));
+      return ($__9 = injectable).instantiate.apply($__9, $traceurRuntime.spread(args));
     },
     get XingPromise() {
       this._XingPromise = this._XingPromise || new ValueInjectable();
@@ -3726,86 +3221,86 @@ define('a1atscript',["./a1atscript/Injector", "./a1atscript/annotations", "./a1a
     $__6 = {default: $__6};
   if (!$__7 || !$__7.__esModule)
     $__7 = {default: $__7};
-  var $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_Injector_46_js__ = $__0;
-  var $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_annotations_46_js__ = $__1;
-  var $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_DirectiveObject_46_js__ = $__2;
+  var $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_Injector_46_js__ = $__0;
+  var $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_annotations_46_js__ = $__1;
+  var $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_DirectiveObject_46_js__ = $__2;
   $__3;
-  var $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_ng2Directives_47_Component_46_js__ = $__4;
-  var $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_ToAnnotation_46_js__ = $__5;
-  var $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_bootstrap_46_js__ = $__6;
-  var $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_Router_46_js__ = $__7;
+  var $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_ng2Directives_47_Component_46_js__ = $__4;
+  var $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_ToAnnotation_46_js__ = $__5;
+  var $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_bootstrap_46_js__ = $__6;
+  var $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_Router_46_js__ = $__7;
   return {
     get registerInjector() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_Injector_46_js__.registerInjector;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_Injector_46_js__.registerInjector;
     },
     get getInjector() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_Injector_46_js__.getInjector;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_Injector_46_js__.getInjector;
     },
     get Injector() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_Injector_46_js__.Injector;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_Injector_46_js__.Injector;
     },
     get Config() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_annotations_46_js__.Config;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_annotations_46_js__.Config;
     },
     get Run() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_annotations_46_js__.Run;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_annotations_46_js__.Run;
     },
     get Controller() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_annotations_46_js__.Controller;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_annotations_46_js__.Controller;
     },
     get Directive() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_annotations_46_js__.Directive;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_annotations_46_js__.Directive;
     },
     get Service() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_annotations_46_js__.Service;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_annotations_46_js__.Service;
     },
     get Factory() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_annotations_46_js__.Factory;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_annotations_46_js__.Factory;
     },
     get Provider() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_annotations_46_js__.Provider;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_annotations_46_js__.Provider;
     },
     get Value() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_annotations_46_js__.Value;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_annotations_46_js__.Value;
     },
     get Constant() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_annotations_46_js__.Constant;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_annotations_46_js__.Constant;
     },
     get Filter() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_annotations_46_js__.Filter;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_annotations_46_js__.Filter;
     },
     get Animation() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_annotations_46_js__.Animation;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_annotations_46_js__.Animation;
     },
     get Module() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_annotations_46_js__.Module;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_annotations_46_js__.Module;
     },
     get AsModule() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_annotations_46_js__.AsModule;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_annotations_46_js__.AsModule;
     },
     get DirectiveObject() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_DirectiveObject_46_js__.DirectiveObject;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_DirectiveObject_46_js__.DirectiveObject;
     },
     get Component() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_ng2Directives_47_Component_46_js__.Component;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_ng2Directives_47_Component_46_js__.Component;
     },
     get Template() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_ng2Directives_47_Component_46_js__.Template;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_ng2Directives_47_Component_46_js__.Template;
     },
     get View() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_ng2Directives_47_Component_46_js__.View;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_ng2Directives_47_Component_46_js__.View;
     },
     get ToAnnotation() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_ToAnnotation_46_js__.ToAnnotation;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_ToAnnotation_46_js__.ToAnnotation;
     },
     get bootstrap() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_bootstrap_46_js__.bootstrap;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_bootstrap_46_js__.bootstrap;
     },
     get Router() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_Router_46_js__.Router;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_Router_46_js__.Router;
     },
     get RouteConfig() {
-      return $___46__46__47_node_95_modules_47_a1atscript_47_dist_47_a1atscript_46_js_47_Router_46_js__.RouteConfig;
+      return $___46__46__47_node_95_modules_47_a1atscript_47_src_47_a1atscript_46_js_47_Router_46_js__.RouteConfig;
     },
     __esModule: true
   };

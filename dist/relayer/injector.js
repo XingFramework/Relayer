@@ -1,18 +1,20 @@
-import {} from 'reflect-metadata';
+import MetaMap from "./MetaMap.js";
+
+var metaMap = new MetaMap();
 
 function metadataValueOrCall(key, target, cb) {
-  if (Reflect.hasOwnMetadata(key, target)) {
-    return Reflect.getMetadata(key, target);
+  if (metaMap.hasMetadata(key, target)) {
+    return metaMap.getMetadata(key, target);
   } else {
     var value = cb();
-    Reflect.defineMetadata(key, value, target);
+    metaMap.defineMetadata(key, value, target);
     return value;
   }
 }
 
 export function Inject(...dependencies) {
   return function(target) {
-    Reflect.defineMetadata('injectables', dependencies, target);
+    metaMap.defineMetadata('injectables', dependencies, target);
   }
 }
 
@@ -86,8 +88,8 @@ class ConstructableInjectable extends Injectable {
 
   _instantiate(...args) {
     var finalArgs;
-    if (Reflect.hasOwnMetadata('injectables', this.Target)) {
-      var instantiatedInjectables = injector.instantiateInjectables(Reflect.getMetadata('injectables', this.Target));
+    if (metaMap.hasMetadata('injectables', this.Target)) {
+      var instantiatedInjectables = injector.instantiateInjectables(metaMap.getMetadata('injectables', this.Target));
       finalArgs = instantiatedInjectables.concat(args);
     } else {
       finalArgs = args;
@@ -116,7 +118,7 @@ class Injector {
   }
 
   reset() {
-    this._instantiations.forEach((instantiated) => Reflect.deleteMetadata("instantiated", instantiated));
+    this._instantiations.forEach((instantiated) => metaMap.deleteMetadata("instantiated", instantiated));
   }
 
   instantiateInjectables(injectables) {

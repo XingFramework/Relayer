@@ -15,20 +15,26 @@ exports.value = value;
 exports.singleton = singleton;
 exports.instance = instance;
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-require('reflect-metadata');
+var _MetaMapJs = require('./MetaMap.js');
+
+var _MetaMapJs2 = _interopRequireDefault(_MetaMapJs);
+
+var metaMap = new _MetaMapJs2['default']();
 
 function metadataValueOrCall(key, target, cb) {
-  if (Reflect.hasOwnMetadata(key, target)) {
-    return Reflect.getMetadata(key, target);
+  if (metaMap.hasMetadata(key, target)) {
+    return metaMap.getMetadata(key, target);
   } else {
     var value = cb();
-    Reflect.defineMetadata(key, value, target);
+    metaMap.defineMetadata(key, value, target);
     return value;
   }
 }
@@ -39,7 +45,7 @@ function Inject() {
   }
 
   return function (target) {
-    Reflect.defineMetadata('injectables', dependencies, target);
+    metaMap.defineMetadata('injectables', dependencies, target);
   };
 }
 
@@ -158,8 +164,8 @@ var ConstructableInjectable = (function (_Injectable3) {
       }
 
       var finalArgs;
-      if (Reflect.hasOwnMetadata('injectables', this.Target)) {
-        var instantiatedInjectables = injector.instantiateInjectables(Reflect.getMetadata('injectables', this.Target));
+      if (metaMap.hasMetadata('injectables', this.Target)) {
+        var instantiatedInjectables = injector.instantiateInjectables(metaMap.getMetadata('injectables', this.Target));
         finalArgs = instantiatedInjectables.concat(args);
       } else {
         finalArgs = args;
@@ -226,7 +232,7 @@ var Injector = (function () {
     key: 'reset',
     value: function reset() {
       this._instantiations.forEach(function (instantiated) {
-        return Reflect.deleteMetadata('instantiated', instantiated);
+        return metaMap.deleteMetadata('instantiated', instantiated);
       });
     }
   }, {
