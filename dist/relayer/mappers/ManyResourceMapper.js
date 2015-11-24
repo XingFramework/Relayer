@@ -1,13 +1,13 @@
-import {SimpleFactory} from "../SimpleFactoryInjector.js";
 import Mapper from "./Mapper.js";
+import SingleRelationshipDescription from "../relationshipDescriptions/SingleRelationshipDescription.js";
+import {Inject, factory} from "../injector.js";
 
-@SimpleFactory("ManyResourceMapperFactory", ["SingleRelationshipDescriptionFactory"])
 export default class ManyResourceMapper extends Mapper {
 
   constructor(singleRelationshipDescriptionFactory, transport, response, relationshipDescription, useErrors = false) {
     super(transport, response, relationshipDescription, useErrors);
     this.singleRelationshipDescription = singleRelationshipDescriptionFactory("", this.ResourceClass);
-  };
+  }
 
   initializeModel() {
     this.mapped = [];
@@ -21,5 +21,6 @@ export default class ManyResourceMapper extends Mapper {
       this.mapped.push(resourceMapper.map());
     });
   }
-
 }
+
+Inject(factory(SingleRelationshipDescription))(ManyResourceMapper);

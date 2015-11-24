@@ -16,9 +16,35 @@ var _APIErrorJs = require("./APIError.js");
 
 var _APIErrorJs2 = _interopRequireDefault(_APIErrorJs);
 
-var _a1atscript = require("a1atscript");
+var _decoratorsJsonPropertyDecoratorJs = require("./decorators/JsonPropertyDecorator.js");
 
-var _SimpleFactoryInjectorJs = require("./SimpleFactoryInjector.js");
+var _decoratorsJsonPropertyDecoratorJs2 = _interopRequireDefault(_decoratorsJsonPropertyDecoratorJs);
+
+var _decoratorsRelatedResourceDecoratorJs = require("./decorators/RelatedResourceDecorator.js");
+
+var _decoratorsRelatedResourceDecoratorJs2 = _interopRequireDefault(_decoratorsRelatedResourceDecoratorJs);
+
+var _relationshipDescriptionsSingleRelationshipDescriptionJs = require("./relationshipDescriptions/SingleRelationshipDescription.js");
+
+var _relationshipDescriptionsSingleRelationshipDescriptionJs2 = _interopRequireDefault(_relationshipDescriptionsSingleRelationshipDescriptionJs);
+
+var _relationshipDescriptionsManyRelationshipDescriptionJs = require("./relationshipDescriptions/ManyRelationshipDescription.js");
+
+var _relationshipDescriptionsManyRelationshipDescriptionJs2 = _interopRequireDefault(_relationshipDescriptionsManyRelationshipDescriptionJs);
+
+var _relationshipDescriptionsListRelationshipDescriptionJs = require("./relationshipDescriptions/ListRelationshipDescription.js");
+
+var _relationshipDescriptionsListRelationshipDescriptionJs2 = _interopRequireDefault(_relationshipDescriptionsListRelationshipDescriptionJs);
+
+var _relationshipDescriptionsMapRelationshipDescriptionJs = require("./relationshipDescriptions/MapRelationshipDescription.js");
+
+var _relationshipDescriptionsMapRelationshipDescriptionJs2 = _interopRequireDefault(_relationshipDescriptionsMapRelationshipDescriptionJs);
+
+var _xingInflector = require("xing-inflector");
+
+var _xingInflector2 = _interopRequireDefault(_xingInflector);
+
+var _injectorJs = require("./injector.js");
 
 var resourcesToInitialize = [];
 
@@ -28,46 +54,53 @@ function describeResource(resourceClass, defineFn) {
 
 var InitializedResourceClasses = (function () {
   function InitializedResourceClasses(resourceDescriptionFactory) {
-    _classCallCheck(this, _InitializedResourceClasses);
+    _classCallCheck(this, InitializedResourceClasses);
 
     this.resourceDescriptionFactory = resourceDescriptionFactory;
     this.initializeClasses();
   }
 
-  var _InitializedResourceClasses = InitializedResourceClasses;
-
-  _createClass(_InitializedResourceClasses, [{
+  _createClass(InitializedResourceClasses, [{
+    key: "buildDescription",
+    value: function buildDescription(resourceToInitialize) {
+      var resourceClass = resourceToInitialize.resourceClass;
+      var defineFn = resourceToInitialize.defineFn;
+      var resourceDescription = resourceClass.description(this.resourceDescriptionFactory);
+      // wrap-around definitions because...
+      defineFn(resourceDescription);
+    }
+  }, {
+    key: "applyDescription",
+    value: function applyDescription(resourceToInitialize) {
+      var resourceClass = resourceToInitialize.resourceClass;
+      var resourceDescription = resourceClass.resourceDescription;
+      var errorClass = function errorClass(responseData) {
+        _APIErrorJs2["default"].call(this, responseData);
+      };
+      errorClass.relationships = {};
+      errorClass.properties = {};
+      errorClass.prototype = Object.create(_APIErrorJs2["default"].prototype);
+      errorClass.prototype.constructor = errorClass;
+      resourceDescription.applyToResource(resourceClass.prototype);
+      resourceDescription.applyToError(errorClass.prototype);
+      resourceClass.errorClass = errorClass;
+      return resourceClass;
+    }
+  }, {
     key: "initializeClasses",
     value: function initializeClasses() {
       var _this = this;
 
       resourcesToInitialize.forEach(function (resourceToInitialize) {
-        var resourceClass = resourceToInitialize.resourceClass;
-        var defineFn = resourceToInitialize.defineFn;
-        var resourceDescription = resourceClass.description(_this.resourceDescriptionFactory);
-        // wrap-around definitions because...
-        defineFn(resourceDescription);
+        _this.buildDescription(resourceToInitialize);
       });
 
       return resourcesToInitialize.map(function (resourceToInitialize) {
-        var resourceClass = resourceToInitialize.resourceClass;
-        var resourceDescription = resourceClass.resourceDescription;
-        var errorClass = function errorClass(responseData) {
-          _APIErrorJs2["default"].call(this, responseData);
-        };
-        errorClass.relationships = {};
-        errorClass.properties = {};
-        errorClass.prototype = Object.create(_APIErrorJs2["default"].prototype);
-        errorClass.prototype.constructor = errorClass;
-        resourceDescription.applyToResource(resourceClass.prototype);
-        resourceDescription.applyToError(errorClass.prototype);
-        resourceClass.errorClass = errorClass;
-        return resourceClass;
+        _this.applyDescription(resourceToInitialize);
       });
     }
   }]);
 
-  InitializedResourceClasses = (0, _a1atscript.Service)("InitializedResourceClasses", ["ResourceDescriptionFactory"])(InitializedResourceClasses) || InitializedResourceClasses;
   return InitializedResourceClasses;
 })();
 
@@ -75,7 +108,7 @@ exports.InitializedResourceClasses = InitializedResourceClasses;
 
 var ResourceDescription = (function () {
   function ResourceDescription(jsonPropertyDecoratorFactory, relatedResourceDecoratorFactory, singleRelationshipDescriptionFactory, manyRelationshipDescriptionFactory, listRelationshipDescriptionFactory, mapRelationshipDescriptionFactory, inflector) {
-    _classCallCheck(this, _ResourceDescription);
+    _classCallCheck(this, ResourceDescription);
 
     this.jsonPropertyDecoratorFactory = jsonPropertyDecoratorFactory;
     this.relatedResourceDecoratorFactory = relatedResourceDecoratorFactory;
@@ -90,9 +123,7 @@ var ResourceDescription = (function () {
     this.parentDescription = null; //automated inheritance?
   }
 
-  var _ResourceDescription = ResourceDescription;
-
-  _createClass(_ResourceDescription, [{
+  _createClass(ResourceDescription, [{
     key: "chainFrom",
     value: function chainFrom(other) {
       if (this.parentDescription && this.parentDescription !== other) {
@@ -178,8 +209,11 @@ var ResourceDescription = (function () {
     }
   }]);
 
-  ResourceDescription = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ResourceDescriptionFactory", ["JsonPropertyDecoratorFactory", "RelatedResourceDecoratorFactory", "SingleRelationshipDescriptionFactory", "ManyRelationshipDescriptionFactory", "ListRelationshipDescriptionFactory", "MapRelationshipDescriptionFactory", "Inflector"])(ResourceDescription) || ResourceDescription;
   return ResourceDescription;
 })();
 
 exports.ResourceDescription = ResourceDescription;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(ResourceDescription))(InitializedResourceClasses);
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_decoratorsJsonPropertyDecoratorJs2["default"]), (0, _injectorJs.factory)(_decoratorsRelatedResourceDecoratorJs2["default"]), (0, _injectorJs.factory)(_relationshipDescriptionsSingleRelationshipDescriptionJs2["default"]), (0, _injectorJs.factory)(_relationshipDescriptionsManyRelationshipDescriptionJs2["default"]), (0, _injectorJs.factory)(_relationshipDescriptionsListRelationshipDescriptionJs2["default"]), (0, _injectorJs.factory)(_relationshipDescriptionsMapRelationshipDescriptionJs2["default"]), _xingInflector2["default"])(ResourceDescription);

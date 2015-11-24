@@ -18,13 +18,63 @@ var _RelationshipDescriptionJs = require("./RelationshipDescription.js");
 
 var _RelationshipDescriptionJs2 = _interopRequireDefault(_RelationshipDescriptionJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
+var _initializersListRelationshipInitializerJs = require("../initializers/ListRelationshipInitializer.js");
+
+var _initializersListRelationshipInitializerJs2 = _interopRequireDefault(_initializersListRelationshipInitializerJs);
+
+var _mappersListResourceMapperJs = require("../mappers/ListResourceMapper.js");
+
+var _mappersListResourceMapperJs2 = _interopRequireDefault(_mappersListResourceMapperJs);
+
+var _serializersListResourceSerializerJs = require("../serializers/ListResourceSerializer.js");
+
+var _serializersListResourceSerializerJs2 = _interopRequireDefault(_serializersListResourceSerializerJs);
+
+var _xingInflector = require("xing-inflector");
+
+var _xingInflector2 = _interopRequireDefault(_xingInflector);
+
+var _SingleRelationshipDescriptionJs = require("./SingleRelationshipDescription.js");
+
+var _SingleRelationshipDescriptionJs2 = _interopRequireDefault(_SingleRelationshipDescriptionJs);
+
+var _ListResourceJs = require("../ListResource.js");
+
+var _ListResourceJs2 = _interopRequireDefault(_ListResourceJs);
+
+var _transformersPrimaryResourceTransformerJs = require("../transformers/PrimaryResourceTransformer.js");
+
+var _transformersPrimaryResourceTransformerJs2 = _interopRequireDefault(_transformersPrimaryResourceTransformerJs);
+
+var _transformersEmbeddedRelationshipTransformerJs = require("../transformers/EmbeddedRelationshipTransformer.js");
+
+var _transformersEmbeddedRelationshipTransformerJs2 = _interopRequireDefault(_transformersEmbeddedRelationshipTransformerJs);
+
+var _transformersIndividualFromListTransformerJs = require("../transformers/IndividualFromListTransformer.js");
+
+var _transformersIndividualFromListTransformerJs2 = _interopRequireDefault(_transformersIndividualFromListTransformerJs);
+
+var _transformersCreateResourceTransformerJs = require("../transformers/CreateResourceTransformer.js");
+
+var _transformersCreateResourceTransformerJs2 = _interopRequireDefault(_transformersCreateResourceTransformerJs);
+
+var _endpointsResolvedEndpointJs = require("../endpoints/ResolvedEndpoint.js");
+
+var _endpointsResolvedEndpointJs2 = _interopRequireDefault(_endpointsResolvedEndpointJs);
+
+var _endpointsLoadedDataEndpointJs = require("../endpoints/LoadedDataEndpoint.js");
+
+var _endpointsLoadedDataEndpointJs2 = _interopRequireDefault(_endpointsLoadedDataEndpointJs);
+
+var _TemplatedUrlJs = require("../TemplatedUrl.js");
+
+var _injectorJs = require("../injector.js");
 
 var ListRelationshipDescription = (function (_RelationshipDescription) {
   function ListRelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, singleRelationshipDescriptionFactory, ListResource, primaryResourceTransformerFactory, embeddedRelationshipTransformerFactory, individualFromListTransformerFactory, createResourceTransformerFactory, resolvedEndpointFactory, loadedDataEndpointFactory, templatedUrlFromUrlFactory, templatedUrlFactory, name, ResourceClass, initialValues) {
-    _classCallCheck(this, _ListRelationshipDescription);
+    _classCallCheck(this, ListRelationshipDescription);
 
-    _get(Object.getPrototypeOf(_ListRelationshipDescription.prototype), "constructor", this).call(this, relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues);
+    _get(Object.getPrototypeOf(ListRelationshipDescription.prototype), "constructor", this).call(this, relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues);
 
     this.singleRelationshipDescriptionFactory = singleRelationshipDescriptionFactory;
     this.ListResource = ListResource;
@@ -42,9 +92,7 @@ var ListRelationshipDescription = (function (_RelationshipDescription) {
 
   _inherits(ListRelationshipDescription, _RelationshipDescription);
 
-  var _ListRelationshipDescription = ListRelationshipDescription;
-
-  _createClass(_ListRelationshipDescription, [{
+  _createClass(ListRelationshipDescription, [{
     key: "ListResourceClass",
     get: function () {
       return this._ListResourceClass || this.ListResource;
@@ -155,9 +203,10 @@ var ListRelationshipDescription = (function (_RelationshipDescription) {
     }
   }]);
 
-  ListRelationshipDescription = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ListRelationshipDescriptionFactory", ["ListRelationshipInitializerFactory", "ListResourceMapperFactory", "ListResourceSerializerFactory", "Inflector", "SingleRelationshipDescriptionFactory", "ListResource", "PrimaryResourceTransformerFactory", "EmbeddedRelationshipTransformerFactory", "IndividualFromListTransformerFactory", "CreateResourceTransformerFactory", "ResolvedEndpointFactory", "LoadedDataEndpointFactory", "TemplatedUrlFromUrlFactory", "TemplatedUrlFactory"])(ListRelationshipDescription) || ListRelationshipDescription;
   return ListRelationshipDescription;
 })(_RelationshipDescriptionJs2["default"]);
 
 exports["default"] = ListRelationshipDescription;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_initializersListRelationshipInitializerJs2["default"]), (0, _injectorJs.factory)(_mappersListResourceMapperJs2["default"]), (0, _injectorJs.factory)(_serializersListResourceSerializerJs2["default"]), _xingInflector2["default"], (0, _injectorJs.factory)(_SingleRelationshipDescriptionJs2["default"]), (0, _injectorJs.value)(_ListResourceJs2["default"]), (0, _injectorJs.factory)(_transformersPrimaryResourceTransformerJs2["default"]), (0, _injectorJs.factory)(_transformersEmbeddedRelationshipTransformerJs2["default"]), (0, _injectorJs.factory)(_transformersIndividualFromListTransformerJs2["default"]), (0, _injectorJs.factory)(_transformersCreateResourceTransformerJs2["default"]), (0, _injectorJs.factory)(_endpointsResolvedEndpointJs2["default"]), (0, _injectorJs.factory)(_endpointsLoadedDataEndpointJs2["default"]), (0, _injectorJs.factory)(_TemplatedUrlJs.TemplatedUrlFromUrl), (0, _injectorJs.factory)(_TemplatedUrlJs.TemplatedUrl))(ListRelationshipDescription);
 module.exports = exports["default"];

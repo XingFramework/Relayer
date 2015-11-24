@@ -6,13 +6,29 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _SimpleFactoryInjectorJs = require("./SimpleFactoryInjector.js");
+var _TemplatedUrlJs = require("./TemplatedUrl.js");
+
+var _endpointsResolvedEndpointJs = require("./endpoints/ResolvedEndpoint.js");
+
+var _endpointsResolvedEndpointJs2 = _interopRequireDefault(_endpointsResolvedEndpointJs);
+
+var _transformersThrowErrorTransformerJs = require("./transformers/ThrowErrorTransformer.js");
+
+var _transformersThrowErrorTransformerJs2 = _interopRequireDefault(_transformersThrowErrorTransformerJs);
+
+var _transformersCreateResourceTransformerJs = require("./transformers/CreateResourceTransformer.js");
+
+var _transformersCreateResourceTransformerJs2 = _interopRequireDefault(_transformersCreateResourceTransformerJs);
+
+var _injectorJs = require("./injector.js");
 
 var ResourceBuilder = (function () {
   function ResourceBuilder(templatedUrlFromUrlFactory, resolvedEndpointFactory, throwErrorTransformerFactory, createResourceTransformerFactory, transport, response, primaryResourceTransformer, ResourceClass, relationshipDescription) {
-    _classCallCheck(this, _ResourceBuilder);
+    _classCallCheck(this, ResourceBuilder);
 
     this.transport = transport;
     this.ResourceClass = ResourceClass;
@@ -26,9 +42,7 @@ var ResourceBuilder = (function () {
     this.primaryResourceTransformer = primaryResourceTransformer;
   }
 
-  var _ResourceBuilder = ResourceBuilder;
-
-  _createClass(_ResourceBuilder, [{
+  _createClass(ResourceBuilder, [{
     key: "build",
     value: function build() {
       var uriTemplate = arguments[0] === undefined ? null : arguments[0];
@@ -56,9 +70,10 @@ var ResourceBuilder = (function () {
     }
   }]);
 
-  ResourceBuilder = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ResourceBuilderFactory", ["TemplatedUrlFromUrlFactory", "ResolvedEndpointFactory", "ThrowErrorTransformerFactory", "CreateResourceTransformerFactory"])(ResourceBuilder) || ResourceBuilder;
   return ResourceBuilder;
 })();
 
 exports["default"] = ResourceBuilder;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_TemplatedUrlJs.TemplatedUrlFromUrl), (0, _injectorJs.factory)(_endpointsResolvedEndpointJs2["default"]), (0, _injectorJs.factory)(_transformersThrowErrorTransformerJs2["default"]), (0, _injectorJs.factory)(_transformersCreateResourceTransformerJs2["default"]))(ResourceBuilder);
 module.exports = exports["default"];

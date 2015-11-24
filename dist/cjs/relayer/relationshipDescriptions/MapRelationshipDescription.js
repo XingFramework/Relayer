@@ -14,11 +14,39 @@ var _MultipleRelationshipDescriptionJs = require("./MultipleRelationshipDescript
 
 var _MultipleRelationshipDescriptionJs2 = _interopRequireDefault(_MultipleRelationshipDescriptionJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
+var _initializersMapRelationshipInitializerJs = require("../initializers/MapRelationshipInitializer.js");
+
+var _initializersMapRelationshipInitializerJs2 = _interopRequireDefault(_initializersMapRelationshipInitializerJs);
+
+var _mappersMapResourceMapperJs = require("../mappers/MapResourceMapper.js");
+
+var _mappersMapResourceMapperJs2 = _interopRequireDefault(_mappersMapResourceMapperJs);
+
+var _serializersMapResourceSerializerJs = require("../serializers/MapResourceSerializer.js");
+
+var _serializersMapResourceSerializerJs2 = _interopRequireDefault(_serializersMapResourceSerializerJs);
+
+var _xingInflector = require("xing-inflector");
+
+var _xingInflector2 = _interopRequireDefault(_xingInflector);
+
+var _transformersEmbeddedRelationshipTransformerJs = require("../transformers/EmbeddedRelationshipTransformer.js");
+
+var _transformersEmbeddedRelationshipTransformerJs2 = _interopRequireDefault(_transformersEmbeddedRelationshipTransformerJs);
+
+var _transformersSingleFromManyTransformerJs = require("../transformers/SingleFromManyTransformer.js");
+
+var _transformersSingleFromManyTransformerJs2 = _interopRequireDefault(_transformersSingleFromManyTransformerJs);
+
+var _endpointsLoadedDataEndpointJs = require("../endpoints/LoadedDataEndpoint.js");
+
+var _endpointsLoadedDataEndpointJs2 = _interopRequireDefault(_endpointsLoadedDataEndpointJs);
+
+var _injectorJs = require("../injector.js");
 
 var MapRelationshipDescription = (function (_MultipleRelationshipDescription) {
   function MapRelationshipDescription() {
-    _classCallCheck(this, _MapRelationshipDescription);
+    _classCallCheck(this, MapRelationshipDescription);
 
     if (_MultipleRelationshipDescription != null) {
       _MultipleRelationshipDescription.apply(this, arguments);
@@ -27,10 +55,10 @@ var MapRelationshipDescription = (function (_MultipleRelationshipDescription) {
 
   _inherits(MapRelationshipDescription, _MultipleRelationshipDescription);
 
-  var _MapRelationshipDescription = MapRelationshipDescription;
-  MapRelationshipDescription = (0, _SimpleFactoryInjectorJs.SimpleFactory)("MapRelationshipDescriptionFactory", ["MapRelationshipInitializerFactory", "MapResourceMapperFactory", "MapResourceSerializerFactory", "Inflector", "EmbeddedRelationshipTransformerFactory", "SingleFromManyTransformerFactory", "LoadedDataEndpointFactory"])(MapRelationshipDescription) || MapRelationshipDescription;
   return MapRelationshipDescription;
 })(_MultipleRelationshipDescriptionJs2["default"]);
 
 exports["default"] = MapRelationshipDescription;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_initializersMapRelationshipInitializerJs2["default"]), (0, _injectorJs.factory)(_mappersMapResourceMapperJs2["default"]), (0, _injectorJs.factory)(_serializersMapResourceSerializerJs2["default"]), _xingInflector2["default"], (0, _injectorJs.factory)(_transformersEmbeddedRelationshipTransformerJs2["default"]), (0, _injectorJs.factory)(_transformersSingleFromManyTransformerJs2["default"]), (0, _injectorJs.factory)(_endpointsLoadedDataEndpointJs2["default"]))(MapRelationshipDescription);
 module.exports = exports["default"];

@@ -1,22 +1,21 @@
 import RelationshipDescription from "./RelationshipDescription.js";
-import {SimpleFactory} from "../SimpleFactoryInjector.js";
+import ListRelationshipInitializer from "../initializers/ListRelationshipInitializer.js";
+import ListResourceMapper from "../mappers/ListResourceMapper.js";
+import ListResourceSerializer from "../serializers/ListResourceSerializer.js";
+import Inflector from "xing-inflector";
+import SingleRelationshipDescription from "./SingleRelationshipDescription.js";
+import ListResource from "../ListResource.js";
+import PrimaryResourceTransformer from "../transformers/PrimaryResourceTransformer.js";
+import EmbeddedRelationshipTransformer from "../transformers/EmbeddedRelationshipTransformer.js";
+import IndividualFromListTransformer from "../transformers/IndividualFromListTransformer.js";
+import CreateResourceTransformer from "../transformers/CreateResourceTransformer.js";
+import ResolvedEndpoint from "../endpoints/ResolvedEndpoint.js";
+import LoadedDataEndpoint from "../endpoints/LoadedDataEndpoint.js";
+import {TemplatedUrl, TemplatedUrlFromUrl} from "../TemplatedUrl.js";
+import {Inject, factory, value} from "../injector.js";
 
-@SimpleFactory('ListRelationshipDescriptionFactory',
-  ['ListRelationshipInitializerFactory',
-  'ListResourceMapperFactory',
-  'ListResourceSerializerFactory',
-  'Inflector',
-  "SingleRelationshipDescriptionFactory",
-  "ListResource",
-  'PrimaryResourceTransformerFactory',
-  'EmbeddedRelationshipTransformerFactory',
-  'IndividualFromListTransformerFactory',
-  'CreateResourceTransformerFactory',
-  'ResolvedEndpointFactory',
-  'LoadedDataEndpointFactory',
-  'TemplatedUrlFromUrlFactory',
-  'TemplatedUrlFactory'])
 export default class ListRelationshipDescription extends RelationshipDescription {
+
   constructor(relationshipInitializerFactory,
     resourceMapperFactory,
     resourceSerializerFactory,
@@ -161,3 +160,20 @@ export default class ListRelationshipDescription extends RelationshipDescription
   }
 
 }
+
+Inject(
+  factory(ListRelationshipInitializer),
+  factory(ListResourceMapper),
+  factory(ListResourceSerializer),
+  Inflector,
+  factory(SingleRelationshipDescription),
+  value(ListResource),
+  factory(PrimaryResourceTransformer),
+  factory(EmbeddedRelationshipTransformer),
+  factory(IndividualFromListTransformer),
+  factory(CreateResourceTransformer),
+  factory(ResolvedEndpoint),
+  factory(LoadedDataEndpoint),
+  factory(TemplatedUrlFromUrl),
+  factory(TemplatedUrl)
+)(ListRelationshipDescription);

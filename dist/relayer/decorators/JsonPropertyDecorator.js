@@ -1,10 +1,11 @@
 import ResourceDecorator from "./ResourceDecorator.js";
-import {SimpleFactory} from "../SimpleFactoryInjector.js";
+import LoadedDataEndpoint from "../endpoints/LoadedDataEndpoint.js";
+import EmbeddedPropertyTransformer from "../transformers/EmbeddedPropertyTransformer.js";
+import PromiseEndpoint from "../endpoints/PromiseEndpoint.js";
+import {Inject, factory} from "../injector.js";
 
-@SimpleFactory('JsonPropertyDecoratorFactory', ['LoadedDataEndpointFactory',
-  'EmbeddedPropertyTransformerFactory',
-  'PromiseEndpointFactory'])
 export default class JsonPropertyDecorator extends ResourceDecorator {
+
   constructor(loadedDataEndpointFactory,
     embeddedPropertyTransformerFactory,
     promiseEndpointFactory,
@@ -91,20 +92,8 @@ export default class JsonPropertyDecorator extends ResourceDecorator {
   }
 }
 
-/*
-export default class JsonPropertyTransform extends ResourceTransform {
-  static get transformArguments() {
-    return ["property", "jsonPath", "initial"]
-  }
-
-  transform(property, jsonPath, initial = undefined) {
-    this.ResourceClass.prototype.defineJsonProperty(property, jsonPath);
-    this.ResourceClass.prototype.addInitialValue(property, initial);
-  }
-
-  // WIP this would generate the promise version of calling this property, not tested
-  static promiseCall(transformDescription) {
-    return (results) => results[transformDescription.property];
-  }
-}
-*/
+Inject(
+  factory(LoadedDataEndpoint),
+  factory(EmbeddedPropertyTransformer),
+  factory(PromiseEndpoint)
+)(JsonPropertyDecorator);

@@ -18,21 +18,17 @@ var _ResourceTransformerJs = require("./ResourceTransformer.js");
 
 var _ResourceTransformerJs2 = _interopRequireDefault(_ResourceTransformerJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var PrimaryResourceTransformer = (function (_ResourceTransformer) {
   function PrimaryResourceTransformer(relationshipDescription) {
-    _classCallCheck(this, _PrimaryResourceTransformer);
+    _classCallCheck(this, PrimaryResourceTransformer);
 
-    _get(Object.getPrototypeOf(_PrimaryResourceTransformer.prototype), "constructor", this).call(this);
+    _get(Object.getPrototypeOf(PrimaryResourceTransformer.prototype), "constructor", this).call(this);
     this.relationshipDescription = relationshipDescription;
   }
 
   _inherits(PrimaryResourceTransformer, _ResourceTransformer);
 
-  var _PrimaryResourceTransformer = PrimaryResourceTransformer;
-
-  _createClass(_PrimaryResourceTransformer, [{
+  _createClass(PrimaryResourceTransformer, [{
     key: "primaryResourceSerializerFactory",
     get: function () {
       return this.relationshipDescription.serializerFactory;
@@ -61,7 +57,6 @@ var PrimaryResourceTransformer = (function (_ResourceTransformer) {
     }
   }]);
 
-  PrimaryResourceTransformer = (0, _SimpleFactoryInjectorJs.SimpleFactory)("PrimaryResourceTransformerFactory", [])(PrimaryResourceTransformer) || PrimaryResourceTransformer;
   return PrimaryResourceTransformer;
 })(_ResourceTransformerJs2["default"]);
 

@@ -14,27 +14,43 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var _ResourceMapperJs = require("./ResourceMapper.js");
 
 var _ResourceMapperJs2 = _interopRequireDefault(_ResourceMapperJs);
+
+var _TemplatedUrlJs = require("../TemplatedUrl.js");
+
+var _ResourceBuilderJs = require("../ResourceBuilder.js");
+
+var _ResourceBuilderJs2 = _interopRequireDefault(_ResourceBuilderJs);
+
+var _PrimaryResourceBuilderJs = require("../PrimaryResourceBuilder.js");
+
+var _PrimaryResourceBuilderJs2 = _interopRequireDefault(_PrimaryResourceBuilderJs);
+
+var _transformersPrimaryResourceTransformerJs = require("../transformers/PrimaryResourceTransformer.js");
+
+var _transformersPrimaryResourceTransformerJs2 = _interopRequireDefault(_transformersPrimaryResourceTransformerJs);
+
+var _ManyResourceMapperJs = require("./ManyResourceMapper.js");
+
+var _ManyResourceMapperJs2 = _interopRequireDefault(_ManyResourceMapperJs);
+
+var _injectorJs = require("../injector.js");
 
 var ListResourceMapper = (function (_ResourceMapper) {
   function ListResourceMapper(templatedUrlFromUrlFactory, resourceBuilderFactory, primaryResourceBuilderFactory, primaryResourceTransformerFactory, manyResourceMapperFactory, transport, response, relationshipDescription, endpoint) {
     var useErrors = arguments[9] === undefined ? false : arguments[9];
 
-    _classCallCheck(this, _ListResourceMapper);
+    _classCallCheck(this, ListResourceMapper);
 
-    _get(Object.getPrototypeOf(_ListResourceMapper.prototype), "constructor", this).call(this, templatedUrlFromUrlFactory, resourceBuilderFactory, primaryResourceBuilderFactory, primaryResourceTransformerFactory, transport, response, relationshipDescription, endpoint, useErrors);
+    _get(Object.getPrototypeOf(ListResourceMapper.prototype), "constructor", this).call(this, templatedUrlFromUrlFactory, resourceBuilderFactory, primaryResourceBuilderFactory, primaryResourceTransformerFactory, transport, response, relationshipDescription, endpoint, useErrors);
     this.manyResourceMapperFactory = manyResourceMapperFactory;
   }
 
   _inherits(ListResourceMapper, _ResourceMapper);
 
-  var _ListResourceMapper = ListResourceMapper;
-
-  _createClass(_ListResourceMapper, [{
+  _createClass(ListResourceMapper, [{
     key: "ResourceClass",
     get: function () {
       return this.relationshipDescription.ListResourceClass;
@@ -50,7 +66,7 @@ var ListResourceMapper = (function (_ResourceMapper) {
       var _this = this;
 
       // add mappings for list resource
-      _get(Object.getPrototypeOf(_ListResourceMapper.prototype), "mapNestedRelationships", this).call(this);
+      _get(Object.getPrototypeOf(ListResourceMapper.prototype), "mapNestedRelationships", this).call(this);
 
       this.resource = this.mapped;
       var manyResourceMapper = this.manyResourceMapperFactory(this.transport, this.resource.pathGet("$.data"), this.relationshipDescription);
@@ -112,9 +128,10 @@ var ListResourceMapper = (function (_ResourceMapper) {
     }
   }]);
 
-  ListResourceMapper = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ListResourceMapperFactory", ["TemplatedUrlFromUrlFactory", "ResourceBuilderFactory", "PrimaryResourceBuilderFactory", "PrimaryResourceTransformerFactory", "ManyResourceMapperFactory"])(ListResourceMapper) || ListResourceMapper;
   return ListResourceMapper;
 })(_ResourceMapperJs2["default"]);
 
 exports["default"] = ListResourceMapper;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_TemplatedUrlJs.TemplatedUrlFromUrl), (0, _injectorJs.factory)(_ResourceBuilderJs2["default"]), (0, _injectorJs.factory)(_PrimaryResourceBuilderJs2["default"]), (0, _injectorJs.factory)(_transformersPrimaryResourceTransformerJs2["default"]), (0, _injectorJs.factory)(_ManyResourceMapperJs2["default"]))(ListResourceMapper);
 module.exports = exports["default"];

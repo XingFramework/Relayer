@@ -1,8 +1,8 @@
 import Endpoint from "./Endpoint.js";
-import {SimpleFactory} from "../SimpleFactoryInjector.js";
+import {Inject, value, default as injector} from "../injector.js";
 
-@SimpleFactory('ResolvedEndpointFactory', ["XingPromise"])
 export default class ResolvedEndpoint extends Endpoint {
+
   constructor(Promise, transport, templatedUrl, resourceTransformers = [], createResourceTransformers = []) {
     super();
     this.transport = transport;
@@ -17,7 +17,7 @@ export default class ResolvedEndpoint extends Endpoint {
     } else {
       this.createResourceTransformers = [createResourceTransformers];
     }
-    this.endpointPromise = () => { return Promise.resolve(this) };
+    this.endpointPromise = () => { return Promise.resolve(this); };
   }
 
   _load() {
@@ -28,7 +28,7 @@ export default class ResolvedEndpoint extends Endpoint {
   _update(resource) {
     var request = this._transformRequest(this.resourceTransformers, resource);
     var response = this.transport.put(this.templatedUrl.url, request, this.templatedUrl.etag);
-    return this._transformResponse(this.resourceTransformers, response) }
+    return this._transformResponse(this.resourceTransformers, response); }
 
   _create(resource) {
     var request = this._transformRequest(this.createResourceTransformers, resource);
@@ -53,3 +53,5 @@ export default class ResolvedEndpoint extends Endpoint {
     return this.transport.delete(this.templatedUrl.url);
   }
 }
+
+Inject(injector.XingPromise)(ResolvedEndpoint);

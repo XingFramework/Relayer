@@ -18,13 +18,47 @@ var _RelationshipDescriptionJs = require("./RelationshipDescription.js");
 
 var _RelationshipDescriptionJs2 = _interopRequireDefault(_RelationshipDescriptionJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
+var _initializersSingleRelationshipInitializerJs = require("../initializers/SingleRelationshipInitializer.js");
+
+var _initializersSingleRelationshipInitializerJs2 = _interopRequireDefault(_initializersSingleRelationshipInitializerJs);
+
+var _mappersResourceMapperJs = require("../mappers/ResourceMapper.js");
+
+var _mappersResourceMapperJs2 = _interopRequireDefault(_mappersResourceMapperJs);
+
+var _serializersResourceSerializerJs = require("../serializers/ResourceSerializer.js");
+
+var _serializersResourceSerializerJs2 = _interopRequireDefault(_serializersResourceSerializerJs);
+
+var _xingInflector = require("xing-inflector");
+
+var _xingInflector2 = _interopRequireDefault(_xingInflector);
+
+var _transformersPrimaryResourceTransformerJs = require("../transformers/PrimaryResourceTransformer.js");
+
+var _transformersPrimaryResourceTransformerJs2 = _interopRequireDefault(_transformersPrimaryResourceTransformerJs);
+
+var _transformersEmbeddedRelationshipTransformerJs = require("../transformers/EmbeddedRelationshipTransformer.js");
+
+var _transformersEmbeddedRelationshipTransformerJs2 = _interopRequireDefault(_transformersEmbeddedRelationshipTransformerJs);
+
+var _endpointsResolvedEndpointJs = require("../endpoints/ResolvedEndpoint.js");
+
+var _endpointsResolvedEndpointJs2 = _interopRequireDefault(_endpointsResolvedEndpointJs);
+
+var _endpointsLoadedDataEndpointJs = require("../endpoints/LoadedDataEndpoint.js");
+
+var _endpointsLoadedDataEndpointJs2 = _interopRequireDefault(_endpointsLoadedDataEndpointJs);
+
+var _TemplatedUrlJs = require("../TemplatedUrl.js");
+
+var _injectorJs = require("../injector.js");
 
 var SingleRelationshipDescription = (function (_RelationshipDescription) {
   function SingleRelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, primaryResourceTransformerFactory, embeddedRelationshipTransformerFactory, resolvedEndpointFactory, loadedDataEndpointFactory, templatedUrlFactory, name, ResourceClass, initialValues) {
-    _classCallCheck(this, _SingleRelationshipDescription);
+    _classCallCheck(this, SingleRelationshipDescription);
 
-    _get(Object.getPrototypeOf(_SingleRelationshipDescription.prototype), "constructor", this).call(this, relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues);
+    _get(Object.getPrototypeOf(SingleRelationshipDescription.prototype), "constructor", this).call(this, relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues);
 
     this.primaryResourceTransformerFactory = primaryResourceTransformerFactory;
     this.embeddedRelationshipTransformerFactory = embeddedRelationshipTransformerFactory;
@@ -36,9 +70,7 @@ var SingleRelationshipDescription = (function (_RelationshipDescription) {
 
   _inherits(SingleRelationshipDescription, _RelationshipDescription);
 
-  var _SingleRelationshipDescription = SingleRelationshipDescription;
-
-  _createClass(_SingleRelationshipDescription, [{
+  _createClass(SingleRelationshipDescription, [{
     key: "templated",
     set: function (templated) {
       this._templated = templated;
@@ -71,9 +103,10 @@ var SingleRelationshipDescription = (function (_RelationshipDescription) {
     }
   }]);
 
-  SingleRelationshipDescription = (0, _SimpleFactoryInjectorJs.SimpleFactory)("SingleRelationshipDescriptionFactory", ["SingleRelationshipInitializerFactory", "ResourceMapperFactory", "ResourceSerializerFactory", "Inflector", "PrimaryResourceTransformerFactory", "EmbeddedRelationshipTransformerFactory", "ResolvedEndpointFactory", "LoadedDataEndpointFactory", "TemplatedUrlFactory"])(SingleRelationshipDescription) || SingleRelationshipDescription;
   return SingleRelationshipDescription;
 })(_RelationshipDescriptionJs2["default"]);
 
 exports["default"] = SingleRelationshipDescription;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_initializersSingleRelationshipInitializerJs2["default"]), (0, _injectorJs.factory)(_mappersResourceMapperJs2["default"]), (0, _injectorJs.factory)(_serializersResourceSerializerJs2["default"]), _xingInflector2["default"], (0, _injectorJs.factory)(_transformersPrimaryResourceTransformerJs2["default"]), (0, _injectorJs.factory)(_transformersEmbeddedRelationshipTransformerJs2["default"]), (0, _injectorJs.factory)(_endpointsResolvedEndpointJs2["default"]), (0, _injectorJs.factory)(_endpointsLoadedDataEndpointJs2["default"]), (0, _injectorJs.factory)(_TemplatedUrlJs.TemplatedUrl))(SingleRelationshipDescription);
 module.exports = exports["default"];

@@ -1,7 +1,5 @@
-import {Service} from "a1atscript";
 import {TemplatedUrl} from "./TemplatedUrl.js";
 
-@Service('RelationshipUtilities')
 export default class RelationshipUtilities {
   addMethods(target, resource, name) {
     target.get = function() {

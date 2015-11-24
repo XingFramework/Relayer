@@ -18,21 +18,17 @@ var _ResourceTransformerJs = require("./ResourceTransformer.js");
 
 var _ResourceTransformerJs2 = _interopRequireDefault(_ResourceTransformerJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var EmbeddedPropertyTransformer = (function (_ResourceTransformer) {
   function EmbeddedPropertyTransformer(path) {
-    _classCallCheck(this, _EmbeddedPropertyTransformer);
+    _classCallCheck(this, EmbeddedPropertyTransformer);
 
-    _get(Object.getPrototypeOf(_EmbeddedPropertyTransformer.prototype), "constructor", this).call(this);
+    _get(Object.getPrototypeOf(EmbeddedPropertyTransformer.prototype), "constructor", this).call(this);
     this.path = path;
   }
 
   _inherits(EmbeddedPropertyTransformer, _ResourceTransformer);
 
-  var _EmbeddedPropertyTransformer = EmbeddedPropertyTransformer;
-
-  _createClass(_EmbeddedPropertyTransformer, [{
+  _createClass(EmbeddedPropertyTransformer, [{
     key: "transformRequest",
     value: function transformRequest(endpoint, value) {
       var resource = endpoint.resource;
@@ -53,7 +49,6 @@ var EmbeddedPropertyTransformer = (function (_ResourceTransformer) {
     }
   }]);
 
-  EmbeddedPropertyTransformer = (0, _SimpleFactoryInjectorJs.SimpleFactory)("EmbeddedPropertyTransformerFactory")(EmbeddedPropertyTransformer) || EmbeddedPropertyTransformer;
   return EmbeddedPropertyTransformer;
 })(_ResourceTransformerJs2["default"]);
 

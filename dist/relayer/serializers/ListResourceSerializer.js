@@ -1,8 +1,9 @@
-import {SimpleFactory} from "../SimpleFactoryInjector.js";
 import Serializer from "./Serializer.js";
+import ManyResourceSerializer from "./ManyResourceSerializer.js";
+import {Inject, factory} from "../injector.js";
 
-@SimpleFactory('ListResourceSerializerFactory', ['ManyResourceSerializerFactory'])
 export default class ListResourceSerializer extends Serializer {
+
   constructor(manyResourceSerializerFactory,
     resource) {
     super(resource);
@@ -15,3 +16,5 @@ export default class ListResourceSerializer extends Serializer {
     return this.resource.resource.response;
   }
 }
+
+Inject(factory(ManyResourceSerializer))(ListResourceSerializer);

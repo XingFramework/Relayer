@@ -1,13 +1,13 @@
-import {SimpleFactory} from "../SimpleFactoryInjector.js";
 import ResourceMapper from "./ResourceMapper.js";
+import {TemplatedUrlFromUrl} from "../TemplatedUrl.js";
+import ResourceBuilder from "../ResourceBuilder.js";
+import PrimaryResourceBuilder from "../PrimaryResourceBuilder.js";
+import PrimaryResourceTransformer from "../transformers/PrimaryResourceTransformer.js";
+import ManyResourceMapper from "./ManyResourceMapper.js";
+import {Inject, factory} from "../injector.js";
 
-@SimpleFactory('ListResourceMapperFactory', [
-  'TemplatedUrlFromUrlFactory',
-  'ResourceBuilderFactory',
-  'PrimaryResourceBuilderFactory',
-  'PrimaryResourceTransformerFactory',
-  'ManyResourceMapperFactory'])
 export default class ListResourceMapper extends ResourceMapper {
+
   constructor(templatedUrlFromUrlFactory,
       resourceBuilderFactory,
       primaryResourceBuilderFactory,
@@ -76,3 +76,11 @@ export default class ListResourceMapper extends ResourceMapper {
     this.mapped.new = function() { return new ItemResourceClass(); }
   }
 }
+
+Inject(
+  factory(TemplatedUrlFromUrl),
+  factory(ResourceBuilder),
+  factory(PrimaryResourceBuilder),
+  factory(PrimaryResourceTransformer),
+  factory(ManyResourceMapper)
+)(ListResourceMapper);

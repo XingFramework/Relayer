@@ -18,21 +18,17 @@ var _PrimaryResourceTransformerJs = require("./PrimaryResourceTransformer.js");
 
 var _PrimaryResourceTransformerJs2 = _interopRequireDefault(_PrimaryResourceTransformerJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var CreateResourceTransformer = (function (_PrimaryResourceTransformer) {
   function CreateResourceTransformer(relationshipDescription, uriTemplate) {
-    _classCallCheck(this, _CreateResourceTransformer);
+    _classCallCheck(this, CreateResourceTransformer);
 
-    _get(Object.getPrototypeOf(_CreateResourceTransformer.prototype), "constructor", this).call(this, relationshipDescription);
+    _get(Object.getPrototypeOf(CreateResourceTransformer.prototype), "constructor", this).call(this, relationshipDescription);
     this.uriTemplate = uriTemplate;
   }
 
   _inherits(CreateResourceTransformer, _PrimaryResourceTransformer);
 
-  var _CreateResourceTransformer = CreateResourceTransformer;
-
-  _createClass(_CreateResourceTransformer, [{
+  _createClass(CreateResourceTransformer, [{
     key: "transformResponse",
     value: function transformResponse(endpoint, response) {
       var _this = this;
@@ -49,7 +45,6 @@ var CreateResourceTransformer = (function (_PrimaryResourceTransformer) {
     }
   }]);
 
-  CreateResourceTransformer = (0, _SimpleFactoryInjectorJs.SimpleFactory)("CreateResourceTransformerFactory", [])(CreateResourceTransformer) || CreateResourceTransformer;
   return CreateResourceTransformer;
 })(_PrimaryResourceTransformerJs2["default"]);
 

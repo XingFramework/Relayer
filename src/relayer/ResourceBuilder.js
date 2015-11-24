@@ -1,10 +1,11 @@
-import {SimpleFactory} from "./SimpleFactoryInjector.js";
+import {TemplatedUrlFromUrl} from "./TemplatedUrl.js";
+import ResolvedEndpoint from "./endpoints/ResolvedEndpoint.js";
+import ThrowErrorTransformer from "./transformers/ThrowErrorTransformer.js";
+import CreateResourceTransformer from "./transformers/CreateResourceTransformer.js";
+import {Inject, factory} from "./injector.js";
 
-@SimpleFactory("ResourceBuilderFactory", ["TemplatedUrlFromUrlFactory",
-  "ResolvedEndpointFactory",
-  "ThrowErrorTransformerFactory",
-  "CreateResourceTransformerFactory"])
-export default class ResourceBuilder {
+export default class ResourceBuilder  {
+
   constructor(templatedUrlFromUrlFactory,
     resolvedEndpointFactory,
     throwErrorTransformerFactory,
@@ -15,16 +16,16 @@ export default class ResourceBuilder {
     ResourceClass,
     relationshipDescription) {
 
-    this.transport = transport;
-    this.ResourceClass = ResourceClass;
-    this.relationshipDescription = relationshipDescription;
+      this.transport = transport;
+      this.ResourceClass = ResourceClass;
+      this.relationshipDescription = relationshipDescription;
 
-    this.templatedUrlFromUrlFactory = templatedUrlFromUrlFactory;
-    this.resolvedEndpointFactory = resolvedEndpointFactory;
-    this.throwErrorTransformerFactory = throwErrorTransformerFactory;
-    this.createResourceTransformerFactory = createResourceTransformerFactory;
-    this.response = response;
-    this.primaryResourceTransformer = primaryResourceTransformer;
+      this.templatedUrlFromUrlFactory = templatedUrlFromUrlFactory;
+      this.resolvedEndpointFactory = resolvedEndpointFactory;
+      this.throwErrorTransformerFactory = throwErrorTransformerFactory;
+      this.createResourceTransformerFactory = createResourceTransformerFactory;
+      this.response = response;
+      this.primaryResourceTransformer = primaryResourceTransformer;
 
   }
 
@@ -49,3 +50,10 @@ export default class ResourceBuilder {
     return resource;
   }
 }
+
+Inject(
+  factory(TemplatedUrlFromUrl),
+  factory(ResolvedEndpoint),
+  factory(ThrowErrorTransformer),
+  factory(CreateResourceTransformer)
+)(ResourceBuilder);

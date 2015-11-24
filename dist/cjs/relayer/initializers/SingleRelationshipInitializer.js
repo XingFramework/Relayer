@@ -16,11 +16,9 @@ var _RelationshipInitializerJs = require("./RelationshipInitializer.js");
 
 var _RelationshipInitializerJs2 = _interopRequireDefault(_RelationshipInitializerJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var SingleRelationshipInitializer = (function (_RelationshipInitializer) {
   function SingleRelationshipInitializer() {
-    _classCallCheck(this, _SingleRelationshipInitializer);
+    _classCallCheck(this, SingleRelationshipInitializer);
 
     if (_RelationshipInitializer != null) {
       _RelationshipInitializer.apply(this, arguments);
@@ -29,9 +27,7 @@ var SingleRelationshipInitializer = (function (_RelationshipInitializer) {
 
   _inherits(SingleRelationshipInitializer, _RelationshipInitializer);
 
-  var _SingleRelationshipInitializer = SingleRelationshipInitializer;
-
-  _createClass(_SingleRelationshipInitializer, [{
+  _createClass(SingleRelationshipInitializer, [{
     key: "initialize",
     value: function initialize() {
       var _this = this;
@@ -46,7 +42,6 @@ var SingleRelationshipInitializer = (function (_RelationshipInitializer) {
     }
   }]);
 
-  SingleRelationshipInitializer = (0, _SimpleFactoryInjectorJs.SimpleFactory)("SingleRelationshipInitializerFactory", [])(SingleRelationshipInitializer) || SingleRelationshipInitializer;
   return SingleRelationshipInitializer;
 })(_RelationshipInitializerJs2["default"]);
 

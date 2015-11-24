@@ -18,13 +18,15 @@ var _ResourceTransformerJs = require("./ResourceTransformer.js");
 
 var _ResourceTransformerJs2 = _interopRequireDefault(_ResourceTransformerJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
+var _TemplatedUrlJs = require("../TemplatedUrl.js");
+
+var _injectorJs = require("../injector.js");
 
 var IndividualFromListTransformer = (function (_ResourceTransformer) {
   function IndividualFromListTransformer(templatedUrlFactory, relationshipName, uriParams) {
-    _classCallCheck(this, _IndividualFromListTransformer);
+    _classCallCheck(this, IndividualFromListTransformer);
 
-    _get(Object.getPrototypeOf(_IndividualFromListTransformer.prototype), "constructor", this).call(this);
+    _get(Object.getPrototypeOf(IndividualFromListTransformer.prototype), "constructor", this).call(this);
     this.templatedUrlFactory = templatedUrlFactory;
     this.relationshipName = relationshipName;
     this.uriParams = uriParams;
@@ -32,9 +34,7 @@ var IndividualFromListTransformer = (function (_ResourceTransformer) {
 
   _inherits(IndividualFromListTransformer, _ResourceTransformer);
 
-  var _IndividualFromListTransformer = IndividualFromListTransformer;
-
-  _createClass(_IndividualFromListTransformer, [{
+  _createClass(IndividualFromListTransformer, [{
     key: "templatedUrl",
     value: function templatedUrl(relationship) {
       var template = relationship.resource.pathGet("$.links.template");
@@ -76,9 +76,10 @@ var IndividualFromListTransformer = (function (_ResourceTransformer) {
     }
   }]);
 
-  IndividualFromListTransformer = (0, _SimpleFactoryInjectorJs.SimpleFactory)("IndividualFromListTransformerFactory", ["TemplatedUrlFactory"])(IndividualFromListTransformer) || IndividualFromListTransformer;
   return IndividualFromListTransformer;
 })(_ResourceTransformerJs2["default"]);
 
 exports["default"] = IndividualFromListTransformer;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_TemplatedUrlJs.TemplatedUrl))(IndividualFromListTransformer);
 module.exports = exports["default"];

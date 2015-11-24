@@ -8,11 +8,9 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var _SimpleFactoryInjectorJs = require('./SimpleFactoryInjector.js');
-
 var UrlHelper = (function () {
   function UrlHelper(baseUrl) {
-    _classCallCheck(this, _UrlHelper);
+    _classCallCheck(this, UrlHelper);
 
     if (this.isFullUrl(baseUrl)) {
       baseUrl = this.fullUrlRegEx.exec(baseUrl)[1];
@@ -20,9 +18,7 @@ var UrlHelper = (function () {
     this.baseUrl = this.withoutTrailingSlash(baseUrl);
   }
 
-  var _UrlHelper = UrlHelper;
-
-  _createClass(_UrlHelper, [{
+  _createClass(UrlHelper, [{
     key: 'mangleUrl',
     value: function mangleUrl(url) {
       if (url) {
@@ -66,7 +62,6 @@ var UrlHelper = (function () {
     }
   }]);
 
-  UrlHelper = (0, _SimpleFactoryInjectorJs.SimpleFactory)('UrlHelperFactory', [])(UrlHelper) || UrlHelper;
   return UrlHelper;
 })();
 

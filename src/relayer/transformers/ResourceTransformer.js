@@ -6,6 +6,10 @@
 // I even had the idea that these could potentially be chained
 
 export default class ResourceTransformer {
+  constructor() {
+
+  }
+
   transformRequest(endpoint, resource) {
     return resource;
   }

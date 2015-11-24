@@ -14,8 +14,6 @@ var _jsonpathJs = require("./jsonpath.js");
 
 var _jsonpathJs2 = _interopRequireDefault(_jsonpathJs);
 
-var _SimpleFactoryInjectorJs = require("./SimpleFactoryInjector.js");
-
 var DataWrapper = (function () {
   function DataWrapper(response) {
     _classCallCheck(this, DataWrapper);

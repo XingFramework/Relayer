@@ -18,16 +18,30 @@ var _MapperJs = require("./Mapper.js");
 
 var _MapperJs2 = _interopRequireDefault(_MapperJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
+var _TemplatedUrlJs = require("../TemplatedUrl.js");
+
+var _ResourceBuilderJs = require("../ResourceBuilder.js");
+
+var _ResourceBuilderJs2 = _interopRequireDefault(_ResourceBuilderJs);
+
+var _PrimaryResourceBuilderJs = require("../PrimaryResourceBuilder.js");
+
+var _PrimaryResourceBuilderJs2 = _interopRequireDefault(_PrimaryResourceBuilderJs);
+
+var _transformersPrimaryResourceTransformerJs = require("../transformers/PrimaryResourceTransformer.js");
+
+var _transformersPrimaryResourceTransformerJs2 = _interopRequireDefault(_transformersPrimaryResourceTransformerJs);
+
+var _injectorJs = require("../injector.js");
 
 var ResourceMapper = (function (_Mapper) {
   function ResourceMapper(templatedUrlFromUrlFactory, resourceBuilderFactory, primaryResourceBuilderFactory, primaryResourceTransformerFactory, transport, response, relationshipDescription) {
     var endpoint = arguments[7] === undefined ? null : arguments[7];
     var useErrors = arguments[8] === undefined ? false : arguments[8];
 
-    _classCallCheck(this, _ResourceMapper);
+    _classCallCheck(this, ResourceMapper);
 
-    _get(Object.getPrototypeOf(_ResourceMapper.prototype), "constructor", this).call(this, transport, response, relationshipDescription, useErrors);
+    _get(Object.getPrototypeOf(ResourceMapper.prototype), "constructor", this).call(this, transport, response, relationshipDescription, useErrors);
 
     this.primaryResourceTransformerFactory = primaryResourceTransformerFactory;
     this.templatedUrlFromUrlFactory = templatedUrlFromUrlFactory;
@@ -38,9 +52,7 @@ var ResourceMapper = (function (_Mapper) {
 
   _inherits(ResourceMapper, _Mapper);
 
-  var _ResourceMapper = ResourceMapper;
-
-  _createClass(_ResourceMapper, [{
+  _createClass(ResourceMapper, [{
     key: "initializeModel",
     value: function initializeModel() {
       if (this.endpoint) {
@@ -78,9 +90,10 @@ var ResourceMapper = (function (_Mapper) {
     }
   }]);
 
-  ResourceMapper = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ResourceMapperFactory", ["TemplatedUrlFromUrlFactory", "ResourceBuilderFactory", "PrimaryResourceBuilderFactory", "PrimaryResourceTransformerFactory"])(ResourceMapper) || ResourceMapper;
   return ResourceMapper;
 })(_MapperJs2["default"]);
 
 exports["default"] = ResourceMapper;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_TemplatedUrlJs.TemplatedUrlFromUrl), (0, _injectorJs.factory)(_ResourceBuilderJs2["default"]), (0, _injectorJs.factory)(_PrimaryResourceBuilderJs2["default"]), (0, _injectorJs.factory)(_transformersPrimaryResourceTransformerJs2["default"]))(ResourceMapper);
 module.exports = exports["default"];

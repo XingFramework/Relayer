@@ -8,18 +8,14 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _a1atscript = require("a1atscript");
-
 var _TemplatedUrlJs = require("./TemplatedUrl.js");
 
 var RelationshipUtilities = (function () {
   function RelationshipUtilities() {
-    _classCallCheck(this, _RelationshipUtilities);
+    _classCallCheck(this, RelationshipUtilities);
   }
 
-  var _RelationshipUtilities = RelationshipUtilities;
-
-  _createClass(_RelationshipUtilities, [{
+  _createClass(RelationshipUtilities, [{
     key: "addMethods",
     value: function addMethods(target, resource, name) {
       target.get = function () {
@@ -47,7 +43,6 @@ var RelationshipUtilities = (function () {
     }
   }]);
 
-  RelationshipUtilities = (0, _a1atscript.Service)("RelationshipUtilities")(RelationshipUtilities) || RelationshipUtilities;
   return RelationshipUtilities;
 })();
 

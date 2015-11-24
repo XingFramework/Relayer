@@ -1,7 +1,5 @@
-import ResourceTransformer from "./ResourceTransformer.js"
-import {SimpleFactory} from "../SimpleFactoryInjector.js"
+import ResourceTransformer from "./ResourceTransformer.js";
 
-@SimpleFactory('PrimaryResourceTransformerFactory', [])
 export default class PrimaryResourceTransformer extends ResourceTransformer {
   constructor(relationshipDescription) {
     super();

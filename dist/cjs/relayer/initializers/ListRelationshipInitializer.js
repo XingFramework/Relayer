@@ -18,13 +18,21 @@ var _RelationshipInitializerJs = require("./RelationshipInitializer.js");
 
 var _RelationshipInitializerJs2 = _interopRequireDefault(_RelationshipInitializerJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
+var _ListResourceJs = require("../ListResource.js");
+
+var _ListResourceJs2 = _interopRequireDefault(_ListResourceJs);
+
+var _ManyRelationshipInitializerJs = require("./ManyRelationshipInitializer.js");
+
+var _ManyRelationshipInitializerJs2 = _interopRequireDefault(_ManyRelationshipInitializerJs);
+
+var _injectorJs = require("../injector.js");
 
 var ListRelationshipInitializer = (function (_RelationshipInitializer) {
   function ListRelationshipInitializer(ListResource, manyRelationshipInitializerFactory, ResourceClass, initialValues) {
-    _classCallCheck(this, _ListRelationshipInitializer);
+    _classCallCheck(this, ListRelationshipInitializer);
 
-    _get(Object.getPrototypeOf(_ListRelationshipInitializer.prototype), "constructor", this).call(this, ResourceClass, initialValues);
+    _get(Object.getPrototypeOf(ListRelationshipInitializer.prototype), "constructor", this).call(this, ResourceClass, initialValues);
 
     this.manyRelationshipInitializer = manyRelationshipInitializerFactory(ResourceClass, initialValues);
     this.ListResource = ListResource;
@@ -32,9 +40,7 @@ var ListRelationshipInitializer = (function (_RelationshipInitializer) {
 
   _inherits(ListRelationshipInitializer, _RelationshipInitializer);
 
-  var _ListRelationshipInitializer = ListRelationshipInitializer;
-
-  _createClass(_ListRelationshipInitializer, [{
+  _createClass(ListRelationshipInitializer, [{
     key: "initialize",
     value: function initialize() {
       var manyRelationships = this.manyRelationshipInitializer.initialize();
@@ -53,9 +59,10 @@ var ListRelationshipInitializer = (function (_RelationshipInitializer) {
     }
   }]);
 
-  ListRelationshipInitializer = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ListRelationshipInitializerFactory", ["ListResource", "ManyRelationshipInitializerFactory"])(ListRelationshipInitializer) || ListRelationshipInitializer;
   return ListRelationshipInitializer;
 })(_RelationshipInitializerJs2["default"]);
 
 exports["default"] = ListRelationshipInitializer;
+
+(0, _injectorJs.Inject)((0, _injectorJs.value)(_ListResourceJs2["default"]), (0, _injectorJs.factory)(_ManyRelationshipInitializerJs2["default"]))(ListRelationshipInitializer);
 module.exports = exports["default"];

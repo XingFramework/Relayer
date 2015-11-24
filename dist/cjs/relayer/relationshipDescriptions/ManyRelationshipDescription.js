@@ -14,11 +14,39 @@ var _MultipleRelationshipDescriptionJs = require("./MultipleRelationshipDescript
 
 var _MultipleRelationshipDescriptionJs2 = _interopRequireDefault(_MultipleRelationshipDescriptionJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
+var _initializersManyRelationshipInitializerJs = require("../initializers/ManyRelationshipInitializer.js");
+
+var _initializersManyRelationshipInitializerJs2 = _interopRequireDefault(_initializersManyRelationshipInitializerJs);
+
+var _mappersManyResourceMapperJs = require("../mappers/ManyResourceMapper.js");
+
+var _mappersManyResourceMapperJs2 = _interopRequireDefault(_mappersManyResourceMapperJs);
+
+var _serializersManyResourceSerializerJs = require("../serializers/ManyResourceSerializer.js");
+
+var _serializersManyResourceSerializerJs2 = _interopRequireDefault(_serializersManyResourceSerializerJs);
+
+var _xingInflector = require("xing-inflector");
+
+var _xingInflector2 = _interopRequireDefault(_xingInflector);
+
+var _transformersEmbeddedRelationshipTransformerJs = require("../transformers/EmbeddedRelationshipTransformer.js");
+
+var _transformersEmbeddedRelationshipTransformerJs2 = _interopRequireDefault(_transformersEmbeddedRelationshipTransformerJs);
+
+var _transformersSingleFromManyTransformerJs = require("../transformers/SingleFromManyTransformer.js");
+
+var _transformersSingleFromManyTransformerJs2 = _interopRequireDefault(_transformersSingleFromManyTransformerJs);
+
+var _endpointsLoadedDataEndpointJs = require("../endpoints/LoadedDataEndpoint.js");
+
+var _endpointsLoadedDataEndpointJs2 = _interopRequireDefault(_endpointsLoadedDataEndpointJs);
+
+var _injectorJs = require("../injector.js");
 
 var ManyRelationshipDescription = (function (_MultipleRelationshipDescription) {
   function ManyRelationshipDescription() {
-    _classCallCheck(this, _ManyRelationshipDescription);
+    _classCallCheck(this, ManyRelationshipDescription);
 
     if (_MultipleRelationshipDescription != null) {
       _MultipleRelationshipDescription.apply(this, arguments);
@@ -27,10 +55,10 @@ var ManyRelationshipDescription = (function (_MultipleRelationshipDescription) {
 
   _inherits(ManyRelationshipDescription, _MultipleRelationshipDescription);
 
-  var _ManyRelationshipDescription = ManyRelationshipDescription;
-  ManyRelationshipDescription = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ManyRelationshipDescriptionFactory", ["ManyRelationshipInitializerFactory", "ManyResourceMapperFactory", "ManyResourceSerializerFactory", "Inflector", "EmbeddedRelationshipTransformerFactory", "SingleFromManyTransformerFactory", "LoadedDataEndpointFactory"])(ManyRelationshipDescription) || ManyRelationshipDescription;
   return ManyRelationshipDescription;
 })(_MultipleRelationshipDescriptionJs2["default"]);
 
 exports["default"] = ManyRelationshipDescription;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_initializersManyRelationshipInitializerJs2["default"]), (0, _injectorJs.factory)(_mappersManyResourceMapperJs2["default"]), (0, _injectorJs.factory)(_serializersManyResourceSerializerJs2["default"]), _xingInflector2["default"], (0, _injectorJs.factory)(_transformersEmbeddedRelationshipTransformerJs2["default"]), (0, _injectorJs.factory)(_transformersSingleFromManyTransformerJs2["default"]), (0, _injectorJs.factory)(_endpointsLoadedDataEndpointJs2["default"]))(ManyRelationshipDescription);
 module.exports = exports["default"];

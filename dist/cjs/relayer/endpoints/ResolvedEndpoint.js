@@ -18,7 +18,9 @@ var _EndpointJs = require("./Endpoint.js");
 
 var _EndpointJs2 = _interopRequireDefault(_EndpointJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
+var _injectorJs = require("../injector.js");
+
+var _injectorJs2 = _interopRequireDefault(_injectorJs);
 
 var ResolvedEndpoint = (function (_Endpoint) {
   function ResolvedEndpoint(Promise, transport, templatedUrl) {
@@ -27,9 +29,9 @@ var ResolvedEndpoint = (function (_Endpoint) {
     var resourceTransformers = arguments[3] === undefined ? [] : arguments[3];
     var createResourceTransformers = arguments[4] === undefined ? [] : arguments[4];
 
-    _classCallCheck(this, _ResolvedEndpoint);
+    _classCallCheck(this, ResolvedEndpoint);
 
-    _get(Object.getPrototypeOf(_ResolvedEndpoint.prototype), "constructor", this).call(this);
+    _get(Object.getPrototypeOf(ResolvedEndpoint.prototype), "constructor", this).call(this);
     this.transport = transport;
     this.templatedUrl = templatedUrl;
     if (Array.isArray(resourceTransformers)) {
@@ -49,9 +51,7 @@ var ResolvedEndpoint = (function (_Endpoint) {
 
   _inherits(ResolvedEndpoint, _Endpoint);
 
-  var _ResolvedEndpoint = ResolvedEndpoint;
-
-  _createClass(_ResolvedEndpoint, [{
+  _createClass(ResolvedEndpoint, [{
     key: "_load",
     value: function _load() {
       var response = this.transport.get(this.templatedUrl.url, this.templatedUrl.etag);
@@ -97,9 +97,10 @@ var ResolvedEndpoint = (function (_Endpoint) {
     }
   }]);
 
-  ResolvedEndpoint = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ResolvedEndpointFactory", ["XingPromise"])(ResolvedEndpoint) || ResolvedEndpoint;
   return ResolvedEndpoint;
 })(_EndpointJs2["default"]);
 
 exports["default"] = ResolvedEndpoint;
+
+(0, _injectorJs.Inject)(_injectorJs2["default"].XingPromise)(ResolvedEndpoint);
 module.exports = exports["default"];
