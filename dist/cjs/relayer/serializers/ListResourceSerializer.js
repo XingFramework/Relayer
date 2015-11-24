@@ -14,25 +14,27 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var _SerializerJs = require("./Serializer.js");
 
 var _SerializerJs2 = _interopRequireDefault(_SerializerJs);
 
+var _ManyResourceSerializerJs = require("./ManyResourceSerializer.js");
+
+var _ManyResourceSerializerJs2 = _interopRequireDefault(_ManyResourceSerializerJs);
+
+var _injectorJs = require("../injector.js");
+
 var ListResourceSerializer = (function (_Serializer) {
   function ListResourceSerializer(manyResourceSerializerFactory, resource) {
-    _classCallCheck(this, _ListResourceSerializer);
+    _classCallCheck(this, ListResourceSerializer);
 
-    _get(Object.getPrototypeOf(_ListResourceSerializer.prototype), "constructor", this).call(this, resource);
+    _get(Object.getPrototypeOf(ListResourceSerializer.prototype), "constructor", this).call(this, resource);
     this.manyResourceSerializerFactory = manyResourceSerializerFactory;
   }
 
   _inherits(ListResourceSerializer, _Serializer);
 
-  var _ListResourceSerializer = ListResourceSerializer;
-
-  _createClass(_ListResourceSerializer, [{
+  _createClass(ListResourceSerializer, [{
     key: "serialize",
     value: function serialize() {
       var data = this.manyResourceSerializerFactory(this.resource).serialize();
@@ -41,9 +43,10 @@ var ListResourceSerializer = (function (_Serializer) {
     }
   }]);
 
-  ListResourceSerializer = (0, _SimpleFactoryInjectorJs.SimpleFactory)("ListResourceSerializerFactory", ["ManyResourceSerializerFactory"])(ListResourceSerializer) || ListResourceSerializer;
   return ListResourceSerializer;
 })(_SerializerJs2["default"]);
 
 exports["default"] = ListResourceSerializer;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_ManyResourceSerializerJs2["default"]))(ListResourceSerializer);
 module.exports = exports["default"];

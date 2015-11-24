@@ -5,3 +5,5 @@
 /build
 C:*debuglog.txt
 *.sw?
+.chrome_dev_user/
+*.orig

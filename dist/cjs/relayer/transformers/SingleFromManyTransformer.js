@@ -18,22 +18,18 @@ var _ResourceTransformerJs = require("./ResourceTransformer.js");
 
 var _ResourceTransformerJs2 = _interopRequireDefault(_ResourceTransformerJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var SingleFromManyTransformer = (function (_ResourceTransformer) {
   function SingleFromManyTransformer(relationshipName, property) {
-    _classCallCheck(this, _SingleFromManyTransformer);
+    _classCallCheck(this, SingleFromManyTransformer);
 
-    _get(Object.getPrototypeOf(_SingleFromManyTransformer.prototype), "constructor", this).call(this);
+    _get(Object.getPrototypeOf(SingleFromManyTransformer.prototype), "constructor", this).call(this);
     this.property = property;
     this.relationshipName = relationshipName;
   }
 
   _inherits(SingleFromManyTransformer, _ResourceTransformer);
 
-  var _SingleFromManyTransformer = SingleFromManyTransformer;
-
-  _createClass(_SingleFromManyTransformer, [{
+  _createClass(SingleFromManyTransformer, [{
     key: "transformRequest",
     value: function transformRequest(endpoint, value) {
       var resource = endpoint.resource;
@@ -54,7 +50,6 @@ var SingleFromManyTransformer = (function (_ResourceTransformer) {
     }
   }]);
 
-  SingleFromManyTransformer = (0, _SimpleFactoryInjectorJs.SimpleFactory)("SingleFromManyTransformerFactory")(SingleFromManyTransformer) || SingleFromManyTransformer;
   return SingleFromManyTransformer;
 })(_ResourceTransformerJs2["default"]);
 

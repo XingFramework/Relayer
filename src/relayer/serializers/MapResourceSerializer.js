@@ -1,8 +1,9 @@
 import Serializer from "./Serializer.js";
-import {SimpleFactory} from "../SimpleFactoryInjector.js";
+import ResourceSerializer from "./ResourceSerializer.js";
+import {Inject, factory} from "../injector.js";
 
-@SimpleFactory('MapResourceSerializerFactory', ['ResourceSerializerFactory'])
 export default class MapResourceSerializer extends Serializer {
+
   constructor(resourceSerializerFactory, resource) {
     super(resource);
     this.resourceSerializerFactory = resourceSerializerFactory;
@@ -15,3 +16,5 @@ export default class MapResourceSerializer extends Serializer {
     }, {});
   }
 }
+
+Inject(factory(ResourceSerializer))(MapResourceSerializer);

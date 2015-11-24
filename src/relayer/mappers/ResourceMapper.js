@@ -1,10 +1,10 @@
 import Mapper from "./Mapper.js";
-import {SimpleFactory} from "../SimpleFactoryInjector.js";
+import {TemplatedUrlFromUrl} from "../TemplatedUrl.js";
+import ResourceBuilder from "../ResourceBuilder.js";
+import PrimaryResourceBuilder from "../PrimaryResourceBuilder.js";
+import PrimaryResourceTransformer from "../transformers/PrimaryResourceTransformer.js";
+import {Inject, factory} from "../injector.js";
 
-@SimpleFactory("ResourceMapperFactory", ["TemplatedUrlFromUrlFactory",
-  "ResourceBuilderFactory",
-  "PrimaryResourceBuilderFactory",
-  "PrimaryResourceTransformerFactory"])
 export default class ResourceMapper extends Mapper {
 
   constructor(templatedUrlFromUrlFactory,
@@ -32,12 +32,16 @@ export default class ResourceMapper extends Mapper {
     if (this.endpoint) {
       this.mapped = this.primaryResourceBuilderFactory(this.response, this.ResourceClass).build(this.endpoint);
     } else {
-      this.mapped = this.resourceBuilderFactory(this.transport, this.response, this.primaryResourceTransformer, this.ResourceClass, this.relationshipDescription).build(this.uriTemplate);
+      this.mapped = this.resourceBuilderFactory(this.transport, this.response,
+                                                this.primaryResourceTransformer,
+                                                this.ResourceClass,
+                                                this.relationshipDescription).build(this.uriTemplate);
     }
   }
 
   get primaryResourceTransformer() {
-    this._primaryResourceTransformer = this._primaryResourceTransformer || this.primaryResourceTransformerFactory(this.relationshipDescription)
+    this._primaryResourceTransformer = this._primaryResourceTransformer ||
+      this.primaryResourceTransformerFactory(this.relationshipDescription);
     return this._primaryResourceTransformer;
   }
 
@@ -61,3 +65,10 @@ export default class ResourceMapper extends Mapper {
     }
   }
 }
+
+Inject(
+    factory(TemplatedUrlFromUrl),
+    factory(ResourceBuilder),
+    factory(PrimaryResourceBuilder),
+    factory(PrimaryResourceTransformer)
+)(ResourceMapper);

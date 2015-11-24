@@ -18,13 +18,25 @@ var _ResourceDecoratorJs = require("./ResourceDecorator.js");
 
 var _ResourceDecoratorJs2 = _interopRequireDefault(_ResourceDecoratorJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
+var _endpointsLoadedDataEndpointJs = require("../endpoints/LoadedDataEndpoint.js");
+
+var _endpointsLoadedDataEndpointJs2 = _interopRequireDefault(_endpointsLoadedDataEndpointJs);
+
+var _transformersEmbeddedPropertyTransformerJs = require("../transformers/EmbeddedPropertyTransformer.js");
+
+var _transformersEmbeddedPropertyTransformerJs2 = _interopRequireDefault(_transformersEmbeddedPropertyTransformerJs);
+
+var _endpointsPromiseEndpointJs = require("../endpoints/PromiseEndpoint.js");
+
+var _endpointsPromiseEndpointJs2 = _interopRequireDefault(_endpointsPromiseEndpointJs);
+
+var _injectorJs = require("../injector.js");
 
 var JsonPropertyDecorator = (function (_ResourceDecorator) {
   function JsonPropertyDecorator(loadedDataEndpointFactory, embeddedPropertyTransformerFactory, promiseEndpointFactory, name, path, value, options) {
-    _classCallCheck(this, _JsonPropertyDecorator);
+    _classCallCheck(this, JsonPropertyDecorator);
 
-    _get(Object.getPrototypeOf(_JsonPropertyDecorator.prototype), "constructor", this).call(this, name);
+    _get(Object.getPrototypeOf(JsonPropertyDecorator.prototype), "constructor", this).call(this, name);
 
     this.path = path;
     this.options = options || {};
@@ -36,9 +48,7 @@ var JsonPropertyDecorator = (function (_ResourceDecorator) {
 
   _inherits(JsonPropertyDecorator, _ResourceDecorator);
 
-  var _JsonPropertyDecorator = JsonPropertyDecorator;
-
-  _createClass(_JsonPropertyDecorator, [{
+  _createClass(JsonPropertyDecorator, [{
     key: "recordApply",
     value: function recordApply(target) {
       target.constructor.properties[this.name] = this.path;
@@ -113,27 +123,10 @@ var JsonPropertyDecorator = (function (_ResourceDecorator) {
     }
   }]);
 
-  JsonPropertyDecorator = (0, _SimpleFactoryInjectorJs.SimpleFactory)("JsonPropertyDecoratorFactory", ["LoadedDataEndpointFactory", "EmbeddedPropertyTransformerFactory", "PromiseEndpointFactory"])(JsonPropertyDecorator) || JsonPropertyDecorator;
   return JsonPropertyDecorator;
 })(_ResourceDecoratorJs2["default"]);
 
 exports["default"] = JsonPropertyDecorator;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_endpointsLoadedDataEndpointJs2["default"]), (0, _injectorJs.factory)(_transformersEmbeddedPropertyTransformerJs2["default"]), (0, _injectorJs.factory)(_endpointsPromiseEndpointJs2["default"]))(JsonPropertyDecorator);
 module.exports = exports["default"];
-
-/*
-export default class JsonPropertyTransform extends ResourceTransform {
-  static get transformArguments() {
-    return ["property", "jsonPath", "initial"]
-  }
-
-  transform(property, jsonPath, initial = undefined) {
-    this.ResourceClass.prototype.defineJsonProperty(property, jsonPath);
-    this.ResourceClass.prototype.addInitialValue(property, initial);
-  }
-
-  // WIP this would generate the promise version of calling this property, not tested
-  static promiseCall(transformDescription) {
-    return (results) => results[transformDescription.property];
-  }
-}
-*/

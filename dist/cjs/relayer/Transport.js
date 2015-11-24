@@ -8,19 +8,15 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _SimpleFactoryInjectorJs = require("./SimpleFactoryInjector.js");
-
 var Transport = (function () {
   function Transport(urlHelper, $http) {
-    _classCallCheck(this, _Transport);
+    _classCallCheck(this, Transport);
 
     this.http = $http;
     this.urlHelper = urlHelper;
   }
 
-  var _Transport = Transport;
-
-  _createClass(_Transport, [{
+  _createClass(Transport, [{
     key: "get",
     value: function get(url) {
       var etag = arguments[1] === undefined ? null : arguments[1];
@@ -94,7 +90,6 @@ var Transport = (function () {
     }
   }]);
 
-  Transport = (0, _SimpleFactoryInjectorJs.SimpleFactory)("TransportFactory", [])(Transport) || Transport;
   return Transport;
 })();
 

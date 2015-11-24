@@ -8,19 +8,15 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _SimpleFactoryInjectorJs = require("./SimpleFactoryInjector.js");
-
 var PrimaryResourceBuilder = (function () {
   function PrimaryResourceBuilder(response, ResourceClass) {
-    _classCallCheck(this, _PrimaryResourceBuilder);
+    _classCallCheck(this, PrimaryResourceBuilder);
 
     this.response = response;
     this.ResourceClass = ResourceClass;
   }
 
-  var _PrimaryResourceBuilder = PrimaryResourceBuilder;
-
-  _createClass(_PrimaryResourceBuilder, [{
+  _createClass(PrimaryResourceBuilder, [{
     key: "build",
     value: function build(endpoint) {
       var resource = new this.ResourceClass(this.response);
@@ -34,7 +30,6 @@ var PrimaryResourceBuilder = (function () {
     }
   }]);
 
-  PrimaryResourceBuilder = (0, _SimpleFactoryInjectorJs.SimpleFactory)("PrimaryResourceBuilderFactory", [])(PrimaryResourceBuilder) || PrimaryResourceBuilder;
   return PrimaryResourceBuilder;
 })();
 

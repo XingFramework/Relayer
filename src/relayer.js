@@ -1,45 +1,17 @@
-import {describeResource, InitializedResourceClasses, ResourceDescription}from "./relayer/ResourceDescription.js";
+import {describeResource, InitializedResourceClasses}from "./relayer/ResourceDescription.js";
 import Resource from "./relayer/Resource.js";
-import * as Endpoints from "./relayer/endpoints.js";
-import * as Serializers from "./relayer/serializers.js";
-import * as Mappers from "./relayer/mappers.js";
-import * as Transformers from "./relayer/transformers.js";
-import * as Initializers from "./relayer/initializers.js";
-import * as Decorators from "./relayer/decorators.js";
-import * as RelationshipDescriptions from "./relayer/relationshipDescriptions.js";
 import ListResource from "./relayer/ListResource.js";
-import PrimaryResourceBuilder from "./relayer/PrimaryResourceBuilder.js";
-import ResourceBuilder from "./relayer/ResourceBuilder.js";
 import Transport from "./relayer/Transport.js";
 import UrlHelper from "./relayer/UrlHelper.js";
-import * as TemplatedUrls from "./relayer/TemplatedUrl.js";
-import XingPromise from "xing-promise";
-import RelationshipUtilities from "./relayer/RelationshipUtilities.js";
+import PrimaryResourceTransformer from "./relayer/transformers/PrimaryResourceTransformer.js";
+import SingleRelationshipDescription from "./relayer/relationshipDescriptions/SingleRelationshipDescription.js";
+import ResolvedEndpoint from "./relayer/endpoints/ResolvedEndpoint.js";
+import {TemplatedUrlFromUrl} from "./relayer/TemplatedUrl.js";
 import {AsModule, Provider} from "a1atscript";
-import Inflector from "xing-inflector";
+import XingPromiseFactory from "xing-promise"
+import {default as injector, instance} from "./relayer/injector.js";
 
-@AsModule('relayer', [
-  Endpoints,
-  Serializers,
-  Mappers,
-  Transformers,
-  Initializers,
-  Decorators,
-  RelationshipDescriptions,
-  ListResource,
-  PrimaryResourceBuilder,
-  ResourceBuilder,
-  Transport,
-  UrlHelper,
-  TemplatedUrls,
-  ResourceDescription,
-  InitializedResourceClasses,
-  ResourceBuilder,
-  PrimaryResourceBuilder,
-  Inflector,
-  XingPromise,
-  RelationshipUtilities
-])
+@AsModule('relayer', [ ])
 @Provider('relayer', ['$provide'])
 export default class ResourceLayer {
 
@@ -50,7 +22,10 @@ export default class ResourceLayer {
   static get Describe() { return describeResource; }
 
   constructor($provide) {
-    this.apis = {}
+
+    injector.reset();
+
+    this.apis = {};
     this.$provide = $provide;
     this.$get = ['$injector', ($injector) => {
       var builtApis = {};
@@ -64,33 +39,41 @@ export default class ResourceLayer {
   createApi(apiName, topLevelResource, baseUrl) {
     this.apis[apiName] = {
       topLevelResource, baseUrl
-    }
-    this.$provide.factory(apiName, ['UrlHelperFactory',
-      'TransportFactory',
-      'TemplatedUrlFromUrlFactory',
-      'ResolvedEndpointFactory',
-      'PrimaryResourceTransformerFactory',
-      'SingleRelationshipDescriptionFactory',
-      '$http',
-      'InitializedResourceClasses',
-      function(urlHelperFactory,
-        transportFactory,
-        templatedUrlFromUrlFactory,
-        resolvedEndpointFactory,
-        primaryResourceTransformerFactory,
-        singleRelationshipDescriptionFactory,
-        $http,
-        initializedResourceClasses) {
+    };
+    this.$provide.factory(apiName, [ '$http', '$q', function( $http, $q ) {
 
-        var urlHelper = urlHelperFactory(baseUrl);
-        var wellKnownUrl = urlHelper.fullUrlRegEx.exec(baseUrl)[3];
-        var transport = transportFactory(urlHelper, $http);
-        var templatedUrl = templatedUrlFromUrlFactory(wellKnownUrl, wellKnownUrl);
-        var transformer = primaryResourceTransformerFactory(singleRelationshipDescriptionFactory("", topLevelResource))
-        var endpoint = resolvedEndpointFactory(transport, templatedUrl, transformer);
-        topLevelResource.resourceDescription.applyToEndpoint(endpoint);
-        return endpoint;
-      }
+      var XingPromise = XingPromiseFactory.factory($q);
+      injector.XingPromise.value = XingPromise;
+
+      injector.instantiate(InitializedResourceClasses);
+
+      var apiBuilder = new APIBuilder($http, topLevelResource, baseUrl);
+      return apiBuilder.build();
+    }
     ]);
+  }
+}
+
+class APIBuilder {
+  constructor($http, topLevelResource, baseUrl) {
+    this.$http = $http;
+    this.topLevelResource = topLevelResource;
+    this.baseUrl = baseUrl;
+  }
+
+  build() {
+    var {$http, topLevelResource, baseUrl} = this;
+
+    var urlHelper = injector.instantiate(instance(UrlHelper), baseUrl);
+    var wellKnownUrl = urlHelper.fullUrlRegEx.exec(baseUrl)[3];
+
+    var transport = injector.instantiate(instance(Transport), urlHelper, $http);
+    var templatedUrl = injector.instantiate(instance(TemplatedUrlFromUrl), wellKnownUrl, wellKnownUrl);
+    var relationshipDescription = injector.instantiate(instance(SingleRelationshipDescription),"", topLevelResource);
+    var transformer = injector.instantiate(instance(PrimaryResourceTransformer), relationshipDescription);
+
+    var endpoint = injector.instantiate(instance(ResolvedEndpoint), transport, templatedUrl, transformer);
+    topLevelResource.resourceDescription.applyToEndpoint(endpoint);
+    return endpoint;
   }
 }

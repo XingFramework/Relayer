@@ -18,21 +18,23 @@ var _RelationshipInitializerJs = require("./RelationshipInitializer.js");
 
 var _RelationshipInitializerJs2 = _interopRequireDefault(_RelationshipInitializerJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
+var _SingleRelationshipInitializerJs = require("./SingleRelationshipInitializer.js");
+
+var _SingleRelationshipInitializerJs2 = _interopRequireDefault(_SingleRelationshipInitializerJs);
+
+var _injectorJs = require("../injector.js");
 
 var MapRelationshipInitializer = (function (_RelationshipInitializer) {
   function MapRelationshipInitializer(singleRelationshipInitializerFactory, ResourceClass, initialValues) {
-    _classCallCheck(this, _MapRelationshipInitializer);
+    _classCallCheck(this, MapRelationshipInitializer);
 
-    _get(Object.getPrototypeOf(_MapRelationshipInitializer.prototype), "constructor", this).call(this, ResourceClass, initialValues);
+    _get(Object.getPrototypeOf(MapRelationshipInitializer.prototype), "constructor", this).call(this, ResourceClass, initialValues);
     this.singleRelationshipInitializerFactory = singleRelationshipInitializerFactory;
   }
 
   _inherits(MapRelationshipInitializer, _RelationshipInitializer);
 
-  var _MapRelationshipInitializer = MapRelationshipInitializer;
-
-  _createClass(_MapRelationshipInitializer, [{
+  _createClass(MapRelationshipInitializer, [{
     key: "initialize",
     value: function initialize() {
       var _this = this;
@@ -51,9 +53,10 @@ var MapRelationshipInitializer = (function (_RelationshipInitializer) {
     }
   }]);
 
-  MapRelationshipInitializer = (0, _SimpleFactoryInjectorJs.SimpleFactory)("MapRelationshipInitializerFactory", ["SingleRelationshipInitializerFactory"])(MapRelationshipInitializer) || MapRelationshipInitializer;
   return MapRelationshipInitializer;
 })(_RelationshipInitializerJs2["default"]);
 
 exports["default"] = MapRelationshipInitializer;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_SingleRelationshipInitializerJs2["default"]))(MapRelationshipInitializer);
 module.exports = exports["default"];

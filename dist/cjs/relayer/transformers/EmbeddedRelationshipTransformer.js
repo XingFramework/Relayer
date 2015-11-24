@@ -18,21 +18,17 @@ var _ResourceTransformerJs = require("./ResourceTransformer.js");
 
 var _ResourceTransformerJs2 = _interopRequireDefault(_ResourceTransformerJs);
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
-
 var EmbeddedRelationshipTransformer = (function (_ResourceTransformer) {
   function EmbeddedRelationshipTransformer(relationshipName) {
-    _classCallCheck(this, _EmbeddedRelationshipTransformer);
+    _classCallCheck(this, EmbeddedRelationshipTransformer);
 
-    _get(Object.getPrototypeOf(_EmbeddedRelationshipTransformer.prototype), "constructor", this).call(this);
+    _get(Object.getPrototypeOf(EmbeddedRelationshipTransformer.prototype), "constructor", this).call(this);
     this.relationshipName = relationshipName;
   }
 
   _inherits(EmbeddedRelationshipTransformer, _ResourceTransformer);
 
-  var _EmbeddedRelationshipTransformer = EmbeddedRelationshipTransformer;
-
-  _createClass(_EmbeddedRelationshipTransformer, [{
+  _createClass(EmbeddedRelationshipTransformer, [{
     key: "transformRequest",
     value: function transformRequest(endpoint, value) {
       var resource = endpoint.resource;
@@ -53,7 +49,6 @@ var EmbeddedRelationshipTransformer = (function (_ResourceTransformer) {
     }
   }]);
 
-  EmbeddedRelationshipTransformer = (0, _SimpleFactoryInjectorJs.SimpleFactory)("EmbeddedRelationshipTransformerFactory")(EmbeddedRelationshipTransformer) || EmbeddedRelationshipTransformer;
   return EmbeddedRelationshipTransformer;
 })(_ResourceTransformerJs2["default"]);
 

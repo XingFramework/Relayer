@@ -1,6 +1,3 @@
-import {SimpleFactory} from "./SimpleFactoryInjector.js";
-
-@SimpleFactory('TemplatedUrlFactory')
 export class TemplatedUrl {
 
   constructor(uriTemplate, uriParams = {}) {
@@ -19,7 +16,7 @@ export class TemplatedUrl {
   }
 
   get url() {
-    return this._url
+    return this._url;
   }
 
   _setUrl(url) {
@@ -52,12 +49,10 @@ export class TemplatedUrl {
   }
 }
 
-@SimpleFactory('TemplatedUrlFromUrlFactory')
 export class TemplatedUrlFromUrl extends TemplatedUrl {
-
   constructor(uriTemplate, url) {
     super(uriTemplate);
-    super._setUrl(url)
+    super._setUrl(url);
   }
 
 }

@@ -20,13 +20,21 @@ var _ResourceDecoratorJs2 = _interopRequireDefault(_ResourceDecoratorJs);
 
 var _TemplatedUrlJs = require("../TemplatedUrl.js");
 
-var _SimpleFactoryInjectorJs = require("../SimpleFactoryInjector.js");
+var _injectorJs = require("../injector.js");
+
+var _endpointsPromiseEndpointJs = require("../endpoints/PromiseEndpoint.js");
+
+var _endpointsPromiseEndpointJs2 = _interopRequireDefault(_endpointsPromiseEndpointJs);
+
+var _RelationshipUtilitiesJs = require("../RelationshipUtilities.js");
+
+var _RelationshipUtilitiesJs2 = _interopRequireDefault(_RelationshipUtilitiesJs);
 
 var RelatedResourceDecorator = (function (_ResourceDecorator) {
   function RelatedResourceDecorator(promiseEndpointFactory, relationshipUtilities, name, relationship) {
-    _classCallCheck(this, _RelatedResourceDecorator);
+    _classCallCheck(this, RelatedResourceDecorator);
 
-    _get(Object.getPrototypeOf(_RelatedResourceDecorator.prototype), "constructor", this).call(this, name);
+    _get(Object.getPrototypeOf(RelatedResourceDecorator.prototype), "constructor", this).call(this, name);
 
     this.promiseEndpointFactory = promiseEndpointFactory;
     this.relationshipUtilities = relationshipUtilities;
@@ -35,9 +43,7 @@ var RelatedResourceDecorator = (function (_ResourceDecorator) {
 
   _inherits(RelatedResourceDecorator, _ResourceDecorator);
 
-  var _RelatedResourceDecorator = RelatedResourceDecorator;
-
-  _createClass(_RelatedResourceDecorator, [{
+  _createClass(RelatedResourceDecorator, [{
     key: "resourceFn",
     get: function () {
       if (!this._resourceFn) {
@@ -53,7 +59,7 @@ var RelatedResourceDecorator = (function (_ResourceDecorator) {
           if (relationship.async && this.isPersisted) {
             var endpoint;
             if (!this.relationships[name]) {
-              if (recursiveCall == false) {
+              if (recursiveCall === false) {
                 endpoint = promiseEndpointFactory(function () {
                   return _this.self().load().then(function (resource) {
                     return resource[name](uriParams, true);
@@ -170,9 +176,10 @@ var RelatedResourceDecorator = (function (_ResourceDecorator) {
     }
   }]);
 
-  RelatedResourceDecorator = (0, _SimpleFactoryInjectorJs.SimpleFactory)("RelatedResourceDecoratorFactory", ["PromiseEndpointFactory", "RelationshipUtilities"])(RelatedResourceDecorator) || RelatedResourceDecorator;
   return RelatedResourceDecorator;
 })(_ResourceDecoratorJs2["default"]);
 
 exports["default"] = RelatedResourceDecorator;
+
+(0, _injectorJs.Inject)((0, _injectorJs.factory)(_endpointsPromiseEndpointJs2["default"]), _RelationshipUtilitiesJs2["default"])(RelatedResourceDecorator);
 module.exports = exports["default"];

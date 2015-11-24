@@ -1,6 +1,7 @@
 import RL from "../../src/relayer.js"
 import {Module, Injector, Config} from "a1atscript";
 import {TemplatedUrl} from "../../src/relayer/TemplatedUrl.js";
+import XingPromiseFactory from "xing-promise";
 
 class Book extends RL.Resource {
 }
@@ -84,7 +85,8 @@ describe("Delete test", function() {
         }
       });
     angular.mock.module(function($provide) {
-      $provide.factory("$http", function(XingPromise) {
+      $provide.factory("$http", function($q) {
+        var XingPromise = XingPromiseFactory.factory($q);
         return function(params) {
           return mockHttp(XingPromise, params);
         };
