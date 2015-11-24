@@ -1,5 +1,6 @@
 import ResourceMapper from "./ResourceMapper.js";
 import {TemplatedUrlFromUrl} from "../TemplatedUrl.js";
+import TemporaryTemplatedUrl from "../TemporaryTemplatedUrl.js";
 import ResourceBuilder from "../ResourceBuilder.js";
 import PrimaryResourceBuilder from "../PrimaryResourceBuilder.js";
 import PrimaryResourceTransformer from "../transformers/PrimaryResourceTransformer.js";
@@ -8,11 +9,13 @@ import {Inject, factory} from "../injector.js";
 
 export default class ListResourceMapper extends ResourceMapper {
 
-  constructor(templatedUrlFromUrlFactory,
+  constructor(
+      templatedUrlFromUrlFactory,
       resourceBuilderFactory,
       primaryResourceBuilderFactory,
       primaryResourceTransformerFactory,
       manyResourceMapperFactory,
+      temporaryTemplatedUrlFactory,
       transport,
       response,
       relationshipDescription,
@@ -28,6 +31,7 @@ export default class ListResourceMapper extends ResourceMapper {
       relationshipDescription,
       endpoint,
       useErrors);
+    this.temporaryTemplatedUrlFactory = temporaryTemplatedUrlFactory;
     this.manyResourceMapperFactory = manyResourceMapperFactory;
   }
 
@@ -46,7 +50,8 @@ export default class ListResourceMapper extends ResourceMapper {
 
     this.resource = this.mapped;
     var manyResourceMapper = this.manyResourceMapperFactory(this.transport, this.resource.pathGet("$.data"), this.relationshipDescription);
-    manyResourceMapper.uriTemplate = this.resource.pathGet("$.links.template");
+    var uriTemplate = this.resource.pathGet("$.links.template");
+    manyResourceMapper.uriTemplate = uriTemplate;
     this.mapped = manyResourceMapper.map();
     this.mapped.resource = this.resource;
     ["url", "uriTemplate", "uriParams"].forEach((func) => {
@@ -73,7 +78,14 @@ export default class ListResourceMapper extends ResourceMapper {
       });
     }
     var ItemResourceClass = this.ItemResourceClass;
-    this.mapped.new = function() { return new ItemResourceClass(); }
+    var temporaryTemplatedUrlFactory = this.temporaryTemplatedUrlFactory;
+    this.mapped.new = function(withUrl = false) {
+      var item = new ItemResourceClass();
+      if (withUrl) {
+        item.templatedUrl = temporaryTemplatedUrlFactory(uriTemplate);
+      }
+      return item;
+    }
   }
 }
 
@@ -82,5 +94,6 @@ Inject(
   factory(ResourceBuilder),
   factory(PrimaryResourceBuilder),
   factory(PrimaryResourceTransformer),
-  factory(ManyResourceMapper)
+  factory(ManyResourceMapper),
+  factory(TemporaryTemplatedUrl)
 )(ListResourceMapper);
