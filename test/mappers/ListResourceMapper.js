@@ -11,6 +11,7 @@ describe("ListResourceMapper", function() {
   ItemResourceClass,
   listResourceMapper,
   templatedUrlFromUrlFactory,
+  temporaryTemplatedUrlFactory,
   templatedUrl,
   templatedUrlDataPathSpy,
   resourceBuilderFactory,
@@ -124,6 +125,10 @@ describe("ListResourceMapper", function() {
       }
     });
 
+    temporaryTemplatedUrlFactory = jasmine.createSpy("temporaryTemplatedUrlFactory").and.returnValue({
+      url: "a url"
+    });
+
     transport = {};
 
     listResourceMapperFactory = function() {
@@ -147,6 +152,7 @@ describe("ListResourceMapper", function() {
       primaryResourceBuilderFactory,
       primaryResourceTransformerFactory,
       manyResourceMapperFactory,
+      temporaryTemplatedUrlFactory,
       transport,
       data,
       relationship);
@@ -195,6 +201,7 @@ describe("ListResourceMapper", function() {
 
     it("should setup new", function() {
       expect(results.new().awesome).toEqual("awesome");
+      expect(results.new(true).templatedUrl).toEqual({url: "a url"});
     });
 
     it("should have the right properties", function() {
