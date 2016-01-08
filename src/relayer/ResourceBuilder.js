@@ -29,19 +29,21 @@ export default class ResourceBuilder  {
 
   }
 
-  build(uriTemplate = null, useTemplate = false) {
+  template(resource) {
+    if (resource.pathGet("$.links.self_template")) {
+      return resource.pathGet("$.links.self_template")
+    } else {
+      return resource.pathGet("$.links.self");
+    }
+  }
+
+  build(uriTemplate = null) {
     var resource = new this.ResourceClass(this.response);
     if (resource.pathGet("$.links.self")) {
       if (uriTemplate) {
         resource.templatedUrl = this.templatedUrlFromUrlFactory(uriTemplate, resource.pathGet("$.links.self"));
       } else {
-        var template;
-        if (useTemplate && resource.pathGet("$.links.template")) {
-          template = resource.pathGet("$.links.template")
-        } else {
-          template = resource.pathGet("$.links.self")
-        }
-        resource.templatedUrl = this.templatedUrlFromUrlFactory(template, resource.pathGet("$.links.self"));
+        resource.templatedUrl = this.templatedUrlFromUrlFactory(this.template(resource), resource.pathGet("$.links.self"));
       }
       resource.templatedUrl.addDataPathLink(resource, "$.links.self");
       if (this.relationshipDescription.canCreate) {

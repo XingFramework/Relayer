@@ -95,14 +95,14 @@ describe('MenuItem class', function(){
             name: 'Test 1',
             type: 'page',
             page: { links: { self: '/pages/test-1',
-              template: '/pages/{url_slug}'} },
+              self_template: '/pages/{url_slug}'} },
             children: [ {
               links: {},
               data: {
                 name: 'Sublevel 1',
                 type: 'page',
                 page: { links: { self: '/pages/test-2',
-              template: '/pages/{url_slug}'} },
+              self_template: '/pages/{url_slug}'} },
                 children: [
                   {
                   links: {},
@@ -110,7 +110,7 @@ describe('MenuItem class', function(){
                     name: 'Sub-Sublevel 1',
                     type: 'page',
                     page: { links: { self: '/pages/test-3',
-              template: '/pages/{url_slug}'} },
+              self_template: '/pages/{url_slug}'} },
                     children: [ ]
                   }
                 } ]
@@ -122,7 +122,7 @@ describe('MenuItem class', function(){
                 name: 'Sublevel 2',
                 type: 'page',
                 page: { links: { self: '/pages/test-2.1',
-              template: '/pages/{url_slug}'} },
+              self_template: '/pages/{url_slug}'} },
               }
             } ]
           }
@@ -133,7 +133,7 @@ describe('MenuItem class', function(){
             name: 'Test 2',
             type: 'page',
             page: { links: { self: '/pages/test-4',
-              template: '/pages/{url_slug}'} },
+              self_template: '/pages/{url_slug}'} },
             children: [ ]
           }
         } ]

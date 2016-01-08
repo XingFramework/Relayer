@@ -43,10 +43,6 @@ export default class ListResourceMapper extends ResourceMapper {
     return this.relationshipDescription.ResourceClass;
   }
 
-  get useTemplate() {
-    return false;
-  }
-
   mapNestedRelationships() {
 
     // add mappings for list resource
