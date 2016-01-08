@@ -29,13 +29,21 @@ export default class ResourceBuilder  {
 
   }
 
+  template(resource) {
+    if (resource.pathGet("$.links.self_template")) {
+      return resource.pathGet("$.links.self_template")
+    } else {
+      return resource.pathGet("$.links.self");
+    }
+  }
+
   build(uriTemplate = null) {
     var resource = new this.ResourceClass(this.response);
     if (resource.pathGet("$.links.self")) {
       if (uriTemplate) {
         resource.templatedUrl = this.templatedUrlFromUrlFactory(uriTemplate, resource.pathGet("$.links.self"));
       } else {
-        resource.templatedUrl = this.templatedUrlFromUrlFactory(resource.pathGet("$.links.self"), resource.pathGet("$.links.self"));
+        resource.templatedUrl = this.templatedUrlFromUrlFactory(this.template(resource), resource.pathGet("$.links.self"));
       }
       resource.templatedUrl.addDataPathLink(resource, "$.links.self");
       if (this.relationshipDescription.canCreate) {

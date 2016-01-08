@@ -1,5 +1,5 @@
 [![Code Climate](https://codeclimate.com/github/XingFramework/Relayer/badges/gpa.svg)](https://codeclimate.com/github/XingFramework/Relayer)
-[![Dependency Status](https://gemnasium.com/XingFramework/Relayer.svg)](https://gemnasium.com/XingFramework/Relayer) 
+[![Dependency Status](https://gemnasium.com/XingFramework/Relayer.svg)](https://gemnasium.com/XingFramework/Relayer)
 [![Build Status](https://travis-ci.org/XingFramework/Relayer.svg?branch=master)](https://travis-ci.org/XingFramework/Relayer)
 
 # Relayer
@@ -10,9 +10,7 @@ Relayer is a simple to use client side interface for talking to hypermedia API's
 
 It's a "Relayer" because finding resources is like a relay race -- each successive request sets up the next request.
 
-*** Relayer is written in ES6 and assumes you are writing your code in ES6. At the moment, Relayer is specifically written for Angular.js, but uses the injection library A1AtScript, which makes Angular bindings very loose. At least in theory, relayer could be supported by any Javascript dependency injection system, including Ember's ***
-
-*** You may want to read over the README at http://github.com/hannahhoward/a1atscript to get a simple tutorial on how A1Atscript works ***
+*** Relayer is written in ES6 and assumes you are writing your code in ES6. At the moment, Relayer has a loose dependency on Angular.js, as well as A1Atscript. However, the only actual file that requires angular is src/relayer.js -- versions for Ember, Angular 2.x and others may arrive in the future ***
 
 ## Setting up resources
 

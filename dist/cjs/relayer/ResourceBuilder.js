@@ -43,6 +43,15 @@ var ResourceBuilder = (function () {
   }
 
   _createClass(ResourceBuilder, [{
+    key: "template",
+    value: function template(resource) {
+      if (resource.pathGet("$.links.self_template")) {
+        return resource.pathGet("$.links.self_template");
+      } else {
+        return resource.pathGet("$.links.self");
+      }
+    }
+  }, {
     key: "build",
     value: function build() {
       var uriTemplate = arguments[0] === undefined ? null : arguments[0];
@@ -52,7 +61,7 @@ var ResourceBuilder = (function () {
         if (uriTemplate) {
           resource.templatedUrl = this.templatedUrlFromUrlFactory(uriTemplate, resource.pathGet("$.links.self"));
         } else {
-          resource.templatedUrl = this.templatedUrlFromUrlFactory(resource.pathGet("$.links.self"), resource.pathGet("$.links.self"));
+          resource.templatedUrl = this.templatedUrlFromUrlFactory(this.template(resource), resource.pathGet("$.links.self"));
         }
         resource.templatedUrl.addDataPathLink(resource, "$.links.self");
         if (this.relationshipDescription.canCreate) {

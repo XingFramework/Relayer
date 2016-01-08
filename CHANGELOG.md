@@ -1,3 +1,12 @@
+0.2.1 01-07-2016
+================
+* Can generate temporary links on the frontend
+* Can absorb self template links in backend response on singular resources
+
+0.2.0 12-07-2015
+================
+* Complete refactor of dependency injection system to remove most A1Atscript dependency & Angular
+
 0.1.4 11-10-2015
 ================
 * Fix create template links
