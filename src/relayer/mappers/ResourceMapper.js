@@ -35,14 +35,19 @@ export default class ResourceMapper extends Mapper {
       this.mapped = this.resourceBuilderFactory(this.transport, this.response,
                                                 this.primaryResourceTransformer,
                                                 this.ResourceClass,
-                                                this.relationshipDescription).build(this.uriTemplate);
+                                                this.relationshipDescription).build(this.uriTemplate, this.useTemplate);
     }
   }
+
 
   get primaryResourceTransformer() {
     this._primaryResourceTransformer = this._primaryResourceTransformer ||
       this.primaryResourceTransformerFactory(this.relationshipDescription);
     return this._primaryResourceTransformer;
+  }
+
+  get useTemplate() {
+    return true;
   }
 
   mapNestedRelationships() {
