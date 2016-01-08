@@ -76,7 +76,6 @@ describe("ResourceBuilder", function() {
 
   describe("standard", function() {
     beforeEach(function() {
-
       resourceBuilder = new ResourceBuilder(templatedUrlFromUrlFactory,
         resolvedEndpointFactory,
         throwErrorTransformerFactory,
@@ -145,6 +144,57 @@ describe("ResourceBuilder", function() {
           primaryResourceTransformer,
           throwErrorTransformer);
       });
+    });
+  })
+
+  describe("with self template", function() {
+    var TemplatedResourceClass;
+    beforeEach(function() {
+      TemplatedResourceClass = function(resource) {
+        this.pathGet = function(path) {
+          if (path == "$.links.self") {
+            return "/cheese/gouda"
+          } else if (path == "$.links.self_template") {
+            return "/cheese/{type}"
+          }
+        }
+        this.response = resource;
+      };
+
+      resourceBuilder = new ResourceBuilder(templatedUrlFromUrlFactory,
+        resolvedEndpointFactory,
+        throwErrorTransformerFactory,
+        createResourceTransformerFactory,
+        transport,
+        resource,
+        primaryResourceTransformer,
+        TemplatedResourceClass,
+        relationshipDescription);
+
+      builtResource = resourceBuilder.build();
+    });
+
+    it("should have the right properties", function() {
+      expect(builtResource.templatedUrl).toEqual(templatedUrl);
+      expect(builtResource.response).toEqual(resource);
+      expect(builtResource.self()).toEqual(resolvedEndpoint);
+    });
+
+    it("should setup the templatedUrl properly", function() {
+      expect(templatedUrlFromUrlFactory).toHaveBeenCalledWith("/cheese/{type}", "/cheese/gouda");
+      expect(templatedUrlDataPathSpy).toHaveBeenCalledWith(builtResource, "$.links.self");
+    });
+
+    it("should setup the transformers", function() {
+      expect(throwErrorTransformerFactory).toHaveBeenCalled();
+    });
+
+    it("should setup the endpoint properly", function() {
+      expect(resolvedEndpointFactory).toHaveBeenCalledWith(
+        transport,
+        templatedUrl,
+        primaryResourceTransformer,
+        throwErrorTransformer);
     });
   })
 
