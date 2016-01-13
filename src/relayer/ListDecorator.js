@@ -21,7 +21,9 @@ export default class ListDecorator {
   setupSelfFunctions(list, resource) {
     ["remove", "update", "load"].forEach((func) => {
       list[func] = function(...args) {
-        return resource.self()[func](list,...args);
+        if (resource.isPersisted) {
+          return resource.self()[func](list,...args);
+        }
       };
     });
   }

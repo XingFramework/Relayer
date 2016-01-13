@@ -15,6 +15,7 @@ describe("ListDecorator", function() {
       relationships: {
         relatedObject: null
       },
+      isPersisted: true,
       self() {
         return self;
       },
