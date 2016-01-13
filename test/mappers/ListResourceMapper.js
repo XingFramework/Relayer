@@ -11,7 +11,7 @@ describe("ListResourceMapper", function() {
   ItemResourceClass,
   listResourceMapper,
   templatedUrlFromUrlFactory,
-  temporaryTemplatedUrlFactory,
+  listDecorator,
   templatedUrl,
   templatedUrlDataPathSpy,
   resourceBuilderFactory,
@@ -64,21 +64,6 @@ describe("ListResourceMapper", function() {
           return "/crackers/crackers"
         }
       };
-
-      var self = {};
-      this.self = function() { return self; };
-
-      ["url", "uriTemplate", "uriParams"].forEach((func) => {
-        this[func] = function() { return func; };
-      });
-
-      ["remove", "update", "load"].forEach((func) => {
-        self[func] = function() { return func; };
-      });
-
-      this.create = function(param) { return Promise.resolve(param); }
-
-      this.crackers = function() { return this.relationships.crackers; }
     };
 
     ListResource.relationships = {};
@@ -125,9 +110,9 @@ describe("ListResourceMapper", function() {
       }
     });
 
-    temporaryTemplatedUrlFactory = jasmine.createSpy("temporaryTemplatedUrlFactory").and.returnValue({
-      url: "a url"
-    });
+    listDecorator = {
+      decorate: jasmine.createSpy("decorate")
+    }
 
     transport = {};
 
@@ -152,7 +137,7 @@ describe("ListResourceMapper", function() {
       primaryResourceBuilderFactory,
       primaryResourceTransformerFactory,
       manyResourceMapperFactory,
-      temporaryTemplatedUrlFactory,
+      listDecorator,
       transport,
       data,
       relationship);
@@ -181,36 +166,13 @@ describe("ListResourceMapper", function() {
       expect(resultElements).toEqual(resultArray);
     });
 
-    it("should setup relationships for the list", function() {
-      expect(results.resource.relationships["crackers"]).toEqual(templatedUrl)
-    })
-
-    it("should setup pass through functions on the array", function() {
-      var spy = spyOn(results.resource, 'self').and.callThrough();
-
-      ["url", "uriTemplate", "uriParams"].forEach((func) => {
-        expect(results[func]()).toEqual(func);
-      });
-      ["remove", "update", "load"].forEach((func) => {
-        expect(results[func]()).toEqual(func);
-        expect(spy).toHaveBeenCalled();
-      });
-
-      expect(results.crackers()).toEqual(templatedUrl);
-    });
-
-    it("should setup new", function() {
-      expect(results.new().awesome).toEqual("awesome");
-      expect(results.new(true).templatedUrl).toEqual({url: "a url"});
-    });
-
-    it("should have the right properties", function() {
-      expect(results.resource.data).toEqual(data);
+    it("should decorate the list", function() {
+      expect(listDecorator.decorate).toHaveBeenCalledWith(results, jasmine.any(ListResource), ItemResourceClass, "/cheese/{cheese}")
     });
 
     it("should setup the primary resource transformer", function() {
       expect(primaryResourceTransformerFactory).toHaveBeenCalledWith(relationship)
-    })
+    });
 
     it("should build the resource with the regular resource builder", function() {
       expect(resourceBuilderFactory).toHaveBeenCalledWith(
@@ -219,18 +181,6 @@ describe("ListResourceMapper", function() {
         primaryResourceTransformer,
         ListResource,
         relationship);
-    });
-
-    describe("create", function() {
-      var length;
-      beforeEach(function(done) {
-        length = results.length;
-        results.create("something").then(() => done());
-      });
-
-      it("should add to the array", function() {
-        expect(results.length).toEqual(length+1)
-      });
     });
   });
 });
