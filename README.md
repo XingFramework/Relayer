@@ -1,3 +1,10 @@
+The Xing Framework
+===
+
+***To learn more about the Xing Framework, read the [Xing Book](https://xingframework.gitbooks.io/the-xing-framework/content/).***
+
+The Xing Framework is a cutting edge web and mobile development platform by Logical Reality Design, Inc. It is designed to provide a completely modern (and even somewhat future-proofed) API + SPA web development platform with sensible defaults, solid conventions, and ease of rapid development. Xing uses Rails (4.2) on the backend and AngularJS (1.4) on the frontend. Most of the problems inherent in getting these two frameworks to talk to each other cleanly have been pre-solved in Xing.
+
 [![Code Climate](https://codeclimate.com/github/XingFramework/Relayer/badges/gpa.svg)](https://codeclimate.com/github/XingFramework/Relayer)
 [![Dependency Status](https://gemnasium.com/XingFramework/Relayer.svg)](https://gemnasium.com/XingFramework/Relayer)
 [![Build Status](https://travis-ci.org/XingFramework/Relayer.svg?branch=master)](https://travis-ci.org/XingFramework/Relayer)
@@ -218,3 +225,6 @@ Authors
 
 * Hannah Howard
 * Judson Lester
+* Evan Dorn
+
+The Xing Framework strives to be an open and inclusive project. All Contributors to the Xing Framework must abide by our [Code Of Conduct](CODE_OF_CONDUCT.md).
