@@ -1,5 +1,5 @@
 define('relayer/jsonpath',[], function() {
-  
+
   if (!Array.isArray) {
     Array.isArray = function(vArg) {
       return Object.prototype.toString.call(vArg) === "[object Array]";
@@ -213,7 +213,7 @@ define('relayer/jsonpath',[], function() {
 });
 
 define('relayer/DataWrapper',["./jsonpath"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var jsonPath = $__0.default;
@@ -349,7 +349,7 @@ define('relayer/DataWrapper',["./jsonpath"], function($__0) {
 });
 
 define('relayer/APIError',["./DataWrapper"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var DataWrapper = $__0.default;
@@ -385,7 +385,7 @@ define('relayer/APIError',["./DataWrapper"], function($__0) {
 });
 
 define('relayer/decorators/ResourceDecorator',[], function() {
-  
+
   var ResourceDecorator = function ResourceDecorator(name) {
     this.name = name;
   };
@@ -409,7 +409,7 @@ define('relayer/decorators/ResourceDecorator',[], function() {
 });
 
 define('relayer/endpoints/Endpoint',[], function() {
-  
+
   var Endpoint = function Endpoint() {};
   ($traceurRuntime.createClass)(Endpoint, {
     create: function(resource, res, rej) {
@@ -468,7 +468,7 @@ define('relayer/endpoints/Endpoint',[], function() {
 });
 
 define('relayer/MetaMap',[], function() {
-  
+
   var MetaMap = function MetaMap() {
     this._metadataMap = new Map();
   };
@@ -504,7 +504,7 @@ define('relayer/MetaMap',[], function() {
 });
 
 define('relayer/injector',["./MetaMap"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var MetaMap = $__0.default;
@@ -680,7 +680,7 @@ define('relayer/injector',["./MetaMap"], function($__0) {
 });
 
 define('relayer/endpoints/ResolvedEndpoint',["./Endpoint", "../injector"], function($__0,$__2) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -754,7 +754,7 @@ define('relayer/endpoints/ResolvedEndpoint',["./Endpoint", "../injector"], funct
 });
 
 define('relayer/endpoints/LoadedDataEndpoint',["./ResolvedEndpoint", "../injector"], function($__0,$__2) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -801,7 +801,7 @@ define('relayer/endpoints/LoadedDataEndpoint',["./ResolvedEndpoint", "../injecto
 });
 
 define('relayer/transformers/ResourceTransformer',[], function() {
-  
+
   var ResourceTransformer = function ResourceTransformer() {};
   ($traceurRuntime.createClass)(ResourceTransformer, {
     transformRequest: function(endpoint, resource) {
@@ -821,7 +821,7 @@ define('relayer/transformers/ResourceTransformer',[], function() {
 });
 
 define('relayer/transformers/EmbeddedPropertyTransformer',["./ResourceTransformer"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var ResourceTransformer = $__0.default;
@@ -856,7 +856,7 @@ define('relayer/transformers/EmbeddedPropertyTransformer',["./ResourceTransforme
 });
 
 define('relayer/endpoints/PromiseEndpoint',["./Endpoint"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var Endpoint = $__0.default;
@@ -876,7 +876,7 @@ define('relayer/endpoints/PromiseEndpoint',["./Endpoint"], function($__0) {
 });
 
 define('relayer/decorators/JsonPropertyDecorator',["./ResourceDecorator", "../endpoints/LoadedDataEndpoint", "../transformers/EmbeddedPropertyTransformer", "../endpoints/PromiseEndpoint", "../injector"], function($__0,$__2,$__4,$__6,$__8) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -970,7 +970,7 @@ define('relayer/decorators/JsonPropertyDecorator',["./ResourceDecorator", "../en
 });
 
 define('relayer/TemplatedUrl',[], function() {
-  
+
   var TemplatedUrl = function TemplatedUrl(uriTemplate) {
     var uriParams = arguments[1] !== (void 0) ? arguments[1] : {};
     this._uriTemplate = new UriTemplate(uriTemplate);
@@ -1035,7 +1035,7 @@ define('relayer/TemplatedUrl',[], function() {
 });
 
 define('relayer/RelationshipUtilities',["./TemplatedUrl"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var TemplatedUrl = $__0.TemplatedUrl;
@@ -1076,7 +1076,7 @@ define('relayer/RelationshipUtilities',["./TemplatedUrl"], function($__0) {
 });
 
 define('relayer/decorators/RelatedResourceDecorator',["./ResourceDecorator", "../TemplatedUrl", "../injector", "../endpoints/PromiseEndpoint", "../RelationshipUtilities"], function($__0,$__2,$__4,$__6,$__8) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -1216,7 +1216,7 @@ define('relayer/decorators/RelatedResourceDecorator',["./ResourceDecorator", "..
 });
 
 define('relayer/relationshipDescriptions/RelationshipDescription',[], function() {
-  
+
   var RelationshipDescription = function RelationshipDescription(relationshipInitializerFactory, resourceMapperFactory, resourceSerializerFactory, inflector, name, ResourceClass, initialValues) {
     this.initializer = relationshipInitializerFactory(ResourceClass, initialValues);
     this.mapperFactory = resourceMapperFactory;
@@ -1261,7 +1261,7 @@ define('relayer/relationshipDescriptions/RelationshipDescription',[], function()
 });
 
 define('relayer/initializers/RelationshipInitializer',[], function() {
-  
+
   var RelationshipInitializer = function RelationshipInitializer(ResourceClass, initialValues) {
     this.ResourceClass = ResourceClass;
     this.initialValues = initialValues;
@@ -1277,7 +1277,7 @@ define('relayer/initializers/RelationshipInitializer',[], function() {
 });
 
 define('relayer/initializers/SingleRelationshipInitializer',["./RelationshipInitializer"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var RelationshipInitializer = $__0.default;
@@ -1306,7 +1306,7 @@ define('relayer/initializers/SingleRelationshipInitializer',["./RelationshipInit
 });
 
 define('relayer/mappers/Mapper',[], function() {
-  
+
   var Mapper = function Mapper(transport, response, relationshipDescription) {
     var useErrors = arguments[3] !== (void 0) ? arguments[3] : false;
     this.transport = transport;
@@ -1344,7 +1344,7 @@ define('relayer/mappers/Mapper',[], function() {
 });
 
 define('relayer/transformers/ThrowErrorTransformer',["./ResourceTransformer"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var ResourceTransformer = $__0.default;
@@ -1371,7 +1371,7 @@ define('relayer/transformers/ThrowErrorTransformer',["./ResourceTransformer"], f
 });
 
 define('relayer/transformers/PrimaryResourceTransformer',["./ResourceTransformer"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var ResourceTransformer = $__0.default;
@@ -1410,7 +1410,7 @@ define('relayer/transformers/PrimaryResourceTransformer',["./ResourceTransformer
 });
 
 define('relayer/transformers/CreateResourceTransformer',["./PrimaryResourceTransformer"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var PrimaryResourceTransformer = $__0.default;
@@ -1441,7 +1441,7 @@ define('relayer/transformers/CreateResourceTransformer',["./PrimaryResourceTrans
 });
 
 define('relayer/ResourceBuilder',["./TemplatedUrl", "./endpoints/ResolvedEndpoint", "./transformers/ThrowErrorTransformer", "./transformers/CreateResourceTransformer", "./injector"], function($__0,$__2,$__4,$__6,$__8) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -1513,7 +1513,7 @@ define('relayer/ResourceBuilder',["./TemplatedUrl", "./endpoints/ResolvedEndpoin
 });
 
 define('relayer/PrimaryResourceBuilder',[], function() {
-  
+
   var PrimaryResourceBuilder = function PrimaryResourceBuilder(response, ResourceClass) {
     this.response = response;
     this.ResourceClass = ResourceClass;
@@ -1537,7 +1537,7 @@ define('relayer/PrimaryResourceBuilder',[], function() {
 });
 
 define('relayer/mappers/ResourceMapper',["./Mapper", "../TemplatedUrl", "../ResourceBuilder", "../PrimaryResourceBuilder", "../transformers/PrimaryResourceTransformer", "../injector"], function($__0,$__2,$__4,$__6,$__8,$__10) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -1610,7 +1610,7 @@ define('relayer/mappers/ResourceMapper',["./Mapper", "../TemplatedUrl", "../Reso
 });
 
 define('relayer/serializers/Serializer',[], function() {
-  
+
   var Serializer = function Serializer(resource) {
     this.resource = resource;
   };
@@ -1625,7 +1625,7 @@ define('relayer/serializers/Serializer',[], function() {
 });
 
 define('relayer/serializers/ResourceSerializer',["./Serializer", "../TemplatedUrl"], function($__0,$__2) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -1660,7 +1660,7 @@ define('relayer/serializers/ResourceSerializer',["./Serializer", "../TemplatedUr
 });
 
 define('a1atscript/ToAnnotation',[], function() {
-  
+
   function defineAnnotation(target, AnnotationClass, callParams) {
     var oldAnnotation = Object.getOwnPropertyDescriptor(target, 'annotations');
     if (oldAnnotation) {
@@ -1728,7 +1728,7 @@ define('a1atscript/ToAnnotation',[], function() {
 });
 
 define('a1atscript/annotations',["./ToAnnotation"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var ToAnnotation = $__0.ToAnnotation;
@@ -1904,7 +1904,7 @@ define('a1atscript/annotations',["./ToAnnotation"], function($__0) {
 });
 
 define('a1atscript/AnnotationFinder',[], function() {
-  
+
   var AnnotationFinder = function AnnotationFinder(AnnotatedClass) {
     this.AnnotatedClass = AnnotatedClass;
   };
@@ -1939,7 +1939,7 @@ define('a1atscript/AnnotationFinder',[], function() {
 });
 
 define('a1atscript/ng2Directives/Ng2Directive',[], function() {
-  
+
   var Ng2Directive = function Ng2Directive(descriptor) {
     this.selector = descriptor.selector;
     this.properties = descriptor.properties || descriptor.bind;
@@ -1959,7 +1959,7 @@ define('a1atscript/ng2Directives/Ng2Directive',[], function() {
 });
 
 define('a1atscript/ng2Directives/Component',["./Ng2Directive", "../ToAnnotation"], function($__0,$__2) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -2016,7 +2016,7 @@ define('a1atscript/ng2Directives/Component',["./Ng2Directive", "../ToAnnotation"
 });
 
 define('a1atscript/ng2Directives/SelectorMatcher',[], function() {
-  
+
   var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g;
   var MOZ_HACK_REGEXP = /^moz([A-Z])/;
   var SelectorMatcher = function SelectorMatcher(selector) {
@@ -2067,7 +2067,7 @@ define('a1atscript/ng2Directives/SelectorMatcher',[], function() {
 });
 
 define('a1atscript/router/ComponentMapper',["../annotations", "../ng2Directives/Component", "../AnnotationFinder", "../ng2Directives/SelectorMatcher"], function($__0,$__2,$__4,$__6) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -2247,7 +2247,7 @@ define('a1atscript/router/ComponentMapper',["../annotations", "../ng2Directives/
 });
 
 define('a1atscript/router/RouteConfig',["../ToAnnotation"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var ToAnnotation = $__0.ToAnnotation;
@@ -2267,7 +2267,7 @@ define('a1atscript/router/RouteConfig',["../ToAnnotation"], function($__0) {
 });
 
 define('a1atscript/router/RouteReader',["./RouteConfig", "../AnnotationFinder"], function($__0,$__2) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -2320,7 +2320,7 @@ define('a1atscript/router/RouteReader',["./RouteConfig", "../AnnotationFinder"],
 });
 
 define('a1atscript/router/RouteInitializer',[], function() {
-  
+
   var RouteInitializer = function RouteInitializer(componentMapper) {
     this.componentMapper = componentMapper;
   };
@@ -2395,7 +2395,7 @@ define('a1atscript/router/RouteInitializer',[], function() {
 });
 
 define('a1atscript/Router',["./router/ComponentMapper", "./router/RouteReader", "./router/RouteInitializer", "./router/RouteConfig"], function($__0,$__2,$__4,$__6) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -2428,7 +2428,7 @@ define('a1atscript/Router',["./router/ComponentMapper", "./router/RouteReader", 
 });
 
 define('a1atscript/injectorTypes',["./annotations", "./Router"], function($__0,$__2) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -2652,7 +2652,7 @@ define('a1atscript/injectorTypes',["./annotations", "./Router"], function($__0,$
 });
 
 define('a1atscript/Injector',["./annotations", "./AnnotationFinder", "./injectorTypes"], function($__0,$__2,$__4) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -2849,7 +2849,7 @@ define('a1atscript/Injector',["./annotations", "./AnnotationFinder", "./injector
 });
 
 define('a1atscript/DirectiveObject',["./injectorTypes", "./Injector", "./ToAnnotation"], function($__0,$__2,$__4) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -2928,7 +2928,7 @@ define('a1atscript/DirectiveObject',["./injectorTypes", "./Injector", "./ToAnnot
 });
 
 define('a1atscript/ng2Directives/Ng2DirectiveDefinitionObject',["./SelectorMatcher"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var SelectorMatcher = $__0.default;
@@ -3010,7 +3010,7 @@ define('a1atscript/ng2Directives/Ng2DirectiveDefinitionObject',["./SelectorMatch
 });
 
 define('a1atscript/ng2Directives/BindBuilder',[], function() {
-  
+
   var BindBuilder = function BindBuilder(bindObj, component) {
     this._bindObj = bindObj;
     this._component = component;
@@ -3033,7 +3033,7 @@ define('a1atscript/ng2Directives/BindBuilder',[], function() {
 });
 
 define('a1atscript/ng2Directives/PropertiesBuilder',["./BindBuilder"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var BindBuilder = $__0.default;
@@ -3091,7 +3091,7 @@ define('a1atscript/ng2Directives/PropertiesBuilder',["./BindBuilder"], function(
 });
 
 define('a1atscript/ng2Directives/EventsBuilder',["./BindBuilder"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var BindBuilder = $__0.default;
@@ -3114,7 +3114,7 @@ define('a1atscript/ng2Directives/EventsBuilder',["./BindBuilder"], function($__0
 });
 
 define('a1atscript/ng2Directives/ComponentInjector',["../Injector", "./Component", "../injectorTypes", "./Ng2DirectiveDefinitionObject", "./PropertiesBuilder", "./EventsBuilder", "../Router"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -3191,7 +3191,7 @@ define('a1atscript/ng2Directives/ComponentInjector',["../Injector", "./Component
 });
 
 define('a1atscript/bootstrap',["./Injector", "./Router"], function($__0,$__2) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -3213,7 +3213,7 @@ define('a1atscript/bootstrap',["./Injector", "./Router"], function($__0,$__2) {
 });
 
 define('a1atscript',["./a1atscript/Injector", "./a1atscript/annotations", "./a1atscript/DirectiveObject", "./a1atscript/ng2Directives/ComponentInjector", "./a1atscript/ng2Directives/Component", "./a1atscript/ToAnnotation", "./a1atscript/bootstrap", "./a1atscript/Router"], function($__0,$__1,$__2,$__3,$__4,$__5,$__6,$__7) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__1 || !$__1.__esModule)
@@ -3316,7 +3316,7 @@ define('a1atscript',["./a1atscript/Injector", "./a1atscript/annotations", "./a1a
 });
 
 define('xing-inflector',["a1atscript"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var $__1 = $__0,
@@ -3375,7 +3375,7 @@ define('xing-inflector',["a1atscript"], function($__0) {
 });
 
 define('relayer/transformers/EmbeddedRelationshipTransformer',["./ResourceTransformer"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var ResourceTransformer = $__0.default;
@@ -3410,7 +3410,7 @@ define('relayer/transformers/EmbeddedRelationshipTransformer',["./ResourceTransf
 });
 
 define('relayer/relationshipDescriptions/SingleRelationshipDescription',["./RelationshipDescription", "../initializers/SingleRelationshipInitializer", "../mappers/ResourceMapper", "../serializers/ResourceSerializer", "xing-inflector", "../transformers/PrimaryResourceTransformer", "../transformers/EmbeddedRelationshipTransformer", "../endpoints/ResolvedEndpoint", "../endpoints/LoadedDataEndpoint", "../TemplatedUrl", "../injector"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12,$__14,$__16,$__18,$__20) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -3494,7 +3494,7 @@ define('relayer/relationshipDescriptions/SingleRelationshipDescription',["./Rela
 });
 
 define('relayer/relationshipDescriptions/MultipleRelationshipDescription',["./RelationshipDescription"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var RelationshipDescription = $__0.default;
@@ -3530,7 +3530,7 @@ define('relayer/relationshipDescriptions/MultipleRelationshipDescription',["./Re
 });
 
 define('relayer/initializers/ManyRelationshipInitializer',["./RelationshipInitializer", "./SingleRelationshipInitializer", "../injector"], function($__0,$__2,$__4) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -3572,7 +3572,7 @@ define('relayer/initializers/ManyRelationshipInitializer',["./RelationshipInitia
 });
 
 define('relayer/mappers/ManyResourceMapper',["./Mapper", "../relationshipDescriptions/SingleRelationshipDescription", "../injector"], function($__0,$__2,$__4) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -3614,7 +3614,7 @@ define('relayer/mappers/ManyResourceMapper',["./Mapper", "../relationshipDescrip
 });
 
 define('relayer/serializers/ManyResourceSerializer',["./Serializer", "./ResourceSerializer", "../injector"], function($__0,$__2,$__4) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -3648,7 +3648,7 @@ define('relayer/serializers/ManyResourceSerializer',["./Serializer", "./Resource
 });
 
 define('relayer/transformers/SingleFromManyTransformer',["./ResourceTransformer"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var ResourceTransformer = $__0.default;
@@ -3684,7 +3684,7 @@ define('relayer/transformers/SingleFromManyTransformer',["./ResourceTransformer"
 });
 
 define('relayer/relationshipDescriptions/ManyRelationshipDescription',["./MultipleRelationshipDescription", "../initializers/ManyRelationshipInitializer", "../mappers/ManyResourceMapper", "../serializers/ManyResourceSerializer", "xing-inflector", "../transformers/EmbeddedRelationshipTransformer", "../transformers/SingleFromManyTransformer", "../endpoints/LoadedDataEndpoint", "../injector"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12,$__14,$__16) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -3731,7 +3731,7 @@ define('relayer/relationshipDescriptions/ManyRelationshipDescription',["./Multip
 });
 
 define('relayer/Resource',["./DataWrapper"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var DataWrapper = $__0.default;
@@ -3882,7 +3882,7 @@ define('relayer/Resource',["./DataWrapper"], function($__0) {
 });
 
 define('relayer/ListResource',["./Resource"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var Resource = $__0.default;
@@ -3902,7 +3902,7 @@ define('relayer/ListResource',["./Resource"], function($__0) {
 });
 
 define('relayer/initializers/ListRelationshipInitializer',["./RelationshipInitializer", "../ListResource", "./ManyRelationshipInitializer", "../injector"], function($__0,$__2,$__4,$__6) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -3953,7 +3953,7 @@ define('relayer/initializers/ListRelationshipInitializer',["./RelationshipInitia
 });
 
 define('relayer/TemporaryTemplatedUrl',["./TemplatedUrl"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var TemplatedUrl = $__0.TemplatedUrl;
@@ -3986,7 +3986,7 @@ define('relayer/TemporaryTemplatedUrl',["./TemplatedUrl"], function($__0) {
 });
 
 define('relayer/mappers/ListResourceMapper',["./ResourceMapper", "../TemplatedUrl", "../TemporaryTemplatedUrl", "../ResourceBuilder", "../PrimaryResourceBuilder", "../transformers/PrimaryResourceTransformer", "./ManyResourceMapper", "../injector"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12,$__14) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -4098,7 +4098,7 @@ define('relayer/mappers/ListResourceMapper',["./ResourceMapper", "../TemplatedUr
 });
 
 define('relayer/serializers/ListResourceSerializer',["./Serializer", "./ManyResourceSerializer", "../injector"], function($__0,$__2,$__4) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -4131,7 +4131,7 @@ define('relayer/serializers/ListResourceSerializer',["./Serializer", "./ManyReso
 });
 
 define('relayer/transformers/IndividualFromListTransformer',["./ResourceTransformer", "../TemplatedUrl", "../injector"], function($__0,$__2,$__4) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -4194,7 +4194,7 @@ define('relayer/transformers/IndividualFromListTransformer',["./ResourceTransfor
 });
 
 define('relayer/relationshipDescriptions/ListRelationshipDescription',["./RelationshipDescription", "../initializers/ListRelationshipInitializer", "../mappers/ListResourceMapper", "../serializers/ListResourceSerializer", "xing-inflector", "./SingleRelationshipDescription", "../ListResource", "../transformers/PrimaryResourceTransformer", "../transformers/EmbeddedRelationshipTransformer", "../transformers/IndividualFromListTransformer", "../transformers/CreateResourceTransformer", "../endpoints/ResolvedEndpoint", "../endpoints/LoadedDataEndpoint", "../TemplatedUrl", "../injector"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12,$__14,$__16,$__18,$__20,$__22,$__24,$__26,$__28) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -4358,7 +4358,7 @@ define('relayer/relationshipDescriptions/ListRelationshipDescription',["./Relati
 });
 
 define('relayer/initializers/MapRelationshipInitializer',["./RelationshipInitializer", "./SingleRelationshipInitializer", "../injector"], function($__0,$__2,$__4) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -4400,7 +4400,7 @@ define('relayer/initializers/MapRelationshipInitializer',["./RelationshipInitial
 });
 
 define('relayer/mappers/MapResourceMapper',["./Mapper", "../relationshipDescriptions/SingleRelationshipDescription", "../injector"], function($__0,$__2,$__4) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -4442,7 +4442,7 @@ define('relayer/mappers/MapResourceMapper',["./Mapper", "../relationshipDescript
 });
 
 define('relayer/serializers/MapResourceSerializer',["./Serializer", "./ResourceSerializer", "../injector"], function($__0,$__2,$__4) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -4477,7 +4477,7 @@ define('relayer/serializers/MapResourceSerializer',["./Serializer", "./ResourceS
 });
 
 define('relayer/relationshipDescriptions/MapRelationshipDescription',["./MultipleRelationshipDescription", "../initializers/MapRelationshipInitializer", "../mappers/MapResourceMapper", "../serializers/MapResourceSerializer", "xing-inflector", "../transformers/EmbeddedRelationshipTransformer", "../transformers/SingleFromManyTransformer", "../endpoints/LoadedDataEndpoint", "../injector"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12,$__14,$__16) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -4524,7 +4524,7 @@ define('relayer/relationshipDescriptions/MapRelationshipDescription',["./Multipl
 });
 
 define('relayer/ResourceDescription',["./APIError", "./decorators/JsonPropertyDecorator", "./decorators/RelatedResourceDecorator", "./relationshipDescriptions/SingleRelationshipDescription", "./relationshipDescriptions/ManyRelationshipDescription", "./relationshipDescriptions/ListRelationshipDescription", "./relationshipDescriptions/MapRelationshipDescription", "xing-inflector", "./injector"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12,$__14,$__16) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -4688,7 +4688,7 @@ define('relayer/ResourceDescription',["./APIError", "./decorators/JsonPropertyDe
 });
 
 define('relayer/Transport',[], function() {
-  
+
   var Transport = function Transport(urlHelper, $http) {
     this.http = $http;
     this.urlHelper = urlHelper;
@@ -4762,7 +4762,7 @@ define('relayer/Transport',[], function() {
 });
 
 define('relayer/UrlHelper',[], function() {
-  
+
   var UrlHelper = function UrlHelper(baseUrl) {
     if (this.isFullUrl(baseUrl)) {
       baseUrl = this.fullUrlRegEx.exec(baseUrl)[1];
@@ -4811,7 +4811,7 @@ define('relayer/UrlHelper',[], function() {
 });
 
 define('xing-promise',["a1atscript"], function($__0) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   var $__1 = $__0,
@@ -4864,7 +4864,7 @@ define('xing-promise',["a1atscript"], function($__0) {
 });
 
 define('relayer',["./relayer/ResourceDescription", "./relayer/Resource", "./relayer/ListResource", "./relayer/Transport", "./relayer/UrlHelper", "./relayer/transformers/PrimaryResourceTransformer", "./relayer/relationshipDescriptions/SingleRelationshipDescription", "./relayer/endpoints/ResolvedEndpoint", "./relayer/TemplatedUrl", "a1atscript", "xing-promise", "./relayer/injector"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12,$__14,$__16,$__18,$__20,$__22) {
-  
+
   if (!$__0 || !$__0.__esModule)
     $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
@@ -4974,4 +4974,3 @@ define('relayer',["./relayer/ResourceDescription", "./relayer/Resource", "./rela
     __esModule: true
   };
 });
-
